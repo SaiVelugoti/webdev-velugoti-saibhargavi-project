@@ -1,15 +1,15 @@
 module.exports = function(app)
 {
 
-    app.get('/api', (req, res) => {
-      res.send('App works');
-    });
-    app.get("/api/test", findAllMessages);
-    app.post("/api/test", createMessage);
-    app.delete("/api/test/:id", deleteMessage);
+  app.get('/api', (req, res) => {
+    res.send('App works');
+});
+  app.get("/api/test", findAllMessages);
+  app.post("/api/test", createMessage);
+  app.delete("/api/test/:id", deleteMessage);
 
 
-  var connectionString = 'mongodb://webappmaker:webappmaker@ds163181.mlab.com:63181/webappmaker';
+  //var connectionString = 'mongodb://webappmaker:webappmaker@ds163181.mlab.com:63181/webappmaker';
 
 
 
@@ -21,54 +21,57 @@ module.exports = function(app)
     connectionString += '@ds129394.mlab.com:29394/heroku_d7gpxsv2'; // use yours
   }
 
-
   var mongoose = require("mongoose");
-    mongoose.connect(connectionString);
- useMongoClient: true
-    var TestSchema = mongoose.Schema({
-        message: String
-    });
+  mongoose.connect(connectionString, {
+    useMongoClient: true
+  });
 
-    var TestModel = mongoose.model("TestModel", TestSchema);
+  var TestSchema = mongoose.Schema({
+    message: String
+  });
 
-    function findAllMessages(req, res) {
 
-        TestModel
-            .find()
-            .then(
-                function(tests) {
-                    res.json(tests);
-                },
-                function(err) {
-                    res.status(400).send(err);
-                }
-            );
-    }
 
-    function createMessage(req, res) {
-        console.log("in app");
-        TestModel
-            .create(req.body)
-            .then(
-                function(test) {
-                    res.json(test);
-                },
-                function(err) {
-                    res.status(400).send(err);
-                }
-            );
-    }
+  var TestModel = mongoose.model("TestModel", TestSchema);
 
-    function deleteMessage(req, res) {
-        TestModel
-            .remove({_id: req.params.id})
-            .then(
-                function(result) {
-                    res.json(result);
-                },
-                function(err) {
-                    res.status(400).send(err);
-                }
-            );
-    }
+  function findAllMessages(req, res) {
+
+    TestModel
+      .find()
+      .then(
+        function(tests) {
+          res.json(tests);
+        },
+        function(err) {
+          res.status(400).send(err);
+        }
+      );
+  }
+
+  function createMessage(req, res) {
+    console.log("in app");
+    TestModel
+      .create(req.body)
+      .then(
+        function(test) {
+          res.json(test);
+        },
+        function(err) {
+          res.status(400).send(err);
+        }
+      );
+  }
+
+  function deleteMessage(req, res) {
+    TestModel
+      .remove({_id: req.params.id})
+      .then(
+        function(result) {
+          res.json(result);
+        },
+        function(err) {
+          res.status(400).send(err);
+        }
+      );
+  }
 };
