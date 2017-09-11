@@ -8,13 +8,15 @@ import {Routing} from './app.routing';
 import {HttpModule} from '@angular/http';
 import {FormsModule} from '@angular/forms';
 import {TestService} from './services/test.service.client';
+import { ComponentNameComponent } from './component-name/component-name.component';
 
 @NgModule({
   // Declare components here
   declarations: [
     AppComponent,
     HomeComponent,
-    TestComponent
+    TestComponent,
+    ComponentNameComponent
   ],
   imports: [
     BrowserModule,
