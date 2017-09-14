@@ -1,3 +1,12 @@
+Hi, I am Sai Bhargavi Velugoti, CS Grad student at NEU, Boston.
+
+I have experience working with Java and databases. This repository contains my assignments and projects for CS5610 till date.
+
+Here is a link to my App on Heroku:
+https://webdev-velugoti-saibhargavi.herokuapp.com
+
+
+
 # AngularFourMEANSeed
 
 After you clone this repository and run "npm install"
