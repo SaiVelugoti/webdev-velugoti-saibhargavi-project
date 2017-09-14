@@ -2,9 +2,9 @@ Hi, I am Sai Bhargavi Velugoti, CS Grad student at NEU, Boston.
 
 I have experience working with Java and databases. This repository contains my assignments and projects for CS5610 till date.
 
-Here is a link to my App on Heroku:
+Click on the following links to navigate to respective pages:
 https://webdev-velugoti-saibhargavi.herokuapp.com
-
+https://webdev-velugoti-saibhargavi.herokuapp.com/test
 
 
 # AngularFourMEANSeed
@@ -20,11 +20,6 @@ Open two terminals, One to start the front end, One to start the backend
 
 Front end will run on `http://localhost:4200/`
 Server will run on port 3100. Specified in server.js and in environment.ts files
-
-
-
-
-
 
 
 ## Development server
