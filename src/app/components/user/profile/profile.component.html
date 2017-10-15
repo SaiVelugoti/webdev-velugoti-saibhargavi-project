@@ -1,0 +1,62 @@
+<nav class="navbar navbar-fixed-top bg-primary">
+  <div class="container-fluid">
+    <div class="navbar-header header-width header-fix">
+
+      <span class="navbar-brand">Profile</span>
+      <p class="navbar-text pull-right p-fix">
+        <a [routerLink]="['/user/:uid']" class="navbar-link glyphicon-color ">
+                <span class="glyphicon glyphicon-ok">
+                </span>
+        </a>
+      </p>
+    </div>
+
+  </div>
+</nav>
+
+
+<div class="container-fluid">
+  <label for="username">Username</label>
+  <input name="username"
+         id="username"
+         value="kkusner"
+         class="form-control"
+         readonly>
+
+  <label for="email">Email</label>
+  <input type="email"
+         id="email"
+         name="email"
+         class="form-control"
+         placeholder="kkusner@gmail.com">
+
+  <label for="firstName">First Name</label>
+  <input name="firstName"
+         id="firstName"
+         placeholder="Kathy"
+         class="form-control">
+
+  <label for="lastName">Last Name</label>
+  <input name="lastName"
+         id="lastName"
+         placeholder="Kusner"
+         class="form-control">
+
+  <a [routerLink]="['/user/:uid/website']" class="btn btn-primary btn-block ">
+    Websites
+  </a>
+  <a [routerLink]="['/login']" class="btn btn-block btn-danger">
+    Logout
+  </a>
+</div>
+
+<nav class="navbar navbar-fixed-bottom bg-primary">
+  <div class="container-fluid">
+    <p class="navbar-text pull-right">
+      <a [routerLink]="['/user/:uid']" class="navbar-link glyphicon-color">
+                <span class="glyphicon glyphicon-user">
+                </span>
+      </a>
+    </p>
+  </div>
+</nav>

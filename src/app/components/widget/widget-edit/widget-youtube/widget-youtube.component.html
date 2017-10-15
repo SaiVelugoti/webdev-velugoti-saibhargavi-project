@@ -1,0 +1,74 @@
+<nav class="navbar navbar-fixed-top bg-primary">
+  <div class="container-fluid">
+    <div class="navbar-header header-width header-fix">
+      <p class="navbar-text pull-left p-fix">
+        <a [routerLink]="['/user/:uid/website/:wid/page/:pid/widget']"
+           class="navbar-link glyphicon-color">
+              <span class="glyphicon glyphicon-chevron-left">
+              </span>
+        </a>
+      </p>
+
+      <span class="navbar-brand">Widget Edit</span>
+      <p class="navbar-text pull-right p-right-fix">
+        <a [routerLink]="['/user/:uid/website/:wid/page/:pid/widget']"
+           class="navbar-link glyphicon-color">
+              <span class="glyphicon glyphicon-ok">
+              </span>
+        </a>
+      </p>
+    </div>
+
+  </div>
+
+</nav>
+
+
+
+<div class="container-fluid">
+
+  <label for="name">Name</label>
+  <input type="text"
+         id="name"
+         name="page-name"
+         class="form-control"
+         placeholder="Widget Name">
+
+  <label for="text">Text</label>
+  <input type="text"
+         id="text"
+         name="page-title"
+         class="form-control"
+         placeholder="Widget Text">
+
+  <label for="url">URL</label>
+  <input type="text"
+         id="url"
+         name="page-title"
+         class="form-control"
+         placeholder="https://www.pexels.com/search/flower/">
+
+  <label for="width">Width</label>
+  <input type="text"
+         id="width"
+         name="page-title"
+         class="form-control"
+         placeholder="100%">
+
+  <a [routerLink]="['/user/:uid/website/:wid/page/:pid/widget']" class="btn btn-danger btn-block ">
+    Delete
+  </a>
+
+</div>
+
+
+<nav class="navbar navbar-fixed-bottom bg-primary">
+  <div class="container-fluid">
+    <p class="navbar-text pull-right">
+      <a [routerLink]="['/user/:uid']" class="navbar-link glyphicon-color">
+              <span class="glyphicon glyphicon-user">
+              </span>
+      </a>
+    </p>
+  </div>
+</nav>

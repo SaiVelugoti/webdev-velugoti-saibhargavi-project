@@ -1,0 +1,26 @@
+<div class="container-fluid">
+  <h1> Register </h1>
+
+  <input placeholder="username"
+         type="text"
+         id="username"
+         class="form-control"/>
+
+  <input placeholder="password"
+         type="password"
+         id="password"
+         class="form-control"/>
+
+  <input placeholder="verify password"
+         type="password"
+         id="verifyPassword" c
+         class="form-control"/>
+
+  <a [routerLink]="['/user/:uid']" class="btn btn-primary btn-block ">
+    Register
+  </a>
+
+  <a [routerLink]="['/login']" class="btn btn-block btn-danger">
+    Cancel
+  </a>
+</div>
