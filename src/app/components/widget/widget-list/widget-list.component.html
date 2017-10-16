@@ -1,94 +1,100 @@
-<nav class="navbar navbar-fixed-top bg-primary">
-  <div class="container-fluid">
-    <div class="navbar-header header-width header-fix">
-      <p class="navbar-text pull-left p-fix">
-        <a [routerLink]="['/user/:uid/website/:wid/page']"
-           class="navbar-link glyphicon-color">
-              <span class="glyphicon glyphicon-chevron-left">
-              </span>
-        </a>
-      </p>
+<nav class="navbar navbar-fixed-top">
+  <div class="container-fluid btnStyle ">
 
-      <span class="navbar-brand">Widgets</span>
-      <p class="navbar-text pull-right p-right-fix ">
-        <a [routerLink]="['/user/:uid/website/:wid/page/:pid/widget/new']"
-           class="navbar-link glyphicon-color">
-              <span class="glyphicon glyphicon-plus">
-              </span>
-        </a>
-      </p>
-    </div>
+    <p class="navbar-text pull-left">
+      <a [routerLink]="['/user', userId, 'website', websiteId, 'page']" class="glyphicon-color">
+        <span class="glyphicon glyphicon-chevron-left glyphicon-nav glyphicon-color"></span>
+      </a>
+    </p>
 
+
+    <p class="navbar-header pull-left">
+      <a class="navbar-brand">
+        <b>Widgets</b>
+      </a>
+    </p>
+
+
+    <p class="navbar-text pull-right">
+      <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget', 'new']">
+        <span class="glyphicon glyphicon-plus glyphicon-color"></span>
+      </a>
+    </p>
   </div>
 </nav>
 
-<div class="container-fluid">
-  <div class="wd-widget">
-    <div class="wd-widget-toolbar">
-      <a [routerLink]="['/user/:uid/website/:wid/page/:pid/widget/:wgid']">
-      <!-- <a href="widget-heading.html"> -->
-        <span class="glyphicon glyphicon-cog"></span>
-      </a>
-      <span class="glyphicon glyphicon-align-justify"></span>
-    </div>
-    <h1>GIZMODO</h1>
-  </div>
-  <div class="wd-widget">
-    <div class="wd-widget-toolbar">
-      <a [routerLink]="['/user/:uid/website/:wid/page/:pid/widget/:wgid']">
-     <!-- <a href="widget-heading.html"> -->
-        <span class="glyphicon glyphicon-cog"></span>
-      </a>
-      <span class="glyphicon glyphicon-align-justify"></span>
-    </div>
-    <h3>
-      Sleep Cool And Comfortable All Summer: Save $50 On The Breathable Casper Mattress
-    </h3>
-  </div>
-  <div class="wd-widget">
-    <div class="wd-widget-toolbar">
-      <a [routerLink]="['/user/:uid/website/:wid/page/:pid/widget/:wgid']">
-      <!-- <a href="widget-image.html"> -->
-        <span class="glyphicon glyphicon-cog"></span>
-      </a>
-      <span class="glyphicon glyphicon-align-justify"></span>
-    </div>
-    <img src="https://i.kinja-img.com/gawker-media/image/upload/s--JYQyMyfT--/c_scale,fl_progressive,q_80,w_800/hkvwpuiqdgtn4ntb2q7z.png"/>
-  </div>
-  <div class="wd-widget">
-    <div class="wd-widget-toolbar">
-      <a [routerLink]="['/user/:uid/website/:wid/page/:pid/widget/:wgid']">
-      <!--<a href="widget-heading.html"> -->
-        <span class="glyphicon glyphicon-cog"></span>
-      </a>
-      <span class="glyphicon glyphicon-align-justify"></span>
-    </div>
 
-    <p>After a brief tease
-      <a href="http://io9.gizmodo.com/the-first-picture-from-star-trek-discovery-explores-st-1795290281" rel="nofollow">this morning</a>, CBS have just revealed our first full look at <em>Star Trek: Discovery</em>, giving us our best glimpse at what’s to come in the future of <em>Star Trek</em>’s past.<br></p>
-    <p>Revealed at the network’s ongoing Upfronts presentation, the trailer marks the first footage from <em>Discovery</em> beyond the initial ship reveal <a href="http://io9.gizmodo.com/the-new-star-trek-tv-show-has-a-title-and-a-starship-d-1784191488" rel="nofollow">back at San Diego Comic Con last year</a>. Set before the events of the original series, <em>Discovery</em> follows the crew of the titular Federation starship, helmed by Captain Lorca (Jason Isaacs), from the perspective of its First Officer, Michael Burnham (Sonequa Martin Green). <br></p>
+<div class="container main-body-content">
 
-  </div>
-  <div class="wd-widget">
-    <div class="video-container">
-      <iframe width="100%" src="https://www.youtube.com/embed/rwhuzDSlgXM" frameborder="0" allowfullscreen></iframe>
-      <div class="wd-widget-toolbar toolbar-youtube-position">
-        <a [routerLink]="['/user/:uid/website/:wid/page/:pid/widget/:wgid']">
-          <!--<a href="widget-youtube.html">-->
-          <span class="glyphicon glyphicon-cog"></span>
-        </a>
-        <span class="glyphicon glyphicon-align-justify"></span>
+  <div class="padtop">
+
+    <div *ngFor="let widget of widgets" class="widget-container wd-widget">
+
+      <div class="widget-container pull-full-width">
+        <div class="wd-widget">
+          <div class="pull-right">
+            <div>
+              <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget', widget['_id'], widget['widgetType']]">
+                <span class="glyphicon glyphicon-cog main-theme-color"></span>
+              </a>
+              <span class="glyphicon glyphicon-menu-hamburger"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div [ngSwitch]="widget['widgetType']">
+        <div *ngSwitchCase="'HEADING'">
+          <div [ngSwitch]="widget['size']">
+            <div *ngSwitchCase="'1'">
+              <h1>{{widget['text']}}</h1>
+            </div>
+            <div *ngSwitchCase="'2'">
+              <h2>{{widget['text']}}</h2>
+            </div>
+            <div *ngSwitchCase="'3'">
+              <h3>{{widget['text']}}</h3>
+            </div>
+            <div *ngSwitchCase="'4'">
+              <h4>{{widget['text']}}</h4>
+            </div>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'YOUTUBE'">
+          <iframe width="560" height="315" [src]="cleanURL(widget['url'])" frameborder="0"
+                  allowfullscreen class="pull-full-width"></iframe>
+        </div>
+
+        <div *ngSwitchCase="'IMAGE'">
+          <img src="{{widget['url']}}" [style.width]="widget['width']">
+        </div>
+        <div *ngSwitchCase="'HTML'">
+          {{widget['text']}}
+        </div>
       </div>
     </div>
-
   </div>
 </div>
 
-<nav class="navbar navbar-fixed-bottom bg-primary">
+
+<nav class="navbar navbar-fixed-bottom bg-primary btnStyle">
   <div class="container-fluid">
+
+    <p class="navbar-text pull-left">
+      <a class="navbar-text-colors-pages">
+        <span class="glyphicon glyphicon-play glyphicon-nav navbar-text-colors-pages"></span>
+      </a>
+    </p>
+
+    <p class="navbar-text pull-left">
+      <a class="navbar-text-colors-pages">
+        <span class="glyphicon glyphicon-eye-open glyphicon-nav navbar-text-colors-pages"></span>
+      </a>
+    </p>
+
     <p class="navbar-text pull-right">
-      <a [routerLink]="['/user/:uid']"
-         class="navbar-link glyphicon-color">
+      <a [routerLink]="['/user', userId]" class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-user">
               </span>
       </a>

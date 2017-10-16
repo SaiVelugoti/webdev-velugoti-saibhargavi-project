@@ -1,8 +1,9 @@
-<nav class="navbar navbar-fixed-top bg-primary">
+
+<nav class="navbar navbar-fixed-top bg-primary btnStyle">
   <div class="container-fluid">
     <div class="navbar-header  header-width header-fix">
       <p class="navbar-text pull-left p-fix">
-        <a [routerLink]="['/user/:uid/website']" class="navbar-link glyphicon-color">
+        <a [routerLink]="['/user', userId, 'website']" class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-chevron-left">
               </span>
         </a>
@@ -10,7 +11,7 @@
 
       <span class="navbar-brand">New Website</span>
       <p class="navbar-text pull-right p-right-fix">
-        <a [routerLink]="['/user/:uid/website']" class="navbar-link glyphicon-color">
+        <a (click)="createWebsite()" class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-ok">
               </span>
         </a>
@@ -31,7 +32,7 @@
             </div>
 
             <div class="col-xs-3">
-              <a [routerLink]="['/user/:uid/website/new']" class="glyphicon-color pull-right">
+              <a [routerLink]="['/user', userId, 'website', 'new']" class="glyphicon-color pull-right">
               <span class="glyphicon glyphicon-plus">
               </span>
               </a>
@@ -40,75 +41,16 @@
           </div>
         </li>
 
-        <li class="list-group-item">
+        <li class="list-group-item" *ngFor="let aWebsite of websites">
           <div class="row">
-            <div class="col-lg-9  visible-lg">
-              <a [routerLink]="['/user/:uid/website/:wid/page']">
-                Twitter
+            <div class="col-sm-9 nav-padding-zero">
+              <a [routerLink]="['/user', userId, 'website', aWebsite['_id'], 'page']">{{aWebsite['name']}}</a>
+            </div>
+            <div class="col-sm-3 nav-padding-zero">
+              <a [routerLink]="['/user', userId, 'website', aWebsite['_id']]">
+                <span class="glyphicon glyphicon-cog pull-right"></span>
               </a>
             </div>
-
-            <div class="col-xs-3">
-              <a [routerLink]="['/user/:uid/website/:wid']" >
-              <span class="glyphicon glyphicon-cog pull-right">
-              </span>
-              </a>
-            </div>
-
-          </div>
-        </li>
-
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-lg-9  visible-lg">
-              <a [routerLink]="['/user/:uid/website/:wid/page']">
-                Google
-              </a>
-            </div>
-
-            <div class="col-xs-3">
-              <a [routerLink]="['/user/:uid/website/:wid']" >
-              <span class="glyphicon glyphicon-cog pull-right">
-              </span>
-              </a>
-            </div>
-
-          </div>
-        </li>
-
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-lg-9  visible-lg">
-              <a [routerLink]="['/user/:uid/website/:wid/page']">
-                LinkedIn
-              </a>
-            </div>
-
-            <div class="col-xs-3">
-              <a [routerLink]="['user/:uid/website/:wid']" >
-              <span class="glyphicon glyphicon-cog pull-right">
-              </span>
-              </a>
-            </div>
-
-          </div>
-        </li>
-
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-lg-9  visible-lg">
-              <a [routerLink]="['/user/:uid/website/:wid/page']">
-                Facebook
-              </a>
-            </div>
-
-            <div class="col-xs-3">
-              <a [routerLink]="['/user/:uid/website/:wid']" >
-              <span class="glyphicon glyphicon-cog pull-right">
-              </span>
-              </a>
-            </div>
-
           </div>
         </li>
 
@@ -116,33 +58,50 @@
     </div>
 
     <div class="col-lg-9 col-xs-12">
-      <label for="name">Name</label>
-      <input type="text"
-             id="name"
-             name="website-name"
-             class="form-control"
-             placeholder="Name">
+      <div *ngIf="errorFlag"
+           class="alert alert-danger">
+        {{errorMsg}}
+      </div>
+      <form>
+        <div class="form-group">
+          <label for="websitename">Name</label>
+          <input   placeholder="username"
+                   id="websitename"
+                   name="websitename"
+                   type="text"
+                   class="form-control"
+                   required
+                   [(ngModel)]="websitename"/>
+        </div>
+      </form>
 
-      <label for="description">Description</label>
-      <textarea
-        id="description"
-        name="email"
-        class="form-control"
-        rows="5">
+      <form>
+        <div class="form-group">
+          <label for="websitedescription">Description</label>
+          <input   placeholder="description"
+                   id="websitedescription"
+                   name="websitedescription"
+                   type="text"
+                   class="form-control"
+                   required
+                   [(ngModel)]="websitedescription"/>
+        </div>
+      </form>
 
-      </textarea>
+
     </div>
   </div>
-
 </div>
 
-<nav class="navbar navbar-fixed-bottom bg-primary">
+
+<nav class="navbar navbar-fixed-bottom bg-primary btnStyle">
   <div class="container-fluid">
     <p class="navbar-text pull-right">
-      <a [routerLink]="['/user/:uid']" class="navbar-link glyphicon-color">
+      <a [routerLink]="['/user', userId]" class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-user">
               </span>
       </a>
     </p>
   </div>
 </nav>
+

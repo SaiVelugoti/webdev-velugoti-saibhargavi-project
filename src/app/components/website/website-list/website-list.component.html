@@ -1,21 +1,55 @@
-<nav class="navbar navbar-fixed-top bg-primary">
+<nav class="navbar navbar-fixed-top">
+  <div class="container-fluid  btnStyle header-fix">
+
+    <p class="navbar-text pull-left p-fix">
+      <a [routerLink]="['/user/', userId]">
+        <span class="glyphicon glyphicon-chevron-left glyphicon-nav glyphicon-color"></span>
+      </a>
+    </p>
+
+
+    <p class="navbar-header pull-left">
+      <a class="navbar-brand" style="color:white">
+        <b>Websites</b>
+      </a>
+    </p>
+
+    <p class="navbar-text pull-right">
+      <a [routerLink]="['/user', userId, 'website', 'new']">
+        <span class="glyphicon glyphicon-plus navbar-link glyphicon-color"></span>
+      </a>
+    </p>
+  </div>
+</nav>
+
+
+
+<div class="container-fluid">
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let aWebsite of websites">
+      <div class="row">
+        <div class="col-xs-9 col-sm-11">
+          <a [routerLink]="['/user', userId, 'website', aWebsite['_id'], 'page']" class="colorBlue">{{aWebsite['name']}}</a>
+        </div>
+        <div class="col-xs-3 col-sm-1 website-list-icon website-page-icons">
+          <a [routerLink]="['/user', userId, 'website', aWebsite['_id']]">
+            <span class="glyphicon glyphicon-cog colorBlue"></span>
+          </a>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+
+
+<nav class="navbar navbar-fixed-bottom bg-primary btnStyle">
   <div class="container-fluid">
-
-    <div class="navbar-header header-width header-fix">
-      <p class="navbar-text pull-left p-fix">
-        <a [routerLink]="['/user/:uid']" class="navbar-link glyphicon-color">
-              <span class="glyphicon glyphicon-chevron-left">
+    <p class="navbar-text pull-right">
+      <a [routerLink]="['/user', userId]" class="navbar-link glyphicon-color">
+              <span class="glyphicon glyphicon-user">
               </span>
-        </a>
-      </p>
-      <span class="navbar-brand">Websites</span>
-
-      <p class="navbar-text pull-right p-right-fix">
-        <a [routerLink]="['/user/:uid/website/new']" class="navbar-link glyphicon-color">
-              <span class="glyphicon glyphicon-plus">
-              </span>
-        </a>
-      </p>
-    </div>
+      </a>
+    </p>
   </div>
 </nav>

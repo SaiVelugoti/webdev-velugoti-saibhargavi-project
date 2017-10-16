@@ -1,0 +1,36 @@
+
+<div class="container main-body-content">
+
+  <div class="padtop">
+
+    <div [ngSwitch]="widgetType">
+      <div *ngSwitchCase="'HEADING'">
+        <app-widget-header></app-widget-header>
+      </div>
+      <div *ngSwitchCase="'IMAGE'">
+        <app-widget-image></app-widget-image>
+      </div>
+      <div *ngSwitchCase="'YOUTUBE'">
+        <app-widget-youtube></app-widget-youtube>
+      </div>
+    </div>
+
+    <div *ngIf="doesWidgetExist">
+      <a class="btn btn-danger btn-block" (click)="deleteWidget()">Delete</a>
+    </div>
+
+
+  </div>
+</div>
+
+
+<nav class="navbar navbar-fixed-bottom bg-primary btnStyle">
+  <div class="container-fluid">
+    <p class="navbar-text pull-right">
+      <a [routerLink]="['/user', userId]" class="navbar-link glyphicon-color">
+              <span class="glyphicon glyphicon-user">
+              </span>
+      </a>
+    </p>
+  </div>
+</nav>

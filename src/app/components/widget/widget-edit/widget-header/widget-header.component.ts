@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {WidgetService} from '../../../../services/widget.service.client';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-widget-header',
@@ -7,9 +9,59 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WidgetHeaderComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit() {
+  userId: string;
+  websiteId: string;
+  pageId: string;
+  widgetId: string;
+  widgetType: string;
+  theWidget: any;
+  aNewWidget: {};
+  widgetExists: boolean;
+  widgetText: string;
+  widgetSize: string;
+  errorFlag: boolean;
+  errorMsg = 'Those fields cannot be blank.';
+  constructor(private widgetService: WidgetService, private activatedRoute: ActivatedRoute, private router: Router) {
   }
 
+  ngOnInit() {
+    this.errorFlag = false;
+    this.activatedRoute.params
+      .subscribe(
+        (params: any) => {
+          this.userId = params['uid'];
+          this.websiteId = params['wid'];
+          this.pageId = params['pid'];
+          this.widgetId = params['wgid'];
+          this.widgetType = params['widtype'];
+          this.theWidget = this.widgetService.findWidgetById(this.widgetId);
+          if (this.theWidget) {
+            this.widgetText = this.theWidget['text'];
+            this.widgetSize = this.theWidget['size'];
+            this.widgetExists = true;
+          } else {
+            this.widgetText = '';
+            this.widgetSize = '';
+            this.widgetExists = false;
+          }
+        }
+      );
+  }
+
+  addData() {
+    if (this.widgetText === '' || this.widgetSize === '') {
+      this.errorFlag = true;
+    } else {
+      if (!this.widgetExists) {
+        this.aNewWidget = {_id: this.widgetId, widgetType: this.widgetType, pageId: this.pageId, size: this.widgetSize,
+          text: this.widgetText };
+        this.widgetService.createWidget(this.pageId, this.aNewWidget);
+      } else {
+        this.aNewWidget = {_id: this.widgetId, widgetType: this.widgetType, pageId: this.pageId, size: this.widgetSize,
+          text: this.widgetText };
+        this.widgetService.updateWidget(this.widgetId, this.aNewWidget);
+      }
+      this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+    }
+  }
 }

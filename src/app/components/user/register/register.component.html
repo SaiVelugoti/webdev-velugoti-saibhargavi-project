@@ -1,26 +1,29 @@
-<div class="container-fluid">
-  <h1> Register </h1>
-
-  <input placeholder="username"
-         type="text"
-         id="username"
-         class="form-control"/>
-
-  <input placeholder="password"
-         type="password"
-         id="password"
-         class="form-control"/>
-
-  <input placeholder="verify password"
-         type="password"
-         id="verifyPassword" c
-         class="form-control"/>
-
-  <a [routerLink]="['/user/:uid']" class="btn btn-primary btn-block ">
-    Register
-  </a>
-
-  <a [routerLink]="['/login']" class="btn btn-block btn-danger">
-    Cancel
-  </a>
+<div class="container">
+  <h1>Register</h1>
+  <div *ngIf="errorFlag"
+       class="alert alert-danger">
+    {{errorMsg}}
+  </div>
+  <input   placeholder="username"
+           name="username"
+           type="text"
+           class="form-control"
+           required
+           [(ngModel)]="username"/>
+  <input   name="password"
+           type="password"
+           class="form-control"
+           placeholder="password"
+           required
+           [(ngModel)]="password"/>
+  <input   name="vpassword"
+           type="password"
+           placeholder="verify password"
+           class="form-control"
+           required
+           [(ngModel)]="vpassword"/>
+  <a class="btn btn-primary btn-block"
+     (click)="register()">Register</a>
+  <a class="btn btn-danger btn-block"
+     [routerLink]="['/login']" >Cancel</a>
 </div>
