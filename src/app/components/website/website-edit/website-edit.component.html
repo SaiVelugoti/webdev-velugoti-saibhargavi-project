@@ -8,7 +8,7 @@
         </a>
       </p>
 
-      <span class="navbar-brand">Edit Website</span>
+      <span class="navbar-brand glyphicon-color">Edit Website</span>
       <p class="navbar-text pull-right p-right-fix">
         <a (click)="editWebsite()" class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-ok">
@@ -24,9 +24,9 @@
   <div class="row">
     <div class="col-lg-3 visible-lg">
       <ul class="list-group">
-        <li class="list-group-item active">
+        <li class="list-group-item active btnStyle">
           <div class="row">
-            <div class="col-lg-9  visible-lg btnStyle">
+            <div class="col-lg-9  visible-lg">
               Websites
             </div>
 
@@ -42,11 +42,11 @@
         <li class="list-group-item" *ngFor="let aWebsite of websites">
           <div class="row">
             <div class="col-sm-9 nav-padding-zero">
-              <a [routerLink]="['/user', userId, 'website', aWebsite['_id'], 'page']">{{aWebsite['name']}}</a>
+              <a [routerLink]="['/user', userId, 'website', aWebsite['_id'], 'page']" class="colorBlue">{{aWebsite['name']}}</a>
             </div>
             <div class="col-sm-3 nav-padding-zero">
               <a [routerLink]="['/user', userId, 'website', aWebsite['_id']]">
-                <span class="glyphicon glyphicon-cog pull-right"></span>
+                <span class="glyphicon glyphicon-cog pull-right colorBlue"></span>
               </a>
             </div>
           </div>

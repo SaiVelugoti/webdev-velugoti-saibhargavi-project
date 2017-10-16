@@ -9,7 +9,7 @@
     </p>
 
     <p class="navbar-header pull-left">
-      <a class="navbar-brand ">
+      <a class="navbar-brand glyphicon-color">
         <b>Widget Edit</b>
       </a>
     </p>
@@ -32,15 +32,18 @@
     <input type="text"
            class="form-control"
            id="name"
+           ngModel
            placeholder="name"
-           [(ngModel)]="widgetType">
+           #widgetType="ngModel">
 
 
     <input type="text"
            class="form-control"
            id="url"
+           ngModel
            placeholder="URL"
-           [(ngModel)]="widgetURL">
+           #widgetURL="ngModel">
+           <!--[(ngModel)]="widgetURL">-->
 
     <label class="form-name-secondary" for="width">Width</label>
 
@@ -48,6 +51,7 @@
            class="form-control"
            id="width"
            placeholder="Wdith"
+
            [(ngModel)]="widgetWidth">
   </div>
 </div>

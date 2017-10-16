@@ -10,7 +10,7 @@
 
     <p class="navbar-header pull-left btnStyle">
       <a class="navbar-brand">
-        <b>Pages</b>
+        <b style="color: white">Pages</b>
       </a>
     </p>
 
@@ -29,11 +29,11 @@
       <li class="list-group-item" *ngFor="let page of pages">
         <div class="row">
           <div class="col-xs-9 col-sm-11">
-            <a [routerLink]="['/user', userId, 'website', websiteId, 'page', page['_id'], 'widget']">{{page['name']}}</a>
+            <a [routerLink]="['/user', userId, 'website', websiteId, 'page', page['_id'], 'widget']" class="colorBlue">{{page['name']}}</a>
           </div>
           <div class="col-xs-3 col-sm-1 website-list-icon">
             <a [routerLink]="['/user', userId, 'website', websiteId, 'page', page['_id']]">
-              <span class="glyphicon glyphicon-cog"></span>
+              <span class="glyphicon glyphicon-cog colorBlue"></span>
             </a>
           </div>
         </div>
