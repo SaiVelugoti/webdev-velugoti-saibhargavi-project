@@ -1,4 +1,4 @@
-<nav class="navbar navbar-fixed-top bg-primary">
+<nav class="navbar navbar-fixed-top bg-primary btnStyle">
   <div class="container-fluid">
     <div class="navbar-header header-width header-fix">
       <p class="navbar-text pull-left p-fix">
@@ -11,7 +11,7 @@
 
       <span class="navbar-brand">Widget Edit</span>
       <p class="navbar-text pull-right p-right-fix">
-        <a [routerLink]="['/user', uid, 'website', wid, 'page', pid, 'widget']"
+        <a (click)="createEditImage()"
            class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-ok">
               </span>
@@ -22,55 +22,56 @@
   </div>
 </nav>
 
-<div class="container-fluid">
 
-  <label for="name">Name</label>
-  <input type="text"
-         id="name"
-         name="page-name"
-         class="form-control"
-         placeholder="Widget Name">
+<form (ngSubmit) = "createEditImage()" #f="ngForm">
+  <div class="container-fluid">
+    <div *ngIf="errorFlag"
+         class="alert alert-danger">
+      {{errMsg}}
+    </div>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input  [(ngModel)]="name"
+              placeholder={{name}}
+              type="text"
+              id="name"
+              name="name"
+              class="form-control"
+      />
+      <label for="url">URL</label>
+      <input  [(ngModel)]="url"
+              placeholder={{url}}
+              type="text"
+              id="url"
+              name="url"
+              class="form-control"
+      />
+      <label for="width">Width</label>
+      <input  [(ngModel)]="width"
+              placeholder={{width}}
+              type="text"
+              id="width"
+              name="width"
+              class="form-control"
+      />
 
-  <label for="text">Text</label>
-  <input type="text"
-         id="text"
-         name="page-title"
-         class="form-control"
-         placeholder="Widget Text">
+      <label for="upload">Upload</label>
+      <input type="file"
+             id="upload"
+             name="page-title"
+             class="form-control"
+             placeholder="Widget Upload">
 
-  <label for="url">URL</label>
-  <input type="text"
-         id="url"
-         name="page-title"
-         class="form-control"
-         placeholder="https://www.pexels.com/search/flower/">
-
-  <label for="width">Width</label>
-  <input type="text"
-         id="width"
-         name="page-title"
-         class="form-control"
-         placeholder="100%">
-
-  <label for="upload">Upload</label>
-  <input type="file"
-         id="upload"
-         name="page-title"
-         class="form-control"
-         placeholder="Widget Upload">
-
-  <a href="" class="btn btn btn-block ">
-    Upload Image
-  </a>
-
-  <a [routerLink]="['/user', uid, 'website', wid, 'page', pid, 'widget']" class="btn btn-danger btn-block ">
-    Delete
-  </a>
-
-</div>
-
-
-<nav class="navbar navbar-fixed-bottom bg-primary">
+      <button class="btn btn-block btnStyle bg-primary"
+              type="submit"
+              [disabled]="!f.valid">Upload Image</button>
+    </div>
+    </div>
+  <!--<a [routerLink]="['/user', uid, 'website', wid, 'page', pid, 'widget']" class="btn btn-danger btn-block ">-->
+    <!--Delete-->
+  <!--</a>-->
+</form>
+<nav class="navbar navbar-fixed-bottom bg-primary btnStyle">
   <div class="container-fluid">
     <p class="navbar-text pull-right">
       <a [routerLink]="['/user', uid]" class="navbar-link glyphicon-color">

@@ -24,6 +24,7 @@ export class WidgetChooserComponent implements OnInit {
           this.uid = params['uid'];
           this.wid = params['wid'];
           this.pid = params['pid'];
+          this.wgid = params['wgid'];
           this.widgets = this.widgetService.findWidgetsByPageId(this.pid);
           this.newWid = Math.random();
         }

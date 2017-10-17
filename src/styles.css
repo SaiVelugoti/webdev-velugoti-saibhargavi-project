@@ -21,9 +21,9 @@ select.form-control {
   margin-bottom: 12px;
 }
 
-.wd-widget {
-  margin-bottom: 10px;
-}
+/*.wd-widget {*/
+  /*margin-bottom: 10px;*/
+/*}*/
 
 .wd-widget > img {
   width: 100%;

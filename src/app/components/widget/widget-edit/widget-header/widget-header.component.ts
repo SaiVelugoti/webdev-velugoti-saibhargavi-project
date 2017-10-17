@@ -34,26 +34,34 @@ export class WidgetHeaderComponent implements OnInit {
           this.wgid = params['wgid'];
           this.widtype = params['widtype'];
           this.widgetRet = this.widgetService.findWidgetById(this.wgid);
-          this.widText = this.widgetRet['text'];
-          this.size = this.widgetRet['size'];
+          if (this.widgetRet !== null) {
+            this.widText = this.widgetRet['text'];
+            this.size = this.widgetRet['size'];
+          } else {
+            this.widText = '';
+            this.size = '';
+          }
         }
       );
   }
 
   createEditHeader() {
-
     if (this.widText === '' || this.size === '') {
       this.errMsg = 'Enter all values'
       this.errorFlag = true;
-    } else if (this.widText !== this.widgetRet['text'] || this.size !== this.widgetRet['size']) {
-      const newId = Math.random().toString();
-       this.widgetNew = {_id: newId, widgetType: this.widtype, pageId: this.pid, size: this.size, text: this.widText};
-        this.widgetService.createWidget(this.pid, this.widgetNew);
+    } else if (this.widgetRet !== null) {
+      if (this.widText !== this.widgetRet['text'] || this.size !== this.widgetRet['size']) {
+          const newId = Math.random().toString();
+          this.widgetNew = {_id: newId, widgetType: 'HEADING', pageId: this.pid, size: this.size, text: this.widText};
+          this.widgetService.createWidget(this.pid, this.widgetNew);
       } else {
-        this.widgetNew = {_id: this.wid, widgetType: this.widtype, pageId: this.pid, size: this.size, text: this.widText };
+        this.widgetNew = {_id: this.wid, widgetType: 'HEADING', pageId: this.pid, size: this.size, text: this.widText };
         this.widgetService.updateWidget(this.wid, this.widgetNew);
-      }
-      // console.log(this.aNewWidget);
+      }} else {
+      const newId = Math.random().toString();
+      this.widgetNew = {_id: newId, widgetType: 'HEADING', pageId: this.pid, size: this.size, text: this.widText};
+      this.widgetService.createWidget(this.pid, this.widgetNew);
+    }
       this.router.navigate(['/user', this.uid, 'website', this.wid, 'page', this.pid, 'widget']);
     }
 }

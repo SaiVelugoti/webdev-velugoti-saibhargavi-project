@@ -37,9 +37,4 @@ export class LoginComponent implements OnInit {
       this.errorFlag = true;
     }
   }
-  // binding click event
-  buttonClicked(event: any) {
-    console.log(event);
-  }
-
 }

@@ -43,11 +43,7 @@ export class PageService {
   updatePage(pageId, page)  {
     for (let x = 0; x < this.pages.length; x++) {
       if (this.pages[x]._id === pageId) {
-        this.pages[x]._id = page._id;
-        this.pages[x].name = page.name;
-        this.pages[x].websiteId = page.websiteId;
-        this.pages[x].description = page.description;
-        // don't need to do this this.pages[x] = page. database will do this in the future.
+        this.pages[x]._id = page;
       }
     }
   }

@@ -1,8 +1,8 @@
-<nav class="navbar navbar-fixed-top btnStyle">
+<nav class="navbar navbar-fixed-top bg-primary btnStyle">
   <div class="container-fluid">
     <div class="navbar-header header-width header-fix">
       <p class="navbar-text pull-left p-fix">
-        <a href="widget-list.html" class="navbar-link glyphicon-color">
+        <a [routerLink]="['/user', uid, 'website', wid, 'page', pid, 'widget']" class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-chevron-left">
               </span>
         </a>
@@ -10,7 +10,7 @@
 
       <span class="navbar-brand">Widget Edit</span>
       <p class="navbar-text pull-right p-right-fix">
-        <a href="widget-list.html" class="navbar-link glyphicon-color">
+        <a (click)="createEditYoutube()" class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-ok">
               </span>
         </a>
@@ -21,48 +21,39 @@
 </nav>
 
 
-
+<form (ngSubmit) = "createEditYoutube()" #f="ngForm">
 <div class="container-fluid">
 
   <label for="name">Name</label>
-  <input type="text"
-         id="name"
-         name="page-name"
-         class="form-control"
-         placeholder="Widget Name">
-
-  <label for="text">Text</label>
-  <input type="text"
-         id="text"
-         name="page-title"
-         class="form-control"
-         placeholder="Widget Text">
-
+  <input  [(ngModel)]="name"
+          placeholder={{name}}
+          type="text"
+          id="name"
+          name="name"
+          class="form-control"
+  />
   <label for="url">URL</label>
-  <input type="text"
-         id="url"
-         name="page-title"
-         class="form-control"
-         placeholder="https://www.pexels.com/search/flower/">
-
+  <input  [(ngModel)]="url"
+          placeholder={{url}}
+          type="text"
+          id="url"
+          name="url"
+          class="form-control"
+  />
   <label for="width">Width</label>
-  <input type="text"
-         id="width"
-         name="page-title"
-         class="form-control"
-         placeholder="100%">
-
-  <a href="widget-list.html" class="btn btn-danger btn-block ">
-    Delete
-  </a>
-
+  <input  [(ngModel)]="width"
+          placeholder={{width}}
+          type="text"
+          id="width"
+          name="width"
+          class="form-control"/>
 </div>
-
+</form>
 
 <nav class="navbar navbar-fixed-bottom btnStyle">
   <div class="container-fluid">
     <p class="navbar-text pull-right">
-      <a href="profile.html" class="navbar-link glyphicon-color">
+      <a [routerLink]="['/user', uid]" class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-user">
               </span>
       </a>

@@ -13,7 +13,7 @@ export class WidgetListComponent implements OnInit {
   wid: string;
   pid: string;
   widgets = [{}]
-widWidth: string;
+ widWidth: string;
   constructor(private widgetService: WidgetService, private activatedRoute: ActivatedRoute,
               private domSanitizer: DomSanitizer) {}
 

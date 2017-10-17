@@ -37,6 +37,7 @@ export class UserService {
         return this.users[x];
       }
     }
+    return null;
   }
 
   updateUser(userId, user) {
@@ -60,5 +61,6 @@ export class UserService {
         return this.users[x];
       }
     }
+    return null;
   }
 }
