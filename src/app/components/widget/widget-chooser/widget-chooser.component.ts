@@ -8,25 +8,24 @@ import {WidgetService} from '../../../services/widget.service.client';
   styleUrls: ['./widget-chooser.component.css']
 })
 export class WidgetChooserComponent implements OnInit {
-
-  userId: string;
-  websiteId: string;
-  pageId: string;
+  uid: string;
+  wid: string;
+  pid: string;
+  wgid: string;
   widgets = [{}];
-  theWidth: string;
-  aRandomId: any;
-  constructor(private widgetService: WidgetService, private activatedRoute: ActivatedRoute) {
-  }
+  newWid;
+
+  constructor(private widgetService: WidgetService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.activatedRoute.params
       .subscribe(
         (params: any) => {
-          this.userId = params['uid'];
-          this.websiteId = params['wid'];
-          this.pageId = params['pid'];
-          this.widgets = this.widgetService.findWidgetsByPageId(this.pageId);
-          this.aRandomId = Math.random();
+          this.uid = params['uid'];
+          this.wid = params['wid'];
+          this.pid = params['pid'];
+          this.widgets = this.widgetService.findWidgetsByPageId(this.pid);
+          this.newWid = Math.random();
         }
       );
   }

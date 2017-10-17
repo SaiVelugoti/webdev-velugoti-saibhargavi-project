@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {PageService} from '../../../services/page.service.client';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
+import {PageService} from '../../../services/page.service.client';
 
 @Component({
   selector: 'app-page-new',
@@ -9,37 +10,41 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class PageNewComponent implements OnInit {
 
-  userId: string;
-  websiteId: string;
-  name: string;
+  @ViewChild('f') pageCreateForm: NgForm;
+  uid: string;
+  wid: string;
+  pageName: string;
   description: string;
-  pages = [{}];
-  aNewPage: any;
+  pages= [{}];
   errorFlag: boolean;
-  errorMsg = 'Those fields cannot be blank.';
-  constructor(private pageService: PageService,  private activatedRoute: ActivatedRoute, private router: Router) { }
+  errorMsg: string;
+  newPageId: string;
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private pageService: PageService) { }
 
   ngOnInit() {
-    this.errorFlag = false;
-    this.activatedRoute.params
-      .subscribe(
-        (params: any) => {
-          this.userId = params['uid'];
-          this.websiteId = params['wid'];
-          this.pages = this.pageService.findPageByWebsiteId(this.websiteId);
-          this.name = '';
-          this.description = '';
-        }
-      );
+    this.activatedRoute.params.subscribe(
+      (params: any) => {
+        this.uid = params['uid'];
+        this.wid = params['wid'];
+        this.pages = this.pageService.findPageByWebsiteId(this.wid);
+      }
+    );
   }
   createPage() {
-    if (this.name === '' || this.description === '') {
+    if (this.pageCreateForm.value.pageName === '' && this.pageCreateForm.value.description === '') {
+     this.router.navigate(['/user/', this.uid, 'website', this.wid, 'page']);
+    } else if (this.pageCreateForm.value.pageName !== '' && this.pageCreateForm.value.description !== '') {
+      this.newPageId = Math.random().toString();
+      const page = {
+        _id: this.newPageId,
+        name: this.pageCreateForm.value.pageName,
+        websiteId: this.wid,
+        description: this.pageCreateForm.value.webDescription};
+      this.pageService.createPage(this.wid, page);
+      this.router.navigate(['/user/', this.uid, 'website', this.wid, 'page']);
+    }else {
+      this.errorMsg = 'Enter both name and description';
       this.errorFlag = true;
-    } else {
-      this.aNewPage = {_id: Math.random().toString(), name: this.name,
-        websiteId: this.websiteId, description: this.description};
-      this.pageService.createPage(this.websiteId, this.aNewPage);
-      this.router.navigate(['/user/', this.userId, 'website', this.websiteId, 'page']);
     }
   }
 }

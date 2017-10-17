@@ -9,35 +9,29 @@ import {DomSanitizer} from '@angular/platform-browser';
   styleUrls: ['./widget-list.component.css']
 })
 export class WidgetListComponent implements OnInit {
-
-  userId: string;
-  websiteId: string;
-  pageId: string;
-  widgets = [{}];
-  theWidth: string;
-
+  uid: string;
+  wid: string;
+  pid: string;
+  widgets = [{}]
+widWidth: string;
   constructor(private widgetService: WidgetService, private activatedRoute: ActivatedRoute,
-              private domSanitizer: DomSanitizer) {
-  }
+              private domSanitizer: DomSanitizer) {}
 
   ngOnInit() {
     this.activatedRoute.params
       .subscribe(
         (params: any) => {
-          this.userId = params['uid'];
-          this.websiteId = params['wid'];
-          this.pageId = params['pid'];
-          this.widgets = this.widgetService.findWidgetsByPageId(this.pageId);
-          // this.thePage = this.widgetService.findPageById(this.pageId);
+          this.uid = params['uid'];
+          this.wid = params['wid'];
+          this.pid = params['pid'];
+          this.widgets = this.widgetService.findWidgetsByPageId(this.pid);
         }
       );
   }
-
   cleanURL(url: any) {
     return this.domSanitizer.bypassSecurityTrustResourceUrl(url);
   }
-  assignWidth(aWidth: string) {
-    this.theWidth = aWidth;
+  assignWidth(width: string) {
+    this.widWidth = width;
   }
-
 }

@@ -7,34 +7,30 @@ import {ActivatedRoute} from '@angular/router';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-
 export class ProfileComponent implements OnInit {
-  userId: string;
-  user = {};
+  // properties
+  uid: string;
+  user = {}
   username: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-
+  firstname: string;
+  lastname: string;
   constructor(private userService: UserService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-
     this.activatedRoute.params
       .subscribe(
         (params: any) => {
-          this.userId = params['uid'];
+          this.uid = params['uid'];
         }
       );
-    this.user = this.userService.findUserById(this.userId);
+    this.user = this.userService.findUserById(this.uid);
     this.username = this.user['username'];
-    this.email = this.user['email'];
-    this.firstName = this.user['firstName'];
-    this.lastName = this.user['lastName'];
+    this.firstname = this.user['firstName'];
+    this.lastname = this.user['lastName'];
   }
   updateUser() {
-    this.user['firstName'] = this.firstName;
-    this.user['lastName'] = this.lastName;
-    this.userService.updateUser(this.userId, this.user);
+    this.user['firstName'] = this.firstname;
+    this.user['lastName'] = this.lastname;
+    this.userService.updateUser(this.uid, this.user);
   }
 }

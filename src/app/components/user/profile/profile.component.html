@@ -1,71 +1,57 @@
-<nav class="navbar navbar-fixed-top bg-primary btnStyle">
-      <div class="container-fluid">
-        <div class="navbar-header header-width header-fix">
-    <p class="navbar-header pull-left">
-      <a class="navbar-brand" style="color:white">
-        <b>Profile</b>
-      </a>
-    </p>
+<nav class="navbar navbar-fixed-top bg-primary ">
+  <div class="container-fluid btnStyle">
+    <div class="navbar-header header-width header-fix">
 
-    <p class="navbar-text pull-right">
-      <a (click)="updateUser()" class="">
-        <span class="glyphicon glyphicon-ok navbar-link" style="color:white"></span>
-      </a>
-    </p>
+      <span class="navbar-brand">Profile</span>
+      <p class="navbar-text pull-right p-fix">
+        <a (click)="updateUser()" class="navbar-link glyphicon-color ">
+                <span class="glyphicon glyphicon-ok">
+                </span>
+        </a>
+      </p>
+    </div>
+
   </div>
-      </div>
 </nav>
 
+
 <div class="container-fluid">
-  <form>
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input [(ngModel)]="username"
-             type="text"
-             class="form-control"
-             id="username"
-             name="username"
-             readonly/>
-    </div>
-  </form>
+  <label for="username">Username</label>
+  <input [(ngModel)]="username"
+         name="username"
+         id="username"
+         placeholder={{username}}
+         class="form-control"
+         readonly>
 
-  <form>
-    <div class="form-group">
-      <label for="firstName">First Name</label>
-      <input [(ngModel)]="firstName"
-             type="text"
-             class="form-control"
-             id="firstName"
-             name="firstName"
-      />
-    </div>
-  </form>
+  <label for="firstName">First Name</label>
+  <input [(ngModel)]="firstname"
+         name="firstname"
+         id="firstName"
+         placeholder={{firstname}}
+         class="form-control">
 
-  <form>
-    <div class="form-group">
-      <label for="lastName">Last Name</label>
-      <input [(ngModel)]="lastName"
-             type="text"
-             class="form-control"
-             id="lastName"
-             name="lastName"
-      />
-    </div>
-  </form>
-  <a class="btn btn-primary btn-block btnStyle"
-     [routerLink]="['/user', userId, 'website']">Websites</a>
-  <a class="btn btn-danger btn-block"
-     [routerLink]="['/login']">Logout</a>
+  <label for="lastName">Last Name</label>
+  <input [(ngModel)]="lastname"
+         name="lastname"
+         id="lastName"
+         placeholder={{lastname}}
+         class="form-control">
 
+  <a [routerLink]="['/user', uid, 'website']" class="btn btn-block bg-primary btnStyle">
+    Websites
+  </a>
+  <a [routerLink]="['/login']" class="btn btn-block btn-danger">
+    Logout
+  </a>
 </div>
-
 
 <nav class="navbar navbar-fixed-bottom bg-primary btnStyle">
   <div class="container-fluid">
     <p class="navbar-text pull-right">
-      <a [routerLink]="['/user', userId]" class="navbar-link glyphicon-color">
-              <span class="glyphicon glyphicon-user">
-              </span>
+      <a [routerLink]="['/user', uid]" class="navbar-link glyphicon-color">
+                <span class="glyphicon glyphicon-user">
+                </span>
       </a>
     </p>
   </div>

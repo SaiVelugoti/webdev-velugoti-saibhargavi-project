@@ -1,66 +1,112 @@
-<nav class="navbar navbar-fixed-top btnStyle">
-  <div class="container-fluid ">
+<nav class="navbar navbar-fixed-top bg-primary btnStyle">
+  <div class="container-fluid">
+    <div class="navbar-header header-width header-fix">
+      <p class="navbar-text pull-left p-fix">
+        <a [routerLink]="['/user', uid, 'website', wid, 'page']" class="navbar-link glyphicon-color">
+              <span class="glyphicon glyphicon-chevron-left">
+              </span>
+        </a>
+      </p>
 
-    <p class="navbar-text pull-left">
-      <a [routerLink]="['/user', userId, 'website', websiteId, 'page']" class="glyphicon-color">
-        <span class="glyphicon glyphicon-chevron-left glyphicon-nav glyphicon-color"></span>
-      </a>
-    </p>
+      <span class="navbar-brand">New Page</span>
+      <p class="navbar-text pull-right p-right-fix">
+        <a (click)="createPage()" class="navbar-link glyphicon-color">
+              <span class="glyphicon glyphicon-ok">
+              </span>
+        </a>
+      </p>
+    </div>
 
-    <p class="navbar-header pull-left">
-      <a class="  glyphicon-color">
-        <b>New Page</b>
-      </a>
-    </p>
-
-    <p class="navbar-text pull-right">
-      <a (click)="createPage()">
-        <span class="glyphicon glyphicon-ok glyphicon-color"></span>
-      </a>
-    </p>
   </div>
 </nav>
+<form (ngSubmit) = "createPage()" #f="ngForm">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-3 visible-lg">
+        <ul class="list-group">
+          <li class="list-group-item active btnStyle">
+            <div class="row">
+              <div class="col-lg-9  visible-lg">
+                Pages
+              </div>
 
-<div class="container">
+              <div class="col-xs-3">
+                <a [routerLink]="['/user', uid, 'website', wid, 'page', 'new']" class="glyphicon-color pull-right">
+              <span class="glyphicon glyphicon-plus">
+              </span>
+                </a>
+              </div>
 
-  <div class="padtop">
-    <div *ngIf="errorFlag"
-         class="alert alert-danger">
-      {{errorMsg}}
-    </div>
-    <div class="form-group">
-      <label class="form-name-secondary" for="name">Name</label>
-      <input   placeholder="name"
-               id="name"
-               name="name"
-               type="text"
-               class="form-control"
-               required
-               [(ngModel)]="name"/>
-    </div>
+            </div>
+          </li>
 
-    <div class="form-group">
-      <label class="form-name-secondary" for="description">Description</label>
-      <input   placeholder="description"
-               id="description"
-               name="description"
-               type="text"
-               class="form-control"
-               required
-               [(ngModel)]="description"/>
+          <li class="list-group-item"  *ngFor="let page of pages">
+            <div class="row">
+              <div class="col-lg-9  visible-lg">
+                <a [routerLink]="['/user', uid, 'website', wid, 'page', pid, 'widget']">
+                  {{page['name']}}
+                </a>
+              </div>
+
+              <div class="col-xs-3">
+                <a [routerLink]="['/user', uid, 'website', wid, 'page', pid]" >
+              <span class="glyphicon glyphicon-cog pull-right">
+              </span>
+                </a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-9 col-xs-12">
+          <div class="container-fluid">
+            <div *ngIf="errorFlag"
+                 class="alert alert-danger">
+              {{errorMsg}}
+            </div>
+
+            <label for="pageName">Name</label>
+            <input
+              placeholder="Page Name"
+              name="pageName"
+              type="text"
+              id="pageName"
+              class="form-control"
+              ngModel
+              required
+              #pageName="ngModel"/>
+            <span class="help-block" *ngIf="!pageName.valid && pageName.touched">
+            Please enter Page Name!
+            </span>
+
+            <label for="description">Description</label>
+            <textarea
+              rows="5"
+              name="description"
+              id="description"
+              class="form-control"
+              ngModel
+              required
+              #description="ngModel">{{description}}</textarea>
+            <span class="help-block" *ngIf="!description.valid && description.touched">
+            Please describe your page!
+            </span>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 
-
-</div>
-
-<nav class="navbar navbar-fixed-bottom bg-primary btnStyle">
-  <div class="container-fluid">
-    <p class="navbar-text pull-right">
-      <a [routerLink]="['/user', userId]" class="navbar-link glyphicon-color">
+  </form>
+      <nav class="navbar navbar-fixed-bottom bg-primary btnStyle">
+        <div class="container-fluid">
+          <p class="navbar-text pull-right">
+            <a [routerLink]="['/user', uid]" class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-user">
               </span>
-      </a>
-    </p>
-  </div>
-</nav>
+            </a>
+          </p>
+        </div>
+      </nav>

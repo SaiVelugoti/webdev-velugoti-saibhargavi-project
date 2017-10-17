@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import { NgForm} from '@angular/forms';
 import {UserService} from '../../../services/user.service.client';
 import {Router} from '@angular/router';
 
@@ -8,37 +9,47 @@ import {Router} from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  @ViewChild('f') registerForm: NgForm;
+// properties
+  title: string;
+  disabledFlag: boolean;
+  inputTxt: string;
   username: string;
   password: string;
-  vpassword: string;
+  verifyPassword: string;
   errorFlag: boolean;
-  errorMsg = 'Invalid!';
-  anExistingUser: {};
-  aNewUser: any;
   newUserId: string;
-  constructor(private userService: UserService,
-              private router: Router) {
+  errorMsg = 'Invalid username or password !';
+
+  constructor(private userService: UserService, private  router: Router) {
   }
 
   ngOnInit() {
     this.errorFlag = false;
     this.username = '';
     this.password = '';
-    this.vpassword = '';
+    this.verifyPassword = '';
   }
 
   register() {
-    this.anExistingUser = this.userService.findUserByUsername(this.username);
-    if (this.anExistingUser) {
+    this.username = this.registerForm.value.username;
+    this.password = this.registerForm.value.password;
+    this.verifyPassword = this.registerForm.value.verifyPassword;
+    const user = this.userService.findUserByUsername(this.username);
+
+    if (user != null) {
+      this.errorMsg = 'User already exists!';
       this.errorFlag = true;
-    } else if (this.password === '' || this.username === '') {
-      this.errorFlag = true;
-    } else if (this.password !== this.vpassword) {
-      this.errorFlag = true;
-    } else {
+    } else if (this.verifyPassword === this.password) {
       this.newUserId = Math.random().toString();
-      this.aNewUser = {_id: this.newUserId, username: this.username, password: this.password};
-      this.userService.createUser(this.aNewUser);
+      const newUser = {
+        _id: this.newUserId,
+        username: this.username,
+        password: this.password,
+        firstName: '',
+        lastName: ''
+      };
+      this.userService.createUser(newUser);
       this.router.navigate(['/user/', this.newUserId]);
     }
   }

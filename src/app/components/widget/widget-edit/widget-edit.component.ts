@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {WidgetService} from '../../../services/widget.service.client';
 import {ActivatedRoute, Router} from '@angular/router';
+import {WidgetService} from '../../../services/widget.service.client';
 
 @Component({
   selector: 'app-widget-edit',
@@ -8,37 +8,39 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./widget-edit.component.css']
 })
 export class WidgetEditComponent implements OnInit {
-
-  userId: string;
-  websiteId: string;
-  pageId: string;
-  widgetId: string;
-  widgetType: string;
-  doesWidgetExist: boolean;
-
-  constructor(private widgetService: WidgetService, private activatedRoute: ActivatedRoute, private router: Router) {
-  }
+  uid: string;
+  wid: string;
+  pid: string;
+  wgid: string;
+  widtype: string;
+  widget: {};
+  widgetExists: boolean;
+  constructor(private activatedRoute: ActivatedRoute, private widgetService: WidgetService, private router: Router) { }
 
   ngOnInit() {
-    this.doesWidgetExist = false;
     this.activatedRoute.params
       .subscribe(
         (params: any) => {
-          this.userId = params['uid'];
-          this.websiteId = params['wid'];
-          this.pageId = params['pid'];
-          this.widgetId = params['wgid'];
-          this.widgetType = params['widtype'];
-          // this.widgets = this.widgetService.findWidgetsByPageId(this.pageId);
-          // this.thePage = this.widgetService.findPageById(this.pageId);
-          if (this.widgetService.findWidgetById(this.widgetId)) {
-            this.doesWidgetExist = true;
+          this.uid = params['uid'];
+          this.wid = params['wid'];
+          this.pid = params['pid'];
+          this.wgid = params['wgid'];
+          this.widtype = params['widtype'];
+          this.widget = this.widgetService.findWidgetById(this.wgid);
+          if (this.widget !== null) {
+            this.widgetExists = true;
           }
         }
       );
   }
+
+  updateWidget() {
+    this.widgetService.updateWidget(this.wgid, this.widget);
+    this.router.navigate(['/user', this.uid, 'website', this.wid, 'page', this.pid, 'widget']);
+  }
+
   deleteWidget() {
-    this.widgetService.deleteWidget(this.widgetId);
-    this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+    this.widgetService.deleteWidget(this.wgid);
+    this.router.navigate(['/user', this.uid, 'website', this.wid, 'page', this.pid, 'widget']);
   }
 }

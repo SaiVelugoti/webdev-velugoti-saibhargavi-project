@@ -1,54 +1,72 @@
-<nav class="navbar navbar-fixed-top btnStyle">
-  <div class="container-fluid ">
+<nav class="navbar navbar-fixed-top bg-primary btnStyle">
+  <div class="container-fluid">
+    <div class="navbar-header header-width header-fix">
+      <p class="navbar-text pull-left p-fix">
+        <a [routerLink]="['/user', uid, 'website']" class="navbar-link glyphicon-color">
+        <span class="glyphicon glyphicon-chevron-left">
+        </span>
+        </a>
+      </p>
 
-    <p class="navbar-text pull-left">
-      <a [routerLink]="['/user', userId, 'website']" class="glyphicon-color">
-        <span class="glyphicon glyphicon-chevron-left glyphicon-nav glyphicon-color"></span>
-      </a>
-    </p>
+      <span class="navbar-brand">Pages</span>
+      <p class="navbar-text pull-right  p-right-fix">
+        <a [routerLink]="['/user', uid, 'website', wid, 'page', 'new']" class="navbar-link glyphicon-color">
+              <span class="glyphicon glyphicon-plus">
+              </span>
+        </a>
+      </p>
+    </div>
 
-
-    <p class="navbar-header pull-left btnStyle">
-      <a class="navbar-brand">
-        <b style="color: white">Pages</b>
-      </a>
-    </p>
-
-    <p class="navbar-text pull-right">
-      <a [routerLink]="['/user', userId, 'website', websiteId, 'page', 'new']">
-        <span class="glyphicon glyphicon-plus glyphicon-color"></span>
-      </a>
-    </p>
   </div>
 </nav>
 
-<div class="main-body-content">
-
-  <div class="container-fluid">
-    <ul class="list-group">
-      <li class="list-group-item" *ngFor="let page of pages">
-        <div class="row">
-          <div class="col-xs-9 col-sm-11">
-            <a [routerLink]="['/user', userId, 'website', websiteId, 'page', page['_id'], 'widget']" class="colorBlue">{{page['name']}}</a>
-          </div>
-          <div class="col-xs-3 col-sm-1 website-list-icon">
-            <a [routerLink]="['/user', userId, 'website', websiteId, 'page', page['_id']]">
-              <span class="glyphicon glyphicon-cog colorBlue"></span>
-            </a>
-          </div>
+<div class="container-fluid">
+  <ul class="list-group">
+    <li class="list-group-item active btnStyle">
+      <div class="row">
+        <div class="col-lg-5 col-md-9 col-xs-9">
+          Name
         </div>
-      </li>
-    </ul>
-  </div>
 
+        <div class="col-lg-4 visible-lg">
+          Description
+        </div>
+
+        <div class="col-xs-3">
+
+        </div>
+
+      </div>
+    </li>
+
+    <li class="list-group-item" *ngFor="let page of pages">
+      <div class="row">
+        <div class="col-lg-5 col-md-9 col-xs-9">
+          <a [routerLink]="['/user', uid, 'website', wid, 'page', page['_id'], 'widget']">
+            {{page['name']}}
+          </a>
+        </div>
+
+        <div class="col-lg-4 visible-lg">
+          {{page['description']}}
+        </div>
+
+        <div class="col-xs-3">
+          <a [routerLink]="['/user', uid, 'website', wid, 'page', page['_id']]">
+              <span class="glyphicon glyphicon-cog pull-right">
+              </span>
+          </a>
+        </div>
+
+      </div>
+    </li>
+  </ul>
 </div>
-
-
 
 <nav class="navbar navbar-fixed-bottom bg-primary btnStyle">
   <div class="container-fluid">
     <p class="navbar-text pull-right">
-      <a [routerLink]="['/user', userId]" class="navbar-link glyphicon-color">
+      <a [routerLink]="['/user', uid]" class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-user">
               </span>
       </a>

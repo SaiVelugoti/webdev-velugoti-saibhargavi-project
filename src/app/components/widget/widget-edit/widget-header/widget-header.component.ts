@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {WidgetService} from '../../../../services/widget.service.client';
+import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {WidgetService} from '../../../../services/widget.service.client';
 
 @Component({
   selector: 'app-widget-header',
@@ -9,18 +9,17 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class WidgetHeaderComponent implements OnInit {
 
-  userId: string;
-  websiteId: string;
-  pageId: string;
-  widgetId: string;
-  widgetType: string;
-  theWidget: any;
-  aNewWidget: {};
-  widgetExists: boolean;
-  widgetText: string;
-  widgetSize: string;
+  uid: string;
+  wid: string;
+  pid: string;
+  wgid: string;
+  widtype: string;
+  widText: string;
+  size: string;
   errorFlag: boolean;
-  errorMsg = 'Those fields cannot be blank.';
+  errMsg: string;
+  widgetRet: {};
+  widgetNew: {};
   constructor(private widgetService: WidgetService, private activatedRoute: ActivatedRoute, private router: Router) {
   }
 
@@ -29,39 +28,32 @@ export class WidgetHeaderComponent implements OnInit {
     this.activatedRoute.params
       .subscribe(
         (params: any) => {
-          this.userId = params['uid'];
-          this.websiteId = params['wid'];
-          this.pageId = params['pid'];
-          this.widgetId = params['wgid'];
-          this.widgetType = params['widtype'];
-          this.theWidget = this.widgetService.findWidgetById(this.widgetId);
-          if (this.theWidget) {
-            this.widgetText = this.theWidget['text'];
-            this.widgetSize = this.theWidget['size'];
-            this.widgetExists = true;
-          } else {
-            this.widgetText = '';
-            this.widgetSize = '';
-            this.widgetExists = false;
-          }
+          this.uid = params['uid'];
+          this.wid = params['wid'];
+          this.pid = params['pid'];
+          this.wgid = params['wgid'];
+          this.widtype = params['widtype'];
+          this.widgetRet = this.widgetService.findWidgetById(this.wgid);
+          this.widText = this.widgetRet['text'];
+          this.size = this.widgetRet['size'];
         }
       );
   }
 
-  addData() {
-    if (this.widgetText === '' || this.widgetSize === '') {
+  createEditHeader() {
+
+    if (this.widText === '' || this.size === '') {
+      this.errMsg = 'Enter all values'
       this.errorFlag = true;
-    } else {
-      if (!this.widgetExists) {
-        this.aNewWidget = {_id: this.widgetId, widgetType: this.widgetType, pageId: this.pageId, size: this.widgetSize,
-          text: this.widgetText };
-        this.widgetService.createWidget(this.pageId, this.aNewWidget);
+    } else if (this.widText !== this.widgetRet['text'] || this.size !== this.widgetRet['size']) {
+      const newId = Math.random().toString();
+       this.widgetNew = {_id: newId, widgetType: this.widtype, pageId: this.pid, size: this.size, text: this.widText};
+        this.widgetService.createWidget(this.pid, this.widgetNew);
       } else {
-        this.aNewWidget = {_id: this.widgetId, widgetType: this.widgetType, pageId: this.pageId, size: this.widgetSize,
-          text: this.widgetText };
-        this.widgetService.updateWidget(this.widgetId, this.aNewWidget);
+        this.widgetNew = {_id: this.wid, widgetType: this.widtype, pageId: this.pid, size: this.size, text: this.widText };
+        this.widgetService.updateWidget(this.wid, this.widgetNew);
       }
-      this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+      // console.log(this.aNewWidget);
+      this.router.navigate(['/user', this.uid, 'website', this.wid, 'page', this.pid, 'widget']);
     }
-  }
 }

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {PageService} from '../../../services/page.service.client';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
+import {PageService} from '../../../services/page.service.client';
 
 @Component({
   selector: 'app-page-edit',
@@ -8,46 +9,51 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./page-edit.component.css']
 })
 export class PageEditComponent implements OnInit {
-
-  userId: string;
-  websiteId: string;
-  pageId: string;
-  pages = [{}];
-  thePage = {};
-  name: string;
+  @ViewChild('f') pageEditForm: NgForm;
+  uid: string;
+  wid: string;
+  pid: string;
+  pageName: string;
   description: string;
-  aNewPage: any;
+  pages= [{}];
+  editpage: {};
   errorFlag: boolean;
-  errorMsg = 'Invalid username or password !';
-  constructor(private pageService: PageService,  private activatedRoute: ActivatedRoute, private router: Router) { }
-
+  errorMsg: string;
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private pageService: PageService) { }
   ngOnInit() {
-    this.errorFlag = false;
-    this.activatedRoute.params
-      .subscribe(
-        (params: any) => {
-          this.userId = params['uid'];
-          this.websiteId = params['wid'];
-          this.pageId = params['pid'];
-          this.pages = this.pageService.findPageByWebsiteId(this.websiteId);
-          this.thePage = this.pageService.findPageById(this.pageId);
-          this.name = this.thePage['name'];
-          this.description = this.thePage['description'];
+    this.activatedRoute.params.subscribe(
+      (params: any) => {
+        this.uid = params['uid'];
+        this.wid = params['wid'];
+        this.pid = params ['pid'];
+        this.pages = this.pageService.findPageByWebsiteId(this.wid);
+        this.editpage = this.pageService.findPageById(this.pid);
+        if (this.editpage != null) {
+          this.pageName = this.editpage['name'];
+          this.description = this.editpage['description'];
         }
-      );
+      }
+    );
   }
-  editPage() {
-    if (this.name === '' || this.description === '') {
+  updatePage() {
+    if (this.pageName === '' || this.description === '') {
+      this.errorMsg = 'Enter both name and description';
       this.errorFlag = true;
     } else {
-      this.aNewPage = {
-        _id: this.pageId, name: this.name, websiteId: this.websiteId, description: this.description};
-      this.pageService.updatePage(this.pageId, this.aNewPage);
-      this.router.navigate(['/user/', this.userId, 'website', this.websiteId, 'page']);
+      const page = {
+        _id: this.pid,
+        name: this.pageEditForm.value.pageName,
+        websiteId: this.wid,
+        description: this.pageEditForm.value.description
+      };
+      this.pageService.updatePage(this.pid, page);
+      this.router.navigate(['/user/', this.uid, 'website', this.wid, 'page']);
     }
   }
+
   deletePage() {
-    this.pageService.deletePage(this.pageId);
-    this.router.navigate(['/user/', this.userId, 'website', this.websiteId, 'page']);
+    this.pageService.deletePage(this.pid);
+    this.router.navigate(['/user/', this.uid, 'website', this.wid, 'page']);
   }
 }
+

@@ -45,6 +45,7 @@ export class WebsiteService {
         return this.websites[x];
       }
     }
+    return null;
   }
 
   updateWebsite(websiteId, website)  {

@@ -1,4 +1,3 @@
-import {User} from '../model/user.model.client';
 import {Injectable} from '@angular/core';
 
 @Injectable()
@@ -29,6 +28,7 @@ export class UserService {
         return this.users[x];
       }
     }
+    return null;
   }
 
   findUserByUsername(username: string) {

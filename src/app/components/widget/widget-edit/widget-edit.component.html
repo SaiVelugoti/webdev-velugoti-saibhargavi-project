@@ -1,33 +1,37 @@
+<form (ngSubmit)="updateWidget()" #f="ngForm">
+    <div class="col-sm-4 hidden-xs vertical-line">
+      <app-widget-chooser></app-widget-chooser>
 
-<div class="container main-body-content">
+    </div>
+    <div class="col-sm-8">
+      <div [ngSwitch]="widtype">
 
-  <div class="padtop">
+        <div *ngSwitchCase="'HEADING'">
+          <app-widget-header></app-widget-header>
+        </div>
 
-    <div [ngSwitch]="widgetType">
-      <div *ngSwitchCase="'HEADING'">
-        <app-widget-header></app-widget-header>
+        <div *ngSwitchCase="'IMAGE'">
+          <app-widget-image></app-widget-image>
+        </div>
+
+        <div *ngSwitchCase="'YOUTUBE'">
+          <app-widget-youtube></app-widget-youtube>
+        </div>
+
       </div>
-      <div *ngSwitchCase="'IMAGE'">
-        <app-widget-image></app-widget-image>
-      </div>
-      <div *ngSwitchCase="'YOUTUBE'">
-        <app-widget-youtube></app-widget-youtube>
+      <div *ngIf="widgetExists">
+      <button class="btn btn-danger btn-block "
+              (click)='deleteWidget()'>Delete
+      </button>
       </div>
     </div>
-
-    <div *ngIf="doesWidgetExist">
-      <a class="btn btn-danger btn-block" (click)="deleteWidget()">Delete</a>
-    </div>
+</form>
 
 
-  </div>
-</div>
-
-
-<nav class="navbar navbar-fixed-bottom bg-primary btnStyle">
+<nav class="navbar navbar-fixed-bottom bg-primary">
   <div class="container-fluid">
     <p class="navbar-text pull-right">
-      <a [routerLink]="['/user', userId]" class="navbar-link glyphicon-color">
+      <a [routerLink]="['/user', uid]" class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-user">
               </span>
       </a>

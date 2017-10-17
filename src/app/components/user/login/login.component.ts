@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { Router} from '@angular/router';
-import { UserService } from '../../../services/user.service.client';
-
+import { NgForm} from '@angular/forms';
+import {UserService} from '../../../services/user.service.client';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,29 +9,37 @@ import { UserService } from '../../../services/user.service.client';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  @ViewChild('f') loginForm: NgForm;
+  // properties
+  title: string;
+  disabledFlag: boolean;
+  inputTxt: string;
   username: string;
   password: string;
   errorFlag: boolean;
   errorMsg = 'Invalid username or password !';
 
-  constructor(private userService: UserService,
-              private router: Router) { }
+  constructor(private userService: UserService, private  router: Router) { }
+
   ngOnInit() {
-    this.errorFlag = false;
-    this.username = '';
-    this.password = '';
+    this.title = 'This is Login Page';
+    this.disabledFlag = true;
   }
-  login(username: string, password: string) {
-    this.username = username;
-    this.password = password;
+  login() {
+    this.username = this.loginForm.value.username;
+    this.password = this.loginForm.value.password;
+
     const user = this.userService.findUserByUsername(this.username);
-    if (this.username === '' || this.password === '') {
-      this.errorFlag = true;
+    if ((user != null)) {
+      this.router.navigate(['/user/', user._id]);
     } else {
-      if (user.username === this.username && user.password === this.password) {
-        this.router.navigate(['/user/', user._id]);
-      }
+      this.errorMsg = 'Invalid username or password !';
+      this.errorFlag = true;
     }
   }
+  // binding click event
+  buttonClicked(event: any) {
+    console.log(event);
+  }
+
 }

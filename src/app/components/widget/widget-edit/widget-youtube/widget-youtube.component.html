@@ -1,57 +1,71 @@
-<nav class="navbar navbar-fixed-top">
-  <div class="container-fluid  btnStyle">
+<nav class="navbar navbar-fixed-top btnStyle">
+  <div class="container-fluid">
+    <div class="navbar-header header-width header-fix">
+      <p class="navbar-text pull-left p-fix">
+        <a href="widget-list.html" class="navbar-link glyphicon-color">
+              <span class="glyphicon glyphicon-chevron-left">
+              </span>
+        </a>
+      </p>
 
-    <p class="navbar-text pull-left">
-      <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget', 'new']"
-         class="navbar-text-colors-pages">
-        <span class="glyphicon glyphicon-chevron-left glyphicon-nav glyphicon-color"></span>
-      </a>
-    </p>
+      <span class="navbar-brand">Widget Edit</span>
+      <p class="navbar-text pull-right p-right-fix">
+        <a href="widget-list.html" class="navbar-link glyphicon-color">
+              <span class="glyphicon glyphicon-ok">
+              </span>
+        </a>
+      </p>
+    </div>
 
-    <p class="navbar-header pull-left">
-      <a class="navbar-brand glyphicon-color">
-        <b>Widget Edit</b>
-      </a>
-    </p>
+  </div>
+</nav>
 
+
+
+<div class="container-fluid">
+
+  <label for="name">Name</label>
+  <input type="text"
+         id="name"
+         name="page-name"
+         class="form-control"
+         placeholder="Widget Name">
+
+  <label for="text">Text</label>
+  <input type="text"
+         id="text"
+         name="page-title"
+         class="form-control"
+         placeholder="Widget Text">
+
+  <label for="url">URL</label>
+  <input type="text"
+         id="url"
+         name="page-title"
+         class="form-control"
+         placeholder="https://www.pexels.com/search/flower/">
+
+  <label for="width">Width</label>
+  <input type="text"
+         id="width"
+         name="page-title"
+         class="form-control"
+         placeholder="100%">
+
+  <a href="widget-list.html" class="btn btn-danger btn-block ">
+    Delete
+  </a>
+
+</div>
+
+
+<nav class="navbar navbar-fixed-bottom btnStyle">
+  <div class="container-fluid">
     <p class="navbar-text pull-right">
-      <a (click)="addData()">
-        <span class="glyphicon glyphicon-ok glyphicon-color"></span>
+      <a href="profile.html" class="navbar-link glyphicon-color">
+              <span class="glyphicon glyphicon-user">
+              </span>
       </a>
     </p>
   </div>
 </nav>
-
-<div class="padtop">
-  <div *ngIf="errorFlag"
-       class="alert alert-danger">
-    {{errorMsg}}
-  </div>
-  <div class="form-group">
-    <label class="form-name-secondary" for="name">Name</label>
-    <input type="text"
-           class="form-control"
-           id="name"
-           ngModel
-           placeholder="name"
-           #widgetType="ngModel">
-
-
-    <input type="text"
-           class="form-control"
-           id="url"
-           ngModel
-           placeholder="URL"
-           #widgetURL="ngModel">
-           <!--[(ngModel)]="widgetURL">-->
-
-    <label class="form-name-secondary" for="width">Width</label>
-
-    <input type="text"
-           class="form-control"
-           id="width"
-           placeholder="Wdith"
-
-           [(ngModel)]="widgetWidth">
-  </div>
-</div>

@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm} from '@angular/forms';
 import {WebsiteService} from '../../../services/website.service.client';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -8,51 +9,49 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./website-edit.component.css']
 })
 export class WebsiteEditComponent implements OnInit {
-
-  userId: string;
-  websiteId: string;
-  theWebsite: {};
-  websites = [{}];
-  websitename: string;
-  websitedescription: string;
-  aNewWebsite: any;
+  @ViewChild('f') webEditForm: NgForm;
+  uid: string;
+  wid: string;
+  websiteName: string;
+  webDescription: string;
+  websites= [{}];
+  editweb: {};
   errorFlag: boolean;
-  errorMsg = 'Those fields cannot be blank.';
+  errorMsg: string;
 
-  constructor(private websiteService: WebsiteService, private activatedRoute: ActivatedRoute, private router: Router) {
-  }
-
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private websiteService: WebsiteService) { }
   ngOnInit() {
-    this.errorFlag = false;
-    this.activatedRoute.params
-      .subscribe(
+    this.activatedRoute.params.subscribe(
         (params: any) => {
-          this.userId = params['uid'];
-          this.websites = this.websiteService.findWebsitesByUser(this.userId);
-          this.websiteId = params['wid'];
-          this.theWebsite = this.websiteService.findWebsiteById(this.websiteId);
-          this.websitename = this.theWebsite['name'];
-          this.websitedescription = this.theWebsite['description'];
+          this.uid = params['uid'];
+          this.wid = params['wid'];
+          this.websites = this.websiteService.findWebsitesByUser(this.uid);
+          this.editweb = this.websiteService.findWebsiteById(this.wid);
+          if (this.editweb != null) {
+            this.websiteName = this.editweb['name'];
+            this.webDescription = this.editweb['description'];
+          }
         }
       );
-
   }
-
-  editWebsite() {
-    if (this.websitename === '' || this.websitedescription === '') {
+  updateWebsite() {
+    if (this.websiteName === '' || this.webDescription === '') {
+      this.errorMsg = 'Enter both name and description';
       this.errorFlag = true;
     } else {
-      this.aNewWebsite = {
-        _id: this.websiteId, name: this.websitename,
-        developerId: this.userId, description: this.websitedescription
+      const web = {
+        _id: this.wid,
+        name: this.webEditForm.value.websiteName,
+        developerId: this.uid,
+        description: this.webEditForm.value.webDescription
       };
-      this.websiteService.updateWebsite(this.websiteId, this.aNewWebsite);
-      this.router.navigate(['/user/', this.userId, 'website']);
+      this.websiteService.updateWebsite(this.wid, web);
+      this.router.navigate(['/user/', this.uid, 'website']);
     }
   }
-  deleteWebsite() {
-    this.websiteService.deleteWebsite(this.websiteId);
-    this.router.navigate(['/user/', this.userId, 'website']);
-  }
 
+  deleteWebsite() {
+    this.websiteService.deleteWebsite(this.wid);
+    this.router.navigate(['/user/', this.uid, 'website']);
+  }
 }
