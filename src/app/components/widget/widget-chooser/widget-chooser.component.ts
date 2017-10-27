@@ -8,7 +8,7 @@ import {WidgetService} from '../../../services/widget.service.client';
   styleUrls: ['./widget-chooser.component.css']
 })
 export class WidgetChooserComponent implements OnInit {
-  uid: string;
+  userId: string;
   wid: string;
   pid: string;
   wgid: string;
@@ -21,7 +21,7 @@ export class WidgetChooserComponent implements OnInit {
     this.activatedRoute.params
       .subscribe(
         (params: any) => {
-          this.uid = params['uid'];
+          this.userId = params['userId'];
           this.wid = params['wid'];
           this.pid = params['pid'];
           this.wgid = params['wgid'];

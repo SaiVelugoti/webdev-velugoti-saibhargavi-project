@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="navbar-header  header-width header-fix">
       <p class="navbar-text pull-left p-fix">
-        <a [routerLink]="['/user', uid, 'website']" class="navbar-link glyphicon-color">
+        <a [routerLink]="['/user', userId, 'website']" class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-chevron-left">
               </span>
         </a>
@@ -31,7 +31,7 @@
                 Websites
               </div>
               <div class="col-xs-3">
-                <a [routerLink]="['/user', uid, 'website', 'new']"class="glyphicon-color pull-right">
+                <a [routerLink]="['/user', userId, 'website', 'new']"class="glyphicon-color pull-right">
               <span class="glyphicon glyphicon-plus">
               </span>
                 </a>
@@ -43,13 +43,13 @@
           <li class="list-group-item" *ngFor="let website of websites">
             <div class="row">
               <div class="col-lg-9  visible-lg">
-                <a [routerLink]="['/user', uid, 'website', website['_id'], 'page']">
+                <a [routerLink]="['/user', userId, 'website', website['_id'], 'page']">
                   {{website['name']}}
                 </a>
               </div>
 
               <div class="col-xs-3">
-                <a [routerLink]="['/user', uid, 'website', website['_id']]" >
+                <a [routerLink]="['/user', userId, 'website', website['_id']]" >
               <span class="glyphicon glyphicon-cog pull-right">
               </span>
                 </a>
@@ -99,7 +99,7 @@
 <nav class="navbar navbar-fixed-bottom btnStyle">
   <div class="container-fluid">
     <p class="navbar-text pull-right">
-      <a [routerLink]="['/user', uid]" class="navbar-link glyphicon-color">
+      <a [routerLink]="['/user', userId]" class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-user">
               </span>
       </a>

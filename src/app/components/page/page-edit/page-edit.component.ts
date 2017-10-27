@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {PageService} from '../../../services/page.service.client';
+import { NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PageService } from '../../../services/page.service.client';
 
 @Component({
   selector: 'app-page-edit',
@@ -10,7 +10,7 @@ import {PageService} from '../../../services/page.service.client';
 })
 export class PageEditComponent implements OnInit {
   @ViewChild('f') pageEditForm: NgForm;
-  uid: string;
+  userId: string;
   wid: string;
   pid: string;
   pageName: string;
@@ -23,7 +23,7 @@ export class PageEditComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.params.subscribe(
       (params: any) => {
-        this.uid = params['uid'];
+        this.userId = params['userId'];
         this.wid = params['wid'];
         this.pid = params ['pid'];
         this.pages = this.pageService.findPageByWebsiteId(this.wid);
@@ -47,13 +47,13 @@ export class PageEditComponent implements OnInit {
         description: this.pageEditForm.value.description
       };
       this.pageService.updatePage(this.pid, page);
-      this.router.navigate(['/user/', this.uid, 'website', this.wid, 'page']);
+      this.router.navigate(['/user/', this.userId, 'website', this.wid, 'page']);
     }
   }
 
   deletePage() {
     this.pageService.deletePage(this.pid);
-    this.router.navigate(['/user/', this.uid, 'website', this.wid, 'page']);
+    this.router.navigate(['/user/', this.userId, 'website', this.wid, 'page']);
   }
 }
 

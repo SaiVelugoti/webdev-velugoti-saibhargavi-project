@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="navbar-header header-width header-fix">
       <p class="navbar-text pull-left p-fix">
-        <a [routerLink]="['/user', uid, 'website', wid, 'page']" class="navbar-link glyphicon-color">
+        <a [routerLink]="['/user', userId, 'website', wid, 'page']" class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-chevron-left">
               </span>
         </a>
@@ -31,7 +31,7 @@
               </div>
 
               <div class="col-xs-3">
-                <a [routerLink]="['/user', uid, 'website', wid, 'page', 'new']" class="glyphicon-color pull-right">
+                <a [routerLink]="['/user', userId, 'website', wid, 'page', 'new']" class="glyphicon-color pull-right">
               <span class="glyphicon glyphicon-plus">
               </span>
                 </a>
@@ -43,13 +43,13 @@
           <li class="list-group-item"  *ngFor="let page of pages">
             <div class="row">
               <div class="col-lg-9  visible-lg">
-                <a [routerLink]="['/user', uid, 'website', wid, 'page', pid, 'widget']">
+                <a [routerLink]="['/user', userId, 'website', wid, 'page', pid, 'widget']">
                   {{page['name']}}
                 </a>
               </div>
 
               <div class="col-xs-3">
-                <a [routerLink]="['/user', uid, 'website', wid, 'page', pid]" >
+                <a [routerLink]="['/user', userId, 'website', wid, 'page', pid]" >
               <span class="glyphicon glyphicon-cog pull-right">
               </span>
                 </a>
@@ -103,7 +103,7 @@
       <nav class="navbar navbar-fixed-bottom bg-primary btnStyle">
         <div class="container-fluid">
           <p class="navbar-text pull-right">
-            <a [routerLink]="['/user', uid]" class="navbar-link glyphicon-color">
+            <a [routerLink]="['/user', userId]" class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-user">
               </span>
             </a>

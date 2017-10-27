@@ -11,7 +11,7 @@ import {WidgetService} from '../../../../services/widget.service.client';
 
 export class WidgetImageComponent implements OnInit {
   @ViewChild('f') imgForm: NgForm;
-  uid: string;
+  userId: string;
   wid: string;
   pid: string;
   wgid: string;
@@ -33,7 +33,7 @@ export class WidgetImageComponent implements OnInit {
     this.activatedRoute.params
       .subscribe(
         (params: any) => {
-          this.uid = params['uid'];
+          this.userId = params['userId'];
           this.wid = params['wid'];
           this.pid = params['pid'];
           this.wgid = params['wgid'];
@@ -76,6 +76,6 @@ export class WidgetImageComponent implements OnInit {
       };
       this.widgetService.createWidget(this.pid, this.widgetNew);
     }
-    this.router.navigate(['/user', this.uid, 'website', this.wid, 'page', this.pid, 'widget']);
+    this.router.navigate(['/user', this.userId, 'website', this.wid, 'page', this.pid, 'widget']);
   }
 }

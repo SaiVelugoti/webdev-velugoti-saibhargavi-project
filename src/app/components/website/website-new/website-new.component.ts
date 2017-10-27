@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+  import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm} from '@angular/forms';
 import {WebsiteService} from '../../../services/website.service.client';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -11,7 +11,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class WebsiteNewComponent implements OnInit {
   @ViewChild('f') webCreateForm: NgForm;
-  uid: string;
+  userId: string;
   wid: string;
   websiteName: string;
   webDescription: string;
@@ -25,24 +25,35 @@ newWebId: string;
   ngOnInit() {
     this.activatedRoute.params.subscribe(
       (params: any) => {
-        this.uid = params['uid'];
-        this.websites = this.websiteService.findWebsitesByUser(this.uid);
+        this.userId = params['userId'];
+      //  this.websites = this.websiteService.findWebsitesByUser(this.userId);
       }
     );
   }
+
+  // createWebsite() {
+  //   this.webname = this.submitForm.value.webname;
+  //   this.description = this.submitForm.value.description;
+  //   const tempSite = {_id: '000', name: this.webname, developerId: this.userId, description: this.description};
+  //   this.websiteService.createWebsite(this.userId, tempSite).subscribe((site: any) => {
+  //     this.router.navigate(['/user', this.userId, 'website']);
+  //   });
+  // }
+
   createWebsite() {
     if (this.webCreateForm.value.websiteName === '' && this.webCreateForm.value.webDescription === '') {
-      this.router.navigate(['/user/', this.uid, 'website']);
+      this.router.navigate(['/user/', this.userId, 'website']);
     } else if (this.webCreateForm.value.websiteName !== '' && this.webCreateForm.value.webDescription !== '') {
      this.newWebId = Math.random().toString();
       const web = {
         _id: this.newWebId,
         name: this.webCreateForm.value.websiteName,
-        developerId: this.uid,
+        developerId: this.userId,
         description: this.webCreateForm.value.webDescription};
-        this.websiteService.createWebsite(this.uid, web);
-      this.router.navigate(['/user/', this.uid, 'website']);
-      }else {
+        this.websiteService.createWebsite(this.userId, web).subscribe((site: any) => {
+      this.router.navigate(['/user/', this.userId, 'website']);
+      });
+    } else {
         this.errorMsg = 'Enter both name and description';
       this.errorFlag = true;
     }

@@ -11,7 +11,7 @@ import {PageService} from '../../../services/page.service.client';
 export class PageNewComponent implements OnInit {
 
   @ViewChild('f') pageCreateForm: NgForm;
-  uid: string;
+  userId: string;
   wid: string;
   pageName: string;
   description: string;
@@ -24,7 +24,7 @@ export class PageNewComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.params.subscribe(
       (params: any) => {
-        this.uid = params['uid'];
+        this.userId = params['userId'];
         this.wid = params['wid'];
         this.pages = this.pageService.findPageByWebsiteId(this.wid);
       }
@@ -32,7 +32,7 @@ export class PageNewComponent implements OnInit {
   }
   createPage() {
     if (this.pageCreateForm.value.pageName === '' && this.pageCreateForm.value.description === '') {
-     this.router.navigate(['/user/', this.uid, 'website', this.wid, 'page']);
+     this.router.navigate(['/user/', this.userId, 'website', this.wid, 'page']);
     } else if (this.pageCreateForm.value.pageName !== '' && this.pageCreateForm.value.description !== '') {
       this.newPageId = Math.random().toString();
       const page = {
@@ -41,7 +41,7 @@ export class PageNewComponent implements OnInit {
         websiteId: this.wid,
         description: this.pageCreateForm.value.webDescription};
       this.pageService.createPage(this.wid, page);
-      this.router.navigate(['/user/', this.uid, 'website', this.wid, 'page']);
+      this.router.navigate(['/user/', this.userId, 'website', this.wid, 'page']);
     }else {
       this.errorMsg = 'Enter both name and description';
       this.errorFlag = true;

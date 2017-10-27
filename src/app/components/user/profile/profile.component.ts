@@ -9,8 +9,8 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class ProfileComponent implements OnInit {
   // properties
-  uid: string;
-  user = {}
+  userId: string;
+  user: any;
   username: string;
   firstname: string;
   lastname: string;
@@ -20,17 +20,21 @@ export class ProfileComponent implements OnInit {
     this.activatedRoute.params
       .subscribe(
         (params: any) => {
-          this.uid = params['uid'];
+          this.userId = params['userId'];
         }
       );
-    this.user = this.userService.findUserById(this.uid);
-    this.username = this.user['username'];
-    this.firstname = this.user['firstName'];
-    this.lastname = this.user['lastName'];
+    this.userService.findUserById(this.userId)
+      .subscribe((user: any) => {
+        this.user = user;
+        this.username = this.user['username'];
+        this.firstname = this.user['firstName'];
+        this.lastname = this.user['lastName'];
+      });
   }
   updateUser() {
     this.user['firstName'] = this.firstname;
     this.user['lastName'] = this.lastname;
-    this.userService.updateUser(this.uid, this.user);
+    this.userService.updateUser(this.userId, this.user)
+      .subscribe((user: any) => {});
   }
 }
