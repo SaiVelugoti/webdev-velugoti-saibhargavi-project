@@ -417,15 +417,18 @@ var PageEditComponent = (function () {
             _this.userId = params['userId'];
             _this.wid = params['wid'];
             _this.pid = params['pid'];
-            _this.pages = _this.pageService.findPageByWebsiteId(_this.wid);
-            _this.editpage = _this.pageService.findPageById(_this.pid);
-            if (_this.editpage != null) {
-                _this.pageName = _this.editpage['name'];
-                _this.description = _this.editpage['description'];
-            }
+            // this.pageService.findPageByWebsiteId(this.wid);
+            _this.pageService.findPageById(_this.pid)
+                .subscribe(function (editpage) {
+                if (editpage != null) {
+                    _this.pageName = editpage['name'];
+                    _this.description = editpage['description'];
+                }
+            });
         });
     };
     PageEditComponent.prototype.updatePage = function () {
+        var _this = this;
         if (this.pageName === '' || this.description === '') {
             this.errorMsg = 'Enter both name and description';
             this.errorFlag = true;
@@ -437,13 +440,18 @@ var PageEditComponent = (function () {
                 websiteId: this.wid,
                 description: this.pageEditForm.value.description
             };
-            this.pageService.updatePage(this.pid, page);
-            this.router.navigate(['/user/', this.userId, 'website', this.wid, 'page']);
+            this.pageService.updatePage(this.pid, page)
+                .subscribe(function (pageVal) {
+                _this.router.navigate(['/user/', _this.userId, 'website', _this.wid, 'page']);
+            });
         }
     };
     PageEditComponent.prototype.deletePage = function () {
-        this.pageService.deletePage(this.pid);
-        this.router.navigate(['/user/', this.userId, 'website', this.wid, 'page']);
+        var _this = this;
+        this.pageService.deletePage(this.pid)
+            .subscribe(function (page) {
+            _this.router.navigate(['/user/', _this.userId, 'website', _this.wid, 'page']);
+        });
     };
     return PageEditComponent;
 }());
@@ -523,8 +531,10 @@ var PageListComponent = (function () {
             _this.userId = params['userId'];
             _this.wid = params['wid'];
             _this.pid = params['pid'];
+            _this.pageService.findPageByWebsiteId(_this.wid).subscribe(function (pages) {
+                _this.pages = pages;
+            });
         });
-        this.pages = this.pageService.findPageByWebsiteId(this.wid);
     };
     return PageListComponent;
 }());
@@ -601,10 +611,10 @@ var PageNewComponent = (function () {
         this.activatedRoute.params.subscribe(function (params) {
             _this.userId = params['userId'];
             _this.wid = params['wid'];
-            _this.pages = _this.pageService.findPageByWebsiteId(_this.wid);
         });
     };
     PageNewComponent.prototype.createPage = function () {
+        var _this = this;
         if (this.pageCreateForm.value.pageName === '' && this.pageCreateForm.value.description === '') {
             this.router.navigate(['/user/', this.userId, 'website', this.wid, 'page']);
         }
@@ -616,8 +626,9 @@ var PageNewComponent = (function () {
                 websiteId: this.wid,
                 description: this.pageCreateForm.value.webDescription
             };
-            this.pageService.createPage(this.wid, page);
-            this.router.navigate(['/user/', this.userId, 'website', this.wid, 'page']);
+            this.pageService.createPage(this.wid, page).subscribe(function (page) {
+                _this.router.navigate(['/user/', _this.userId, 'website', _this.wid, 'page']);
+            });
         }
         else {
             this.errorMsg = 'Enter both name and description';
@@ -1401,7 +1412,7 @@ var WidgetChooserComponent = (function () {
             _this.wid = params['wid'];
             _this.pid = params['pid'];
             _this.wgid = params['wgid'];
-            _this.widgets = _this.widgetService.findWidgetsByPageId(_this.pid);
+            // this.widgets = this.widgetService.findWidgetsByPageId(this.pid);
             _this.newWid = Math.random();
         });
     };
@@ -1481,19 +1492,27 @@ var WidgetEditComponent = (function () {
             _this.pid = params['pid'];
             _this.wgid = params['wgid'];
             _this.widtype = params['widtype'];
-            _this.widget = _this.widgetService.findWidgetById(_this.wgid);
-            if (_this.widget !== null) {
-                _this.widgetExists = true;
-            }
+            //  this.widget = this.widgetService.findWidgetById(this.wgid);
+            _this.widgetService.findWidgetById(_this.wgid).subscribe(function (widget) {
+                if (_this.widget !== null) {
+                    _this.widgetExists = true;
+                }
+            });
         });
     };
     WidgetEditComponent.prototype.updateWidget = function () {
-        this.widgetService.updateWidget(this.wgid, this.widget);
-        this.router.navigate(['/user', this.userId, 'website', this.wid, 'page', this.pid, 'widget']);
+        var _this = this;
+        this.widgetService.updateWidget(this.wgid, this.widget)
+            .subscribe(function (widget) {
+            _this.router.navigate(['/user', _this.userId, 'website', _this.wid, 'page', _this.pid, 'widget']);
+        });
     };
     WidgetEditComponent.prototype.deleteWidget = function () {
-        this.widgetService.deleteWidget(this.wgid);
-        this.router.navigate(['/user', this.userId, 'website', this.wid, 'page', this.pid, 'widget']);
+        var _this = this;
+        this.widgetService.deleteWidget(this.wgid)
+            .subscribe(function (widget) {
+            _this.router.navigate(['/user', _this.userId, 'website', _this.wid, 'page', _this.pid, 'widget']);
+        });
     };
     return WidgetEditComponent;
 }());
@@ -1572,18 +1591,22 @@ var WidgetHeaderComponent = (function () {
             _this.pid = params['pid'];
             _this.wgid = params['wgid'];
             _this.widtype = params['widtype'];
-            _this.widgetRet = _this.widgetService.findWidgetById(_this.wgid);
-            if (_this.widgetRet !== null) {
-                _this.widText = _this.widgetRet['text'];
-                _this.size = _this.widgetRet['size'];
-            }
-            else {
-                _this.widText = '';
-                _this.size = '';
-            }
+            // this.widgetRet = this.widgetService.findWidgetById(this.wgid);
+            _this.widgetService.findWidgetById(_this.wgid).subscribe(function (widget) {
+                _this.widgetRet = widget;
+                if (_this.widgetRet !== null) {
+                    _this.widText = _this.widgetRet['text'];
+                    _this.size = _this.widgetRet['size'];
+                }
+                else {
+                    _this.widText = '';
+                    _this.size = '';
+                }
+            });
         });
     };
     WidgetHeaderComponent.prototype.createEditHeader = function () {
+        var _this = this;
         if (this.widText === '' || this.size === '') {
             this.errMsg = 'Enter all values';
             this.errorFlag = true;
@@ -1592,17 +1615,26 @@ var WidgetHeaderComponent = (function () {
             if (this.widText !== this.widgetRet['text'] || this.size !== this.widgetRet['size']) {
                 var newId = Math.random().toString();
                 this.widgetNew = { _id: newId, widgetType: 'HEADING', pageId: this.pid, size: this.size, text: this.widText };
-                this.widgetService.createWidget(this.pid, this.widgetNew);
+                this.widgetService.createWidget(this.pid, this.widgetNew)
+                    .subscribe(function (widget) {
+                    _this.router.navigate(['/user', _this.userId, 'website', _this.wid, 'page', _this.pid, 'widget']);
+                });
             }
             else {
                 this.widgetNew = { _id: this.wid, widgetType: 'HEADING', pageId: this.pid, size: this.size, text: this.widText };
-                this.widgetService.updateWidget(this.wid, this.widgetNew);
+                this.widgetService.updateWidget(this.wid, this.widgetNew)
+                    .subscribe(function (widgets) {
+                    _this.router.navigate(['/user', _this.userId, 'website', _this.wid, 'page', _this.pid, 'widget']);
+                });
             }
         }
         else {
             var newId = Math.random().toString();
             this.widgetNew = { _id: newId, widgetType: 'HEADING', pageId: this.pid, size: this.size, text: this.widText };
-            this.widgetService.createWidget(this.pid, this.widgetNew);
+            this.widgetService.createWidget(this.pid, this.widgetNew)
+                .subscribe(function (widgets) {
+                _this.router.navigate(['/user', _this.userId, 'website', _this.wid, 'page', _this.pid, 'widget']);
+            });
         }
         this.router.navigate(['/user', this.userId, 'website', this.wid, 'page', this.pid, 'widget']);
     };
@@ -1685,20 +1717,24 @@ var WidgetImageComponent = (function () {
             _this.pid = params['pid'];
             _this.wgid = params['wgid'];
             _this.widtype = params['widtype'];
-            _this.widgetRet = _this.widgetService.findWidgetById(_this.wgid);
-            if (_this.widgetRet !== null) {
-                _this.width = _this.widgetRet['width'];
-                _this.url = _this.widgetRet['url'];
-                _this.name = _this.widgetRet['name'];
-            }
-            else {
-                _this.url = '';
-                _this.name = '';
-                _this.width = '';
-            }
+            // this.widgetRet = this.widgetService.findWidgetById(this.wgid);
+            _this.widgetService.findWidgetById(_this.wgid).subscribe(function (widget) {
+                _this.widgetRet = widget;
+                if (_this.widgetRet !== null) {
+                    _this.width = _this.widgetRet['width'];
+                    _this.url = _this.widgetRet['url'];
+                    _this.name = _this.widgetRet['name'];
+                }
+                else {
+                    _this.url = '';
+                    _this.name = '';
+                    _this.width = '';
+                }
+            });
         });
     };
     WidgetImageComponent.prototype.createEditImage = function () {
+        var _this = this;
         if (this.name === '' || this.width === '' || this.url === '') {
             this.errMsg = 'Enter all values';
             this.errorFlag = true;
@@ -1709,12 +1745,18 @@ var WidgetImageComponent = (function () {
                 var newId = Math.random().toString();
                 this.widgetNew = { _id: newId, widgetType: 'IMAGE', pageId: this.pid, width: this.imgForm.value.width,
                     url: this.imgForm.value.url, name: this.imgForm.value.name };
-                this.widgetService.createWidget(this.pid, this.widgetNew);
+                this.widgetService.createWidget(this.pid, this.widgetNew)
+                    .subscribe(function (widget) {
+                    _this.router.navigate(['/user', _this.userId, 'website', _this.wid, 'page', _this.pid, 'widget']);
+                });
             }
             else {
                 this.widgetNew = { _id: this.wid, widgetType: 'IMAGE', pageId: this.pid, width: this.imgForm.value.width,
                     url: this.imgForm.value.url, name: this.imgForm.value.name };
-                this.widgetService.updateWidget(this.wid, this.widgetNew);
+                this.widgetService.updateWidget(this.wid, this.widgetNew)
+                    .subscribe(function (widget) {
+                    _this.router.navigate(['/user', _this.userId, 'website', _this.wid, 'page', _this.pid, 'widget']);
+                });
             }
         }
         else {
@@ -1723,7 +1765,10 @@ var WidgetImageComponent = (function () {
                 _id: newId, widgetType: 'IMAGE', pageId: this.pid, width: this.imgForm.value.width,
                 url: this.imgForm.value.url, name: this.imgForm.value.name
             };
-            this.widgetService.createWidget(this.pid, this.widgetNew);
+            this.widgetService.createWidget(this.pid, this.widgetNew)
+                .subscribe(function (widget) {
+                _this.router.navigate(['/user', _this.userId, 'website', _this.wid, 'page', _this.pid, 'widget']);
+            });
         }
         this.router.navigate(['/user', this.userId, 'website', this.wid, 'page', this.pid, 'widget']);
     };
@@ -1810,20 +1855,24 @@ var WidgetYoutubeComponent = (function () {
             _this.pid = params['pid'];
             _this.wgid = params['wgid'];
             _this.widtype = params['widtype'];
-            _this.widgetRet = _this.widgetService.findWidgetById(_this.wgid);
-            if (_this.widgetRet !== null) {
-                _this.url = _this.widgetRet['url'];
-                _this.name = _this.widgetRet['name'];
-                _this.width = _this.widgetRet['width'];
-            }
-            else {
-                _this.url = '';
-                _this.name = '';
-                _this.width = '';
-            }
+            // this.widgetRet = this.widgetService.findWidgetById(this.wgid);
+            _this.widgetService.findWidgetById(_this.wgid).subscribe(function (widget) {
+                _this.widgetRet = widget;
+                if (_this.widgetRet !== null) {
+                    _this.url = _this.widgetRet['url'];
+                    _this.name = _this.widgetRet['name'];
+                    _this.width = _this.widgetRet['width'];
+                }
+                else {
+                    _this.url = '';
+                    _this.name = '';
+                    _this.width = '';
+                }
+            });
         });
     };
     WidgetYoutubeComponent.prototype.createEditYoutube = function () {
+        var _this = this;
         if (this.name === '' || this.width === '' || this.url === '') {
             this.errMsg = 'Enter all values';
             this.errorFlag = true;
@@ -1833,19 +1882,28 @@ var WidgetYoutubeComponent = (function () {
                 var newId = Math.random().toString();
                 this.widgetNew = { _id: newId, widgetType: 'YOUTUBE', pageId: this.pid, width: this.ytForm.value.width,
                     url: this.ytForm.value.url, name: this.ytForm.value.name };
-                this.widgetService.createWidget(this.pid, this.widgetNew);
+                this.widgetService.createWidget(this.pid, this.widgetNew)
+                    .subscribe(function (widget) {
+                    _this.router.navigate(['/user', _this.userId, 'website', _this.wid, 'page', _this.pid, 'widget']);
+                });
             }
             else {
                 this.widgetNew = { _id: this.wid, widgetType: 'YOUTUBE', pageId: this.pid, width: this.ytForm.value.width,
                     url: this.ytForm.value.url, name: this.ytForm.value.name };
-                this.widgetService.updateWidget(this.wid, this.widgetNew);
+                this.widgetService.updateWidget(this.wid, this.widgetNew)
+                    .subscribe(function (widget) {
+                    _this.router.navigate(['/user', _this.userId, 'website', _this.wid, 'page', _this.pid, 'widget']);
+                });
             }
         }
         else {
             var newId = Math.random().toString();
             this.widgetNew = { _id: newId, widgetType: 'YOUTUBE', pageId: this.pid, width: this.ytForm.value.width,
                 url: this.ytForm.value.url, name: this.ytForm.value.name };
-            this.widgetService.createWidget(this.pid, this.widgetNew);
+            this.widgetService.createWidget(this.pid, this.widgetNew)
+                .subscribe(function (widget) {
+                _this.router.navigate(['/user', _this.userId, 'website', _this.wid, 'page', _this.pid, 'widget']);
+            });
         }
         this.router.navigate(['/user', this.userId, 'website', this.wid, 'page', this.pid, 'widget']);
     };
@@ -1930,7 +1988,10 @@ var WidgetListComponent = (function () {
             _this.userId = params['userId'];
             _this.wid = params['wid'];
             _this.pid = params['pid'];
-            _this.widgets = _this.widgetService.findWidgetsByPageId(_this.pid);
+            _this.widgetService.findWidgetsByPageId(_this.pid)
+                .subscribe(function (list) {
+                _this.widgets = list;
+            });
         });
     };
     WidgetListComponent.prototype.cleanURL = function (url) {
@@ -1961,6 +2022,10 @@ var _a, _b, _c;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PageService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1971,8 +2036,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+
 var PageService = (function () {
-    function PageService() {
+    function PageService(_http) {
+        this._http = _http;
+        this.baseUrl = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].baseUrl;
         this.pages = [
             { '_id': '321', 'name': 'Post 1', 'websiteId': '890', 'description': 'Lorem' },
             { '_id': '432', 'name': 'Post 2', 'websiteId': '890', 'description': 'Lorem' },
@@ -1987,47 +2057,48 @@ var PageService = (function () {
         };
     }
     PageService.prototype.createPage = function (websiteId, page) {
-        page.websiteID = websiteId;
-        this.pages.push(page);
+        var url = this.baseUrl + '/api/website/' + websiteId + '/page';
+        return this._http.post(url, page)
+            .map(function (response) {
+            return response.json();
+        });
     };
     PageService.prototype.findPageByWebsiteId = function (websiteId) {
-        var pagesByThisWebsiteId = [];
-        for (var x = 0; x < this.pages.length; x++) {
-            if (this.pages[x].websiteId === websiteId) {
-                pagesByThisWebsiteId.push(this.pages[x]);
-            }
-        }
-        return pagesByThisWebsiteId;
+        var url = this.baseUrl + '/api/website/' + websiteId + '/page';
+        return this._http.get(url)
+            .map(function (response) {
+            return response.json();
+        });
     };
     PageService.prototype.findPageById = function (pageId) {
-        for (var x = 0; x < this.pages.length; x++) {
-            if (this.pages[x]._id === pageId) {
-                return this.pages[x];
-            }
-        }
-        return null;
+        var url = this.baseUrl + '/api/page/' + pageId;
+        return this._http.get(url)
+            .map(function (response) {
+            return response.json();
+        });
     };
     PageService.prototype.updatePage = function (pageId, page) {
-        for (var x = 0; x < this.pages.length; x++) {
-            if (this.pages[x]._id === pageId) {
-                this.pages[x]._id = page;
-            }
-        }
+        var url = this.baseUrl + '/api/page/' + pageId;
+        return this._http.put(url, page)
+            .map(function (response) {
+            return response.json();
+        });
     };
     PageService.prototype.deletePage = function (pageId) {
-        for (var x = 0; x < this.pages.length; x++) {
-            if (this.pages[x]._id === pageId) {
-                this.pages.splice(x, 1);
-            }
-        }
+        var url = this.baseUrl + '/api/page/' + pageId;
+        return this._http.delete(url)
+            .map(function (response) {
+            return response.json();
+        });
     };
     return PageService;
 }());
 PageService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]) === "function" && _a || Object])
 ], PageService);
 
+var _a;
 //# sourceMappingURL=page.service.client.js.map
 
 /***/ }),
@@ -2321,8 +2392,10 @@ var _a;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WidgetService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2334,8 +2407,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
 var WidgetService = (function () {
-    function WidgetService() {
+    function WidgetService(_http) {
+        this._http = _http;
+        this.baseUrl = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].baseUrl;
         this.widgets = [
             { '_id': '123', 'widgetType': 'HEADING', 'pageId': '321', 'size': 2, 'text': 'GIZMODO' },
             { '_id': '234', 'widgetType': 'HEADING', 'pageId': '321', 'size': 4, 'text': 'Lorem ipsum' },
@@ -2356,47 +2433,48 @@ var WidgetService = (function () {
         };
     }
     WidgetService.prototype.createWidget = function (pageId, widget) {
-        widget.pageId = pageId;
-        this.widgets.push(widget);
+        var url = this.baseUrl + '/api/page/' + pageId + '/widget';
+        return this._http.post(url, widget)
+            .map(function (response) {
+            return response.json();
+        });
     };
     WidgetService.prototype.findWidgetsByPageId = function (pageId) {
-        var widgetsByPageId = [];
-        for (var x = 0; x < this.widgets.length; x++) {
-            if (this.widgets[x].pageId === pageId) {
-                widgetsByPageId.push(this.widgets[x]);
-            }
-        }
-        return widgetsByPageId;
+        var url = this.baseUrl + '/api/page/' + pageId + '/widget';
+        return this._http.get(url)
+            .map(function (response) {
+            return response.json();
+        });
     };
     WidgetService.prototype.findWidgetById = function (widgetId) {
-        for (var x = 0; x < this.widgets.length; x++) {
-            if (this.widgets[x]._id === widgetId) {
-                return this.widgets[x];
-            }
-        }
-        return null;
+        var url = this.baseUrl + '/api/widget/' + widgetId;
+        return this._http.get(url)
+            .map(function (response) {
+            return response.json();
+        });
     };
     WidgetService.prototype.updateWidget = function (widgetId, widget) {
-        for (var x = 0; x < this.widgets.length; x++) {
-            if (this.widgets[x]._id === widgetId) {
-                this.widgets[x] = widget;
-            }
-        }
+        var url = this.baseUrl + '/api/widget/' + widgetId;
+        return this._http.put(url, widget)
+            .map(function (response) {
+            return response.json();
+        });
     };
     WidgetService.prototype.deleteWidget = function (widgetId) {
-        for (var x = 0; x < this.widgets.length; x++) {
-            if (this.widgets[x]._id === widgetId) {
-                this.widgets.splice(x, 1);
-            }
-        }
+        var url = this.baseUrl + '/api/widget/' + widgetId;
+        return this._http.delete(url)
+            .map(function (response) {
+            return response.json();
+        });
     };
     return WidgetService;
 }());
 WidgetService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]) === "function" && _a || Object])
 ], WidgetService);
 
+var _a;
 //# sourceMappingURL=widget.service.client.js.map
 
 /***/ }),

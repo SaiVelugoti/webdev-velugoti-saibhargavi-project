@@ -16,7 +16,7 @@ export class PageEditComponent implements OnInit {
   pageName: string;
   description: string;
   pages= [{}];
-  editpage: {};
+  // editpage: {};
   errorFlag: boolean;
   errorMsg: string;
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private pageService: PageService) { }
@@ -26,12 +26,14 @@ export class PageEditComponent implements OnInit {
         this.userId = params['userId'];
         this.wid = params['wid'];
         this.pid = params ['pid'];
-        this.pages = this.pageService.findPageByWebsiteId(this.wid);
-        this.editpage = this.pageService.findPageById(this.pid);
-        if (this.editpage != null) {
-          this.pageName = this.editpage['name'];
-          this.description = this.editpage['description'];
-        }
+        // this.pageService.findPageByWebsiteId(this.wid);
+        this.pageService.findPageById(this.pid)
+          .subscribe((editpage: any) => {
+            if (editpage != null) {
+              this.pageName = editpage['name'];
+              this.description = editpage['description'];
+            }
+          });
       }
     );
   }
@@ -46,14 +48,16 @@ export class PageEditComponent implements OnInit {
         websiteId: this.wid,
         description: this.pageEditForm.value.description
       };
-      this.pageService.updatePage(this.pid, page);
-      this.router.navigate(['/user/', this.userId, 'website', this.wid, 'page']);
+      this.pageService.updatePage(this.pid, page)
+        .subscribe((pageVal: any) => {
+          this.router.navigate(['/user/', this.userId, 'website', this.wid, 'page']);
+        });
     }
   }
-
-  deletePage() {
-    this.pageService.deletePage(this.pid);
-    this.router.navigate(['/user/', this.userId, 'website', this.wid, 'page']);
+    deletePage() {
+      this.pageService.deletePage(this.pid)
+        .subscribe((page: any) => {
+          this.router.navigate(['/user/', this.userId, 'website', this.wid, 'page']);
+        });
+    }
   }
-}
-

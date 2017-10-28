@@ -26,7 +26,6 @@ export class PageNewComponent implements OnInit {
       (params: any) => {
         this.userId = params['userId'];
         this.wid = params['wid'];
-        this.pages = this.pageService.findPageByWebsiteId(this.wid);
       }
     );
   }
@@ -40,8 +39,9 @@ export class PageNewComponent implements OnInit {
         name: this.pageCreateForm.value.pageName,
         websiteId: this.wid,
         description: this.pageCreateForm.value.webDescription};
-      this.pageService.createPage(this.wid, page);
-      this.router.navigate(['/user/', this.userId, 'website', this.wid, 'page']);
+      this.pageService.createPage(this.wid, page).subscribe((page: any) => {
+        this.router.navigate(['/user/', this.userId, 'website', this.wid, 'page']);
+      });
     }else {
       this.errorMsg = 'Enter both name and description';
       this.errorFlag = true;

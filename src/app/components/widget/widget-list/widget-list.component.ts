@@ -24,7 +24,10 @@ export class WidgetListComponent implements OnInit {
           this.userId = params['userId'];
           this.wid = params['wid'];
           this.pid = params['pid'];
-          this.widgets = this.widgetService.findWidgetsByPageId(this.pid);
+          this.widgetService.findWidgetsByPageId(this.pid)
+            .subscribe((list: any) => {
+              this.widgets = list;
+            });
         }
       );
   }

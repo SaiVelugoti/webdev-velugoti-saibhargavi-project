@@ -26,21 +26,28 @@ export class WidgetEditComponent implements OnInit {
           this.pid = params['pid'];
           this.wgid = params['wgid'];
           this.widtype = params['widtype'];
-          this.widget = this.widgetService.findWidgetById(this.wgid);
-          if (this.widget !== null) {
-            this.widgetExists = true;
-          }
+        //  this.widget = this.widgetService.findWidgetById(this.wgid);
+
+          this.widgetService.findWidgetById(this.wgid).subscribe((widget: any) => {
+            if (this.widget !== null) {
+              this.widgetExists = true;
+            }
+          });
         }
       );
   }
 
   updateWidget() {
-    this.widgetService.updateWidget(this.wgid, this.widget);
-    this.router.navigate(['/user', this.userId, 'website', this.wid, 'page', this.pid, 'widget']);
+    this.widgetService.updateWidget(this.wgid, this.widget)
+      .subscribe((widget: any) => {
+        this.router.navigate(['/user', this.userId, 'website', this.wid, 'page', this.pid, 'widget']);
+      });
   }
 
   deleteWidget() {
-    this.widgetService.deleteWidget(this.wgid);
-    this.router.navigate(['/user', this.userId, 'website', this.wid, 'page', this.pid, 'widget']);
+    this.widgetService.deleteWidget(this.wgid)
+      .subscribe((widget: any) => {
+        this.router.navigate(['/user', this.userId, 'website', this.wid, 'page', this.pid, 'widget']);
+      });
   }
 }

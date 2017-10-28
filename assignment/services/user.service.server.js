@@ -49,7 +49,7 @@ module.exports = function(app){
    // var userId = Math.random().toString();
     var user = req.body;
    // user._id = userId;
-    users.push(user);
+    this.users.push(user);
     if(user) {
       res.json(user);
     } else {
