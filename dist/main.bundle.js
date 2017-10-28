@@ -1612,7 +1612,7 @@ var WidgetHeaderComponent = (function () {
             this.errorFlag = true;
         }
         else if (this.widgetRet !== null) {
-            if (this.widText !== this.widgetRet['text'] || this.size !== this.widgetRet['size']) {
+            if (this.widText !== this.widgetRet['text'] && this.size !== this.widgetRet['size']) {
                 var newId = Math.random().toString();
                 this.widgetNew = { _id: newId, widgetType: 'HEADING', pageId: this.pid, size: this.size, text: this.widText };
                 this.widgetService.createWidget(this.pid, this.widgetNew)
@@ -2350,8 +2350,6 @@ var WebsiteService = (function () {
     };
     WebsiteService.prototype.findWebsitesByUser = function (userId) {
         var url = this.baseUrl + '/api/user/' + userId + '/website';
-        alert('hey ');
-        alert(url);
         return this._http.get(url).map(function (response) {
             return response.json();
         });

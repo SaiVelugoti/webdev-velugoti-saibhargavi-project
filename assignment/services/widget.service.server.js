@@ -63,7 +63,12 @@ module.exports = function (app) {
     var widgetId = req.params['widgetId'];
     for (let x = 0; x < this.widgets.length; x++) {
       if (this.widgets[x]._id === widgetId) {
-        this.widgets[x] = widget;
+        widgets.splice(x, 1, widget);
+        // this.widgets[x] = widget;
+        // widgets[x]._id = widget._id;
+        // widgets[x].name = widget._id;
+        // widgets[x].pageId = widget._id;
+        // widgets[x].text = widget._id;
       }
     }
     res.json(widget);

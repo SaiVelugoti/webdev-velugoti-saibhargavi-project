@@ -25,9 +25,6 @@ export class WebsiteService {
   }
   findWebsitesByUser(userId) {
     const url = this.baseUrl + '/api/user/' + userId + '/website';
-    alert('hey ');
-    alert(url);
-
     return this._http.get(url).map((response: Response) => {
       return response.json();
     });

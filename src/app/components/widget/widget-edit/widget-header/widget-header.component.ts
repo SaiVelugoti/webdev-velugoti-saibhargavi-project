@@ -53,7 +53,7 @@ export class WidgetHeaderComponent implements OnInit {
       this.errMsg = 'Enter all values'
       this.errorFlag = true;
     } else if (this.widgetRet !== null) {
-      if (this.widText !== this.widgetRet['text'] || this.size !== this.widgetRet['size']) {
+      if (this.widText !== this.widgetRet['text'] && this.size !== this.widgetRet['size']) {
           const newId = Math.random().toString();
           this.widgetNew = {_id: newId, widgetType: 'HEADING', pageId: this.pid, size: this.size, text: this.widText};
           this.widgetService.createWidget(this.pid, this.widgetNew)
