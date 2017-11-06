@@ -9,9 +9,9 @@ import {WidgetService} from '../../../services/widget.service.client';
 })
 export class WidgetEditComponent implements OnInit {
   userId: string;
-  wid: string;
-  pid: string;
-  wgid: string;
+  websiteId: string;
+  pageId: string;
+  widgetId: string;
   widtype: string;
   widget: {};
   widgetExists: boolean;
@@ -22,14 +22,15 @@ export class WidgetEditComponent implements OnInit {
       .subscribe(
         (params: any) => {
           this.userId = params['userId'];
-          this.wid = params['wid'];
-          this.pid = params['pid'];
-          this.wgid = params['wgid'];
+          this.websiteId = params['websiteId'];
+          this.pageId = params['pageId'];
+          this.widgetId = params['widgetId'];
           this.widtype = params['widtype'];
         //  this.widget = this.widgetService.findWidgetById(this.wgid);
 
-          this.widgetService.findWidgetById(this.wgid).subscribe((widget: any) => {
-            if (this.widget !== null) {
+          this.widgetService.findWidgetById(this.widgetId).subscribe((widget: any) => {
+            if (widget !== null) {
+              this.widget = widget;
               this.widgetExists = true;
             }
           });
@@ -38,16 +39,16 @@ export class WidgetEditComponent implements OnInit {
   }
 
   updateWidget() {
-    this.widgetService.updateWidget(this.wgid, this.widget)
-      .subscribe((widget: any) => {
-        this.router.navigate(['/user', this.userId, 'website', this.wid, 'page', this.pid, 'widget']);
+    this.widgetService.updateWidget(this.widgetId, this.widget)
+      .subscribe((widgets: any) => {
+        this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
       });
   }
 
   deleteWidget() {
-    this.widgetService.deleteWidget(this.wgid)
-      .subscribe((widget: any) => {
-        this.router.navigate(['/user', this.userId, 'website', this.wid, 'page', this.pid, 'widget']);
+    this.widgetService.deleteWidget(this.widgetId)
+      .subscribe((widgets: any) => {
+        this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
       });
   }
 }

@@ -31,21 +31,21 @@ export class WebsiteService {
   }
 
   findWebsiteById(websiteId) {
-    const url = this.baseUrl + '/api/' + websiteId;
+    const url = this.baseUrl + '/api/website/' + websiteId;
     return this._http.get(url).map((response: Response) => {
       return response.json();
     });
   }
 
   updateWebsite(websiteId, website)  {
-    const url = this.baseUrl + websiteId;
+    const url = this.baseUrl + '/api/website/' + websiteId;
     return this._http.put(url, website).map((response: Response) => {
       return response.json();
     });
   }
 
   deleteWebsite(websiteId) {
-    const url = this.baseUrl + websiteId;
+    const url = this.baseUrl + '/api/website/' + websiteId;
     return this._http.delete(url).map((response: Response) => {
       return response.json();
     });

@@ -16,7 +16,6 @@ export class WebsiteNewComponent implements OnInit {
   websiteName: string;
   webDescription: string;
   websites= [{}];
-  editweb: {};
   errorFlag: boolean;
   errorMsg: string;
 newWebId: string;

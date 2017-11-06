@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="navbar-header header-width header-fix">
       <p class="navbar-text pull-left p-fix">
-        <a [routerLink]="['/user', userId, 'website', wid, 'page']" class="navbar-link glyphicon-color">
+        <a [routerLink]="['/user', userId, 'website', websiteId, 'page']" class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-chevron-left">
               </span>
         </a>
@@ -31,7 +31,7 @@
               </div>
 
               <div class="col-xs-3">
-                <a [routerLink]="['/user', userId, 'website', wid, 'page', 'new']" class="glyphicon-color pull-right">
+                <a [routerLink]="['/user', userId, 'website', websiteId, 'page', 'new']" class="glyphicon-color pull-right">
               <span class="glyphicon glyphicon-plus">
               </span>
                 </a>
@@ -43,13 +43,13 @@
           <li class="list-group-item"  *ngFor="let page of pages">
             <div class="row">
               <div class="col-lg-9  visible-lg">
-                <a [routerLink]="['/user', userId, 'website', wid, 'page', pid, 'widget']">
+                <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget']">
                   {{page['name']}}
                 </a>
               </div>
 
               <div class="col-xs-3">
-                <a [routerLink]="['/user', userId, 'website', wid, 'page', pid]" >
+                <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId]" >
               <span class="glyphicon glyphicon-cog pull-right">
               </span>
                 </a>
@@ -83,6 +83,7 @@
             <label for="description">Description</label>
             <textarea
               rows="5"
+              placeholder="Description of my page"
               name="description"
               id="description"
               class="form-control"

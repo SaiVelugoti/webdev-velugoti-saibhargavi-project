@@ -9,11 +9,11 @@ export class PageService {
 
   constructor(private _http: Http)   {   }
   baseUrl = environment.baseUrl;
-  pages = [
-    { '_id': '321', 'name': 'Post 1', 'websiteId': '890', 'description': 'Lorem' },
-    { '_id': '432', 'name': 'Post 2', 'websiteId': '890', 'description': 'Lorem' },
-    { '_id': '543', 'name': 'Post 3', 'websiteId': '567', 'description': 'Lorem' }
-  ];
+  // pages = [
+  //   { '_id': '321', 'name': 'Post 1', 'websiteId': '890', 'description': 'Lorem' },
+  //   { '_id': '432', 'name': 'Post 2', 'websiteId': '890', 'description': 'Lorem' },
+  //   { '_id': '543', 'name': 'Post 3', 'websiteId': '567', 'description': 'Lorem' }
+  // ];
   api = {
     'createPage': this.createPage,
     'findPageByWebsiteId': this.findPageByWebsiteId,

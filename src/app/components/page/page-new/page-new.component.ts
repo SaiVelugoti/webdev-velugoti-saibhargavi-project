@@ -12,7 +12,7 @@ export class PageNewComponent implements OnInit {
 
   @ViewChild('f') pageCreateForm: NgForm;
   userId: string;
-  wid: string;
+  websiteId: string;
   pageName: string;
   description: string;
   pages= [{}];
@@ -25,22 +25,22 @@ export class PageNewComponent implements OnInit {
     this.activatedRoute.params.subscribe(
       (params: any) => {
         this.userId = params['userId'];
-        this.wid = params['wid'];
+        this.websiteId = params['websiteId'];
       }
     );
   }
   createPage() {
     if (this.pageCreateForm.value.pageName === '' && this.pageCreateForm.value.description === '') {
-     this.router.navigate(['/user/', this.userId, 'website', this.wid, 'page']);
+     this.router.navigate(['/user/', this.userId, 'website', this.websiteId, 'page']);
     } else if (this.pageCreateForm.value.pageName !== '' && this.pageCreateForm.value.description !== '') {
       this.newPageId = Math.random().toString();
       const page = {
         _id: this.newPageId,
         name: this.pageCreateForm.value.pageName,
-        websiteId: this.wid,
+        websiteId: this.websiteId,
         description: this.pageCreateForm.value.webDescription};
-      this.pageService.createPage(this.wid, page).subscribe((page: any) => {
-        this.router.navigate(['/user/', this.userId, 'website', this.wid, 'page']);
+      this.pageService.createPage(this.websiteId, page).subscribe((pages: any) => {
+        this.router.navigate(['/user/', this.userId, 'website', this.websiteId, 'page']);
       });
     }else {
       this.errorMsg = 'Enter both name and description';

@@ -56,7 +56,7 @@ module.exports = function (app) {
       if (websites[x]._id === websiteId) {
         websites[x] = website; }
     }
-    res.json(website);
+    res.json(websites);
   }
 
   function deleteWebsite(req,res) {

@@ -17,7 +17,6 @@ module.exports = function(app){
   ];
 
   function findAllUsers(req, res) {
-    "use strict";
     res.json(users);
   }
   function findUsers(req, res) {
@@ -46,10 +45,8 @@ module.exports = function(app){
   }
 
   function createUser(req, res) {
-   // var userId = Math.random().toString();
     var user = req.body;
-   // user._id = userId;
-    this.users.push(user);
+    users.push(user);
     if(user) {
       res.json(user);
     } else {
@@ -60,7 +57,7 @@ module.exports = function(app){
   function findUserById(req, res) {
     var userId = req.params['userId'];
     var user;
-    for (let x = 0; x < this.users.length; x++) {
+    for (let x = 0; x < users.length; x++) {
       if (users[x]._id === userId) {
         user = users[x];
       }

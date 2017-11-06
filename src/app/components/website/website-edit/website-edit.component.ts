@@ -15,7 +15,7 @@ export class WebsiteEditComponent implements OnInit {
   websiteName: string;
   webDescription: string;
   websites= [{}];
-  editweb: {};
+  // editweb: {};
   errorFlag: boolean;
   errorMsg: string;
 
@@ -27,9 +27,9 @@ export class WebsiteEditComponent implements OnInit {
         this.userId = params['userId'];
         this.websiteId = params['websiteId'];
         // this.websites = this.websiteService.findWebsitesByUser(this.userId);
-        this.websiteService.findWebsiteById(this.websiteId).subscribe((website: any) => {
-          this.websiteName = this.editweb['name'];
-          this.webDescription = this.editweb['description'];
+        this.websiteService.findWebsiteById(this.websiteId).subscribe((editweb: any) => {
+          this.websiteName = editweb['name'];
+          this.webDescription = editweb['description'];
         });
       }
     );
@@ -45,8 +45,8 @@ export class WebsiteEditComponent implements OnInit {
         developerId: this.userId,
         description: this.webEditForm.value.webDescription
       };
-      this.websiteService.updateWebsite(this.websiteId, web).subscribe((website: any) => {
-        this.router.navigate(['/user/', this.userId, 'website']);
+      this.websiteService.updateWebsite(this.websiteId, web).subscribe((websites: any) => {
+        this.router.navigate(['/user', this.userId, 'website']);
       });
     }
   }

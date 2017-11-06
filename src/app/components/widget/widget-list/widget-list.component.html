@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <div class="navbar-header header-width header-fix">
       <p class="navbar-text pull-left p-fix">
-        <a [routerLink]="['/user', userId, 'website', wid, 'page']" class="navbar-link glyphicon-color">
+        <a [routerLink]="['/user', userId, 'website', websiteId, 'page']" class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-chevron-left">
               </span>
         </a>
@@ -11,7 +11,7 @@
 
       <span class="navbar-brand">Widgets</span>
       <p class="navbar-text pull-right p-right-fix ">
-        <a [routerLink]="['/user', userId, 'website', wid, 'page', pid, 'widget', 'new']" class="navbar-link glyphicon-color">
+        <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget', 'new']" class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-plus">
               </span>
         </a>
@@ -26,7 +26,7 @@
   <div *ngFor="let widget of widgets" class="widget-container wd-widget">
     <div class="wd-widget">
       <div class="wd-widget-toolbar">
-        <a [routerLink]="['/user', userId, 'website', wid, 'page', pid, 'widget', widget['_id'], widget['widgetType']]">
+        <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget', widget['_id'], widget['widgetType']]">
           <span class="glyphicon glyphicon-cog"></span>
         </a>
         <span class="glyphicon glyphicon-align-justify"></span>
@@ -58,7 +58,7 @@
           <div class="video-container">
             <iframe [style.width]="widget['width']" [src]="cleanURL(widget['url'])" frameborder="0" allowfullscreen></iframe>
             <div class="wd-widget-toolbar toolbar-youtube-position">
-              <a [routerLink]="['/user', userId, 'website', wid, 'page', pid, 'widget', widget['_id'], widget['widgetType']]">
+              <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget', widget['_id'], widget['widgetType']]">
                 <span class="glyphicon glyphicon-cog"></span>
               </a>
               <span class="glyphicon glyphicon-align-justify"></span>
@@ -69,20 +69,21 @@
 
       <div *ngSwitchCase="'IMAGE'">
         <div class="wd-widget">
+          <img src="{{widget['url']}}" [style.width]="widget['width']"/>
           <div class="wd-widget-toolbar">
-            <a [routerLink]="['/user', userId, 'website', wid, 'page', pid, 'widget', widget['_id'], widget['widgetType']]">
+            <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget', widget['_id'], widget['widgetType']]">
             <span class="glyphicon glyphicon-cog"></span>
             </a>
             <span class="glyphicon glyphicon-align-justify"></span>
           </div>
-          <img src="{{widget['url']}}" [style.width]="widget['width']"/>
+
         </div>
     </div>
 
       <div *ngSwitchCase="'HTML'">
         <div class="wd-widget">
           <div class="wd-widget-toolbar">
-            <a [routerLink]="['/user', userId, 'website', wid, 'page', pid, 'widget', widget['_id'], widget['widgetType']]">
+            <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget', widget['_id'], widget['widgetType']]">
               <span class="glyphicon glyphicon-cog"></span>
             </a>
             <span class="glyphicon glyphicon-align-justify"></span>

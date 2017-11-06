@@ -12,9 +12,9 @@ export class WidgetYoutubeComponent implements OnInit {
   @ViewChild('f') ytForm: NgForm;
 
   userId: string;
-  wid: string;
-  pid: string;
-  wgid: string;
+  websiteId: string;
+  pageId: string;
+  widgetId: string;
   widtype: string;
   name: string;
   width: string;
@@ -24,6 +24,7 @@ export class WidgetYoutubeComponent implements OnInit {
   errMsg: string;
   widgetRet: {};
   widgetNew: {};
+  widgetExists: boolean;
 
   constructor(private widgetService: WidgetService, private activatedRoute: ActivatedRoute, private router: Router) {
   }
@@ -34,21 +35,23 @@ export class WidgetYoutubeComponent implements OnInit {
       .subscribe(
         (params: any) => {
           this.userId = params['userId'];
-          this.wid = params['wid'];
-          this.pid = params['pid'];
-          this.wgid = params['wgid'];
+          this.websiteId = params['websiteId'];
+          this.pageId = params['pageId'];
+          this.widgetId = params['widgetId'];
           this.widtype = params['widtype'];
           // this.widgetRet = this.widgetService.findWidgetById(this.wgid);
-          this.widgetService.findWidgetById(this.wgid).subscribe((widget: any) => {
+          this.widgetService.findWidgetById(this.widgetId).subscribe((widget: any) => {
             this.widgetRet = widget;
             if (this.widgetRet !== null) {
               this.url = this.widgetRet['url'];
               this.name = this.widgetRet['name'];
               this.width = this.widgetRet['width'];
+              this.widgetExists = true;
             } else {
               this.url = '';
               this.name = '';
               this.width = '';
+              this.widgetExists = false;
             }
           });
         }
@@ -61,30 +64,39 @@ export class WidgetYoutubeComponent implements OnInit {
       this.errMsg = 'Enter all values'
       this.errorFlag = true;
     } else if (this.widgetRet !== null) {
-      if (this.name !== this.widgetRet['name'] || this.width !== this.widgetRet['width'] || this.url !== this.widgetRet['url']) {
-        const newId = Math.random().toString();
-      this.widgetNew = {_id: newId, widgetType: 'YOUTUBE', pageId: this.pid, width: this.ytForm.value.width,
+      this.widgetExists = true;
+    //   if (this.name !== this.widgetRet['name'] || this.width !== this.widgetRet['width'] || this.url !== this.widgetRet['url']) {
+    //     const newId = Math.random().toString();
+    //   this.widgetNew = {_id: newId, widgetType: 'YOUTUBE', pageId: this.pageId, width: this.ytForm.value.width,
+    //     url: this.ytForm.value.url, name: this.ytForm.value.name};
+    //   this.widgetService.createWidget(this.pageId, this.widgetNew)
+    //       .subscribe((widget: any) => {
+    //         this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+    //       });
+    // } else {
+      this.widgetNew = {_id: this.widgetId, widgetType: 'YOUTUBE', pageId: this.pageId, width: this.ytForm.value.width,
         url: this.ytForm.value.url, name: this.ytForm.value.name};
-      this.widgetService.createWidget(this.pid, this.widgetNew)
+      this.widgetService.updateWidget(this.widgetId, this.widgetNew)
           .subscribe((widget: any) => {
-            this.router.navigate(['/user', this.userId, 'website', this.wid, 'page', this.pid, 'widget']);
+            this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
           });
-    } else {
-      this.widgetNew = {_id: this.wid, widgetType: 'YOUTUBE', pageId: this.pid, width: this.ytForm.value.width,
-        url: this.ytForm.value.url, name: this.ytForm.value.name};
-      this.widgetService.updateWidget(this.wid, this.widgetNew)
-          .subscribe((widget: any) => {
-            this.router.navigate(['/user', this.userId, 'website', this.wid, 'page', this.pid, 'widget']);
-          });
-    }} else {
+    }else {
       const newId = Math.random().toString();
-      this.widgetNew = {_id: newId, widgetType: 'YOUTUBE', pageId: this.pid, width: this.ytForm.value.width,
+      this.widgetExists = false;
+      this.widgetNew = {_id: newId, widgetType: 'YOUTUBE', pageId: this.pageId, width: this.ytForm.value.width,
         url: this.ytForm.value.url, name: this.ytForm.value.name};
-      this.widgetService.createWidget(this.pid, this.widgetNew)
+      this.widgetService.createWidget(this.pageId, this.widgetNew)
         .subscribe((widget: any) => {
-          this.router.navigate(['/user', this.userId, 'website', this.wid, 'page', this.pid, 'widget']);
+          this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
         });
     }
-    this.router.navigate(['/user', this.userId, 'website', this.wid, 'page', this.pid, 'widget']);
+   // this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+  }
+
+  deleteWidget() {
+    this.widgetService.deleteWidget(this.widgetId)
+      .subscribe((widgets: any) => {
+        this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+      });
   }
 }

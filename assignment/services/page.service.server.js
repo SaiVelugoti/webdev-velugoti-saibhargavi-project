@@ -23,12 +23,12 @@ module.exports = function(app){
       var page = req.body;
       page.websiteID = req.params['websiteId'];
       this.pages.push(page);
-      res.json(page);
+      res.json(pages);
     }
 
     function findAllPagesForWebsite(req, res) {
       var websiteId = req.params['websiteId'];
-      const pagesByThisWebsiteId = [];
+      var pagesByThisWebsiteId = [];
       for (let x = 0; x < this.pages.length; x++) {
         if (this.pages[x].websiteId === websiteId) {
           pagesByThisWebsiteId.push(this.pages[x]);
@@ -60,16 +60,16 @@ module.exports = function(app){
           this.pages[x] = page;
         }
       }
-      res.json(page);
+      res.json(pages);
     }
 
     function deletePage(req, res) {
       var pageId = req.params['pageId'];
       for (let x = 0; x < this.pages.length; x++) {
         if (this.pages[x]._id === pageId) {
-          this.pages.splice(x, 1);
+          pages.splice(x, 1);
         }
       }
-      res.json(null);
+      res.json(pages);
     }
   }

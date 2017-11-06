@@ -1,10 +1,14 @@
 module.exports = function (app) {
 
+  // var multer = require('multer');
+  // var upload = multer({ dest: __dirname +'/../../src/assets/uploads'});
+
   app.post("/api/page/:pageId/widget", createWidget);
   app.get("/api/page/:pageId/widget", findAllWidgetsForPage);
   app.get("/api/widget/:widgetId", findWidgetById);
   app.put("/api/widget/:widgetId", updateWidget);
   app.delete("/api/widget/:widgetId", deleteWidget);
+ // app.post("/api/upload", upload.single('myFile'), uploadImage);
 
   widgets = [
     { '_id': '123', 'widgetType': 'HEADING', 'pageId': '321', 'size': 2, 'text': 'GIZMODO'},
@@ -29,15 +33,15 @@ module.exports = function (app) {
     var widget = req.body;
     widget.pageId = req.params['pageId'];
     this.widgets.push(widget);
-    res.json(widget);
+    res.json(widgets);
   }
 
   function findAllWidgetsForPage(req, res) {
     var pageId = req.params['pageId'];
-    const widgetsByPageId = [];
-    for (let x = 0; x < this.widgets.length; x++) {
-      if (this.widgets[x].pageId === pageId) {
-        widgetsByPageId.push(this.widgets[x]);
+    var widgetsByPageId = [];
+    for (let x = 0; x < widgets.length; x++) {
+      if (widgets[x].pageId === pageId) {
+        widgetsByPageId.push(widgets[x]);
       }
     }
     res.json(widgetsByPageId);
@@ -46,9 +50,9 @@ module.exports = function (app) {
   function findWidgetById(req, res) {
     var widgetId = req.params['widgetId'];
     var widget;
-    for (let x = 0; x < this.widgets.length; x++) {
-      if (this.widgets[x]._id === widgetId) {
-        widget = this.widgets[x];
+    for (let x = 0; x < widgets.length; x++) {
+      if (widgets[x]._id === widgetId) {
+        widget = widgets[x];
       }
     }
     if (widget){
@@ -63,15 +67,10 @@ module.exports = function (app) {
     var widgetId = req.params['widgetId'];
     for (let x = 0; x < this.widgets.length; x++) {
       if (this.widgets[x]._id === widgetId) {
-        widgets.splice(x, 1, widget);
-        // this.widgets[x] = widget;
-        // widgets[x]._id = widget._id;
-        // widgets[x].name = widget._id;
-        // widgets[x].pageId = widget._id;
-        // widgets[x].text = widget._id;
+        this.widgets[x] = widget;
       }
     }
-    res.json(widget);
+    res.json(widgets);
   }
 
   function deleteWidget(req, res) {
@@ -81,6 +80,47 @@ module.exports = function (app) {
         this.widgets.splice(x, 1);
       }
     }
-    res.json(null);
+    res.json(widgets);
   }
+
+  // function uploadImage(req, res) {
+  //   var widgetId = req.body.widgetId;
+  //   var width = req.body.width;
+  //   var myFile = req.file;
+  //
+  //   var userId = req.body.userId;
+  //   var websiteId = req.body.websiteId;
+  //   var pageId = req.body.pageId;
+  //
+  //   var originalname = myFile.originalname;
+  //   var filename = myFile.filename;
+  //   var path = myFile.path;
+  //   var destination = myFile.destination;
+  //   var size = myFile.size;
+  //   var mimetype = myFile.mimetype;
+  //
+  //   var widget = getWidgetById(widgetId);
+  //   console.log('hey its me' + filename);
+  //
+  //   widget.url = 'assets/uploads/' + filename;
+  //   widget.width = width;
+  //
+  //
+  //     for (let x = 0; x < this.widgets.length; x++) {
+  //       if (this.widgets[x]._id === widgetId) {
+  //         this.widgets[x] = widget;
+  //       }
+  //   }
+  //
+  //   var callbackUrl = '/user/' + userId + '/website/' + websiteId + '/page/' + pageId + '/widget';
+  //   res.redirect(callbackUrl);
+  // }
+  function getWidgetById(widgetId){
+    for (let x = 0; x < widgets.length; x++) {
+      if (widgets[x]._id === widgetId) {
+        return widgets[x];
+      }
+    }
+  }
+
 }

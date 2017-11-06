@@ -11,8 +11,8 @@ import { PageService } from '../../../services/page.service.client';
 export class PageEditComponent implements OnInit {
   @ViewChild('f') pageEditForm: NgForm;
   userId: string;
-  wid: string;
-  pid: string;
+  websiteId: string;
+  pageId: string;
   pageName: string;
   description: string;
   pages= [{}];
@@ -24,10 +24,10 @@ export class PageEditComponent implements OnInit {
     this.activatedRoute.params.subscribe(
       (params: any) => {
         this.userId = params['userId'];
-        this.wid = params['wid'];
-        this.pid = params ['pid'];
+        this.websiteId = params['websiteId'];
+        this.pageId = params ['pageId'];
         // this.pageService.findPageByWebsiteId(this.wid);
-        this.pageService.findPageById(this.pid)
+        this.pageService.findPageById(this.pageId)
           .subscribe((editpage: any) => {
             if (editpage != null) {
               this.pageName = editpage['name'];
@@ -43,21 +43,21 @@ export class PageEditComponent implements OnInit {
       this.errorFlag = true;
     } else {
       const page = {
-        _id: this.pid,
+        _id: this.pageId,
         name: this.pageEditForm.value.pageName,
-        websiteId: this.wid,
+        websiteId: this.websiteId,
         description: this.pageEditForm.value.description
       };
-      this.pageService.updatePage(this.pid, page)
+      this.pageService.updatePage(this.pageId, page)
         .subscribe((pageVal: any) => {
-          this.router.navigate(['/user/', this.userId, 'website', this.wid, 'page']);
+          this.router.navigate(['/user/', this.userId, 'website', this.websiteId, 'page']);
         });
     }
   }
     deletePage() {
-      this.pageService.deletePage(this.pid)
-        .subscribe((page: any) => {
-          this.router.navigate(['/user/', this.userId, 'website', this.wid, 'page']);
+      this.pageService.deletePage(this.pageId)
+        .subscribe((pages: any) => {
+          this.router.navigate(['/user/', this.userId, 'website', this.websiteId, 'page']);
         });
     }
   }

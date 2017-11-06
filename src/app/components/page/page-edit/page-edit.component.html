@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <div class="navbar-header header-width header-fix">
       <p class="navbar-text pull-left p-fix">
-        <a [routerLink]="['/user', userId, 'website', wid, 'page']"
+        <a [routerLink]="['/user', userId, 'website', websiteId, 'page']"
            class="navbar-link glyphicon-color">
           <span class="glyphicon glyphicon-chevron-left">
           </span>
@@ -33,7 +33,7 @@
               </div>
 
               <div class="col-xs-3">
-                <a [routerLink]="['/user', userId, 'website', wid, 'page', 'new']"
+                <a [routerLink]="['/user', userId, 'website', websiteId, 'page', 'new']"
                    class="glyphicon-color pull-right">
               <span class="glyphicon glyphicon-plus">
               </span>
@@ -45,13 +45,13 @@
           <li class="list-group-item"  *ngFor="let page of pages">
             <div class="row">
               <div class="col-lg-9  visible-lg">
-                <a [routerLink]="['/user', userId, 'website', wid, 'page', pid, 'widget']">
+                <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget']">
                   {{page['name']}}
                 </a>
               </div>
 
               <div class="col-xs-3">
-                <a [routerLink]="['/user', userId, 'website', wid, 'page', pid]" >
+                <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId]" >
               <span class="glyphicon glyphicon-cog pull-right">
               </span>
                 </a>
@@ -82,10 +82,13 @@
                   type="text"
                   id="description"
                   class="form-control"/>
-          <a [routerLink]="['/user', userId, 'website', wid, 'page']"
-             class="btn btn-danger btn-block ">
-            Delete
-          </a>
+          <button class="btn btn-danger btn-block "
+                  (click)='deletePage()'>Delete
+          </button>
+          <!--<a [routerLink]="['/user', userId, 'website', websiteId, 'page']"-->
+             <!--class="btn btn-danger btn-block ">-->
+            <!--Delete-->
+          <!--</a>-->
         </div>
       </div>
     </div>

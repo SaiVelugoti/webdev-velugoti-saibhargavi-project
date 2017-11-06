@@ -9,9 +9,9 @@ import {WidgetService} from '../../../services/widget.service.client';
 })
 export class WidgetChooserComponent implements OnInit {
   userId: string;
-  wid: string;
-  pid: string;
-  wgid: string;
+  websiteId: string;
+  pageId: string;
+  widgetId: string;
   widgets = [{}];
   newWid;
 
@@ -22,9 +22,9 @@ export class WidgetChooserComponent implements OnInit {
       .subscribe(
         (params: any) => {
           this.userId = params['userId'];
-          this.wid = params['wid'];
-          this.pid = params['pid'];
-          this.wgid = params['wgid'];
+          this.websiteId = params['websiteId'];
+          this.pageId = params['pageId'];
+          this.widgetId = params['widgetId'];
          // this.widgets = this.widgetService.findWidgetsByPageId(this.pid);
           this.newWid = Math.random();
         }
