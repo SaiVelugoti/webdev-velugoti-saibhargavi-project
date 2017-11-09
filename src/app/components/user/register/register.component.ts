@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import { NgForm} from '@angular/forms';
 import {UserService} from '../../../services/user.service.client';
 import {Router} from '@angular/router';
+import {SharedService} from "../../../services/shared.service.client";
 
 @Component({
   selector: 'app-register',
@@ -21,7 +22,7 @@ export class RegisterComponent implements OnInit {
   newUserId: string;
   errorMsg = 'Invalid username or password !';
 
-  constructor(private userService: UserService, private  router: Router) {
+  constructor(private userService: UserService, private sharedService: SharedService, private  router: Router) {
   }
 
   ngOnInit() {
@@ -54,5 +55,11 @@ export class RegisterComponent implements OnInit {
           });
         }
       });
+    // Asgn 6
+    // this.userService.register(this.username, this.password)
+    //   .subscribe((user) => {
+    //   this.sharedService.user = user;
+    //   this.router.navigate(['/profile']);
+    //   });
   }
 }

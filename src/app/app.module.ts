@@ -28,6 +28,7 @@ import {UserService} from './services/user.service.client';
 import {WebsiteService} from './services/website.service.client';
 import {PageService} from './services/page.service.client';
 import {WidgetService} from './services/widget.service.client';
+import {SharedService} from './services/shared.service.client';
 
 @NgModule({
   // Declare components here
@@ -59,7 +60,13 @@ import {WidgetService} from './services/widget.service.client';
     Routing
   ],
   // Client Side services here
-  providers: [ TestService, UserService, WebsiteService, PageService, WidgetService],
+  providers: [
+    TestService,
+    UserService,
+    WebsiteService,
+    PageService,
+    WidgetService,
+    SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
