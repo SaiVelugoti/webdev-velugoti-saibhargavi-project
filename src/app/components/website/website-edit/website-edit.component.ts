@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm} from '@angular/forms';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {NgForm} from '@angular/forms';
 import {WebsiteService} from '../../../services/website.service.client';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -14,26 +14,33 @@ export class WebsiteEditComponent implements OnInit {
   websiteId: string;
   websiteName: string;
   webDescription: string;
-  websites= [{}];
+  websites: [{}];
   // editweb: {};
   errorFlag: boolean;
   errorMsg: string;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private websiteService: WebsiteService) { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private websiteService: WebsiteService) {
+  }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(
       (params: any) => {
         this.userId = params['userId'];
         this.websiteId = params['websiteId'];
-        // this.websites = this.websiteService.findWebsitesByUser(this.userId);
+        // this.websites = this.websiteService.findWebsitesByUser(this.userId)
+        this.websiteService.findWebsitesByUser(this.userId).subscribe((websites: any) => {
+          this.websites = websites;
+        });
         this.websiteService.findWebsiteById(this.websiteId).subscribe((editweb: any) => {
-          this.websiteName = editweb['name'];
-          this.webDescription = editweb['description'];
+          // this.websiteName = editweb['name'];
+          // this.webDescription = editweb['description'];
+          this.websiteName = editweb.name;
+          this.webDescription = editweb.description;
         });
       }
     );
   }
+
   updateWebsite() {
     if (this.websiteName === '' || this.webDescription === '') {
       this.errorMsg = 'Enter both name and description';
@@ -50,6 +57,7 @@ export class WebsiteEditComponent implements OnInit {
       });
     }
   }
+
   deleteWebsite() {
     this.websiteService.deleteWebsite(this.websiteId).subscribe((website: any) => {
       this.router.navigate(['/user', this.userId, 'website']);

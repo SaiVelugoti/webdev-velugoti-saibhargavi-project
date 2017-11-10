@@ -33,9 +33,9 @@ export class PageNewComponent implements OnInit {
     if (this.pageCreateForm.value.pageName === '' && this.pageCreateForm.value.description === '') {
      this.router.navigate(['/user/', this.userId, 'website', this.websiteId, 'page']);
     } else if (this.pageCreateForm.value.pageName !== '' && this.pageCreateForm.value.description !== '') {
-      this.newPageId = Math.random().toString();
+     // this.newPageId = Math.random().toString();
       const page = {
-        _id: this.newPageId,
+       // _id: this.newPageId,
         name: this.pageCreateForm.value.pageName,
         websiteId: this.websiteId,
         description: this.pageCreateForm.value.webDescription};

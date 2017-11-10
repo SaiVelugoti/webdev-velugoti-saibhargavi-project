@@ -42,16 +42,17 @@
           </div>
         </li>
 
-        <li class="list-group-item" *ngFor="let website of websites">
+        <li class="list-group-item" *ngFor="let websiteFromList of websites">
           <div class="row">
             <div class="col-lg-9  visible-lg">
-              <a [routerLink]="['/user', userId, 'website', website['_id'], 'page']">
-                {{website['name']}}
+              <a [routerLink]="['/user', userId, 'website', websiteFromList['_id'], 'page']">
+                <!--{{website['name']}}-->
+{{websiteFromList.name}}
               </a>
             </div>
 
             <div class="col-xs-3">
-              <a [routerLink]="['/user', userId, 'website', website['_id']]" >
+              <a [routerLink]="['/user', userId, 'website', websiteFromList['_id']]" >
               <span class="glyphicon glyphicon-cog pull-right">
               </span>
               </a>
@@ -70,7 +71,7 @@
         </div>
       <label for="websiteName">Name</label>
       <input [(ngModel)]="websiteName"
-             placeholder={{websiteName}}
+         value={{websiteName}}
              name="websiteName"
              type="text"
              id="websiteName"

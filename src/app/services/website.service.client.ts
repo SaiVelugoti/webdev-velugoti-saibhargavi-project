@@ -9,13 +9,6 @@ export class WebsiteService {
   constructor(private _http: Http) {
   }
   baseUrl = environment.baseUrl;
-  api = {
-    'createWebsite': this.createWebsite,
-    'findWebsitesByUser': this.findWebsitesByUser,
-    'findWebsiteById': this.findWebsiteById,
-    'updateWebsite': this.updateWebsite,
-    'deleteWebsite': this.deleteWebsite
-  };
 
   createWebsite(userId, website) {
     const url = this.baseUrl + '/api/user/' + userId + '/website';

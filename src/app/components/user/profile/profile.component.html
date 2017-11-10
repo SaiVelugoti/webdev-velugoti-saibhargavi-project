@@ -25,17 +25,17 @@
          readonly>
 
   <label for="firstName">First Name</label>
-  <input [(ngModel)]="firstname"
+  <input [(ngModel)]="firstName"
          name="firstname"
          id="firstName"
-         placeholder={{firstname}}
+         placeholder={{firstName}}
          class="form-control">
 
   <label for="lastName">Last Name</label>
-  <input [(ngModel)]="lastname"
+  <input [(ngModel)]="lastName"
          name="lastname"
          id="lastName"
-         placeholder={{lastname}}
+         placeholder={{lastName}}
          class="form-control">
 
   <a [routerLink]="['/user', userId, 'website']" class="btn btn-block bg-primary btnStyle">

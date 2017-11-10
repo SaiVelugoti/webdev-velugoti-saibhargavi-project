@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { QuillEditorModule } from 'ngx-quill-editor';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -29,6 +30,7 @@ import {WebsiteService} from './services/website.service.client';
 import {PageService} from './services/page.service.client';
 import {WidgetService} from './services/widget.service.client';
 import {SharedService} from './services/shared.service.client';
+import { WidgetHtmlComponent } from './components/widget/widget-edit/widget-html/widget-html.component';
 
 @NgModule({
   // Declare components here
@@ -51,12 +53,14 @@ import {SharedService} from './services/shared.service.client';
     WidgetListComponent,
     WidgetHeaderComponent,
     WidgetImageComponent,
-    WidgetYoutubeComponent
+    WidgetYoutubeComponent,
+    WidgetHtmlComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     FormsModule,
+    QuillEditorModule,
     Routing
   ],
   // Client Side services here

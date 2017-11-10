@@ -30,8 +30,10 @@ export class PageEditComponent implements OnInit {
         this.pageService.findPageById(this.pageId)
           .subscribe((editpage: any) => {
             if (editpage != null) {
-              this.pageName = editpage['name'];
-              this.description = editpage['description'];
+              // this.pageName = editpage['name'];
+              this.pageName = editpage.name;
+              // this.description = editpage['description'];
+              this.description = editpage.description;
             }
           });
       }

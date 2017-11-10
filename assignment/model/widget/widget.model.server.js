@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 var WidgetSchema = require("./widget.schema.server");
 var WidgetModel = mongoose.model("WidgetModel", WidgetSchema);
+var PageModel = require('../page/page.model.server');
 
 WidgetModel.createWidget = createWidget;
 WidgetModel.findAllWidgetsForPage = findAllWidgetsForPage;
@@ -12,26 +13,30 @@ WidgetModel.reorderWidget = reorderWidget;
 module.exports = WidgetModel;
 
 function createWidget(pageId, widget){
-  "use strict";
-
+  return WidgetModel.create(widget)
+    .then(function (newWidget) {
+      PageModel.findPageById(pageId)
+        .then(function (page) {
+          page.widgets.push(newWidget);
+          return page.save();
+        })
+    })
 }
 function findAllWidgetsForPage(pageId){
-  "use strict";
-
+  return WidgetModel.find({pageId: pageId})
+    .populate('pageId')
+    .exec();
 }
-function findWidgetById(widgetId){
-  "use strict";
 
+function findWidgetById(widgetId){
+  return WidgetModel.findOne({_id: widgetId});
 }
 function updateWidget(widgetId, widget){
-  "use strict";
-
+  return WidgetModel.update({_id: widgetId}, widget);
 }
 function deleteWidget(widgetId){
-  "use strict";
-
+  return WidgetModel.deleteOne({_id: widgetId});
 }
 function reorderWidget(pageId, start, end){
-  "use strict";
 
 }

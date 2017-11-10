@@ -40,19 +40,21 @@
     </li>
 
 
-    <li class="list-group-item" *ngFor="let website of websites">
+    <li class="list-group-item" *ngFor="let websitefromList of websites">
       <div class="row">
         <div class="col-lg-5 col-md-9 col-xs-9">
-          <a [routerLink]="['/user', userId, 'website', website['_id'], 'page']">
-            {{website['name']}}
+          <a [routerLink]="['/user', userId, 'website', websitefromList['_id'], 'page']">
+            <!--{{websitefromList.name}}-->
+            {{websitefromList['name']}}
+            <!--{{websitefromList.name}}-->
           </a>
         </div>
         <div class="col-lg-4 visible-lg">
-          {{website['description']}}
+          {{websitefromList['description']}}
         </div>
 
         <div class="col-xs-3">
-          <a [routerLink]="['/user', userId, 'website', website['_id']]" >
+          <a [routerLink]="['/user', userId, 'website', websitefromList['_id']]" >
               <span class="glyphicon glyphicon-cog pull-right">
               </span>
           </a>

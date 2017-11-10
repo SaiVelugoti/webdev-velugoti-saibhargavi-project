@@ -12,8 +12,9 @@ export class ProfileComponent implements OnInit {
   userId: string;
   user: any;
   username: string;
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
+  password: string;
   constructor(private userService: UserService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
@@ -24,16 +25,23 @@ export class ProfileComponent implements OnInit {
         }
       );
     this.userService.findUserById(this.userId)
-      .subscribe((user: any) => {
-        this.user = user;
-        this.username = this.user['username'];
-        this.firstname = this.user['firstName'];
-        this.lastname = this.user['lastName'];
+      .subscribe((returnedUser: any) => {
+        this.username = returnedUser.username;
+        this.firstName = returnedUser.firstName;
+        this.lastName = returnedUser.lastName;
+        this.password = returnedUser.password;
       });
   }
   updateUser() {
-    this.user['firstName'] = this.firstname;
-    this.user['lastName'] = this.lastname;
+   this.user = {
+     _id: this.userId,
+     username: this.username,
+     firstName: this.firstName,
+     lastName: this.lastName,
+     password: this.password
+   };
+    // this.user['firstName'] = this.firstName;
+    // this.user['lastName'] = this.lastName;
     this.userService.updateUser(this.userId, this.user)
       .subscribe((user: any) => {});
   }

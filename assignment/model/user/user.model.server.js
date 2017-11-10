@@ -12,7 +12,7 @@ UserModel.deleteUser = deleteUser;
 module.exports = UserModel;
 
 function createUser(user) {
-  UserModel.create(user);
+  return UserModel.create(user);
 }
 
 function findUserById(userId) {
