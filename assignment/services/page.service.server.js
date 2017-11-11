@@ -9,22 +9,23 @@ module.exports = function(app){
   var pageModel = require("../model/page/page.model.server");
 
 
-    pages = [
-      { '_id': '321', 'name': 'Post 1', 'websiteId': '890', 'description': 'Lorem' },
-      { '_id': '432', 'name': 'Post 2', 'websiteId': '890', 'description': 'Lorem' },
-      { '_id': '543', 'name': 'Post 3', 'websiteId': '567', 'description': 'Lorem' }
-    ];
-    api = {
-      'createPage': this.createPage,
-      'findPageByWebsiteId': this.findPageByWebsiteId,
-      'findPageById': this.findPageById,
-      'updatePage': this.updatePage,
-      'deletePage': this.deletePage
-    };
+    // pages = [
+    //   { '_id': '321', 'name': 'Post 1', 'websiteId': '890', 'description': 'Lorem' },
+    //   { '_id': '432', 'name': 'Post 2', 'websiteId': '890', 'description': 'Lorem' },
+    //   { '_id': '543', 'name': 'Post 3', 'websiteId': '567', 'description': 'Lorem' }
+    // ];
+    // api = {
+    //   'createPage': this.createPage,
+    //   'findPageByWebsiteId': this.findPageByWebsiteId,
+    //   'findPageById': this.findPageById,
+    //   'updatePage': this.updatePage,
+    //   'deletePage': this.deletePage
+    // };
 
     function createPage(req, res) {
       var page = req.body;
       page.websiteId = req.params['websiteId'];
+      var websiteId = req.params['websiteId'];
       pageModel.createPage(websiteId, page)
         .then(function (page) {
           pageModel.findAllPagesForWebsite(websiteId)

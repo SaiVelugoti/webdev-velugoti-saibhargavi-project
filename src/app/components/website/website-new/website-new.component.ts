@@ -49,9 +49,9 @@ newWebId: string;
     } else if (this.webCreateForm.value.websiteName !== '' && this.webCreateForm.value.webDescription !== '') {
     // this.newWebId = Math.random().toString();
       const web = {
-     //   _id: this.newWebId,
+       _id: this.newWebId,
         name: this.webCreateForm.value.websiteName,
-      //  developerId: this.userId,
+        developerId: this.userId,
         description: this.webCreateForm.value.webDescription};
         this.websiteService.createWebsite(this.userId, web).subscribe((site: any) => {
       this.router.navigate(['/user', this.userId, 'website']);

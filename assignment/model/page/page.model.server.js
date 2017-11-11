@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 var PageSchema = require("./page.schema.server");
 var PageModel = mongoose.model("PageModel", PageSchema);
+var WebsiteModel = require("../website/website.model.server");
 
 PageModel.createPage = createPage;
 PageModel.findAllPagesForWebsite = findAllPagesForWebsite;
@@ -11,9 +12,12 @@ PageModel.deletePage = deletePage;
 module.exports = PageModel;
 
 function createPage(websiteId, page) {
+  var newPage = null;
+  delete page._id;
   return PageModel.create(page)
     .then(function (page) {
-      WebsiteModel.findWebsiteById(websiteId)
+      newPage = page;
+      WebsiteModel.findWebsiteById(newPage.websiteId)
         .then(function (website) {
           website.pages.push(page);
           return website.save();
@@ -22,7 +26,8 @@ function createPage(websiteId, page) {
 }
 
 function findAllPagesForWebsite(websiteId) {
-  return PgeModel.find({websiteId: websiteId})
+  return PageModel
+    .find({websiteId: websiteId})
     .populate('websiteId')
     .exec();
 }
@@ -31,7 +36,7 @@ function findPageById(pageId) {
   return PageModel.findOne({_id: pageId});
 }
 
-function updatePage(pageId, page){
+function updatePage(pageId, page) {
   return PageModel.update({_id: pageId}, page);
 }
 

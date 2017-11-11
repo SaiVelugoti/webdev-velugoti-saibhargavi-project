@@ -14,11 +14,12 @@ module.exports = WebsiteModel;
 function createWebsiteForUser(userId, website) {
  // website._user = userId;
   var newWebsite = null;
+  delete website._id;
   return WebsiteModel
     .create(website)
     .then(function (website){
       newWebsite = website;
-      UserModel.findUserById(newWebsite._user)
+      UserModel.findUserById(newWebsite.developerId)
         .then(function (user) {
           user.websites.push(newWebsite);
           return user.save();
@@ -28,8 +29,8 @@ function createWebsiteForUser(userId, website) {
 
 function findAllWebsitesForUser(userId){
   return WebsiteModel
-    .find({_user:userId})
-    .populate('_user')
+    .find({developerId:userId})
+    .populate('developerId')
     .exec();
 }
 

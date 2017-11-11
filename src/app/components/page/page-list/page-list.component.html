@@ -39,20 +39,20 @@
       </div>
     </li>
 
-    <li class="list-group-item" *ngFor="let page of pages">
+    <li class="list-group-item" *ngFor="let pageFromList of pages">
       <div class="row">
         <div class="col-lg-5 col-md-9 col-xs-9">
-          <a [routerLink]="['/user', userId, 'website', websiteId, 'page', page['_id'], 'widget']">
-            {{page['name']}}
+          <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageFromList['_id'], 'widget']">
+            {{pageFromList['name']}}
           </a>
         </div>
 
         <div class="col-lg-4 visible-lg">
-          {{page['description']}}
+          {{pageFromList['description']}}
         </div>
 
         <div class="col-xs-3">
-          <a [routerLink]="['/user', userId, 'website', websiteId, 'page', page['_id']]">
+          <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageFromList['_id']]">
               <span class="glyphicon glyphicon-cog pull-right">
               </span>
           </a>

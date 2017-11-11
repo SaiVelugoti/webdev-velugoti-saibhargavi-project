@@ -20,15 +20,18 @@ module.exports = function (app) {
 
   function createWebsite(req, res) {
     var website = req.body;
-    website.developerID = req.params['userId'];
+    website.developerId = req.params['userId'];
     var userId = req.params['userId'];
     websiteModel.createWebsiteForUser(userId, website)
-      .then(function (newWebsite) {
+      .then(function (website) {
         websiteModel.findAllWebsitesForUser(userId)
           .then(function (websites) {
             res.json(websites);
           });
+      }, function (err) {
+console.log(err);
       });
+    return;
     // websites.push(website);
     // res.json(website);
   }
@@ -40,7 +43,7 @@ module.exports = function (app) {
       .then(function (websitesByUserId) {
         res.json(websitesByUserId);
       });
-    return;
+   // return;
     // for (let x = 0; x < this.websites.length; x++) {
     //   if (this.websites[x].developerId === userId) {
     //     websitesByUserId.push(this.websites[x]);

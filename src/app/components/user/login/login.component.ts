@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
 
     this.userService.findUserByCredentials(this.username, this.password)
       .subscribe((user: any) => {
-    if ((user !== 0)) {
+    if ((user !== null)) {
       this.router.navigate(['/user/', user._id]);
     } else {
       this.errorMsg = 'Invalid username or password !';

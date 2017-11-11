@@ -13,15 +13,19 @@ WidgetModel.reorderWidget = reorderWidget;
 module.exports = WidgetModel;
 
 function createWidget(pageId, widget){
+  var newWidget = null;
+  delete widget._id;
   return WidgetModel.create(widget)
-    .then(function (newWidget) {
-      PageModel.findPageById(pageId)
+    .then(function (widget) {
+      newWidget = widget;
+      PageModel.findPageById(newWidget.pageId)
         .then(function (page) {
           page.widgets.push(newWidget);
           return page.save();
         })
     })
 }
+
 function findAllWidgetsForPage(pageId){
   return WidgetModel.find({pageId: pageId})
     .populate('pageId')
