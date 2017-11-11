@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { NgForm} from '@angular/forms';
+import {NgForm} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {WidgetService} from '../../../../services/widget.service.client';
 
@@ -65,34 +65,26 @@ export class WidgetYoutubeComponent implements OnInit {
       this.errorFlag = true;
     } else if (this.widgetRet) {
       this.widgetExists = true;
-    //   if (this.name !== this.widgetRet['name'] || this.width !== this.widgetRet['width'] || this.url !== this.widgetRet['url']) {
-    //     const newId = Math.random().toString();
-    //   this.widgetNew = {_id: newId, widgetType: 'YOUTUBE', pageId: this.pageId, width: this.ytForm.value.width,
-    //     url: this.ytForm.value.url, name: this.ytForm.value.name};
-    //   this.widgetService.createWidget(this.pageId, this.widgetNew)
-    //       .subscribe((widget: any) => {
-    //         this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
-    //       });
-    // } else {
-      this.widgetNew = {_id: this.widgetId, widgetType: 'YOUTUBE', pageId: this.pageId, width: this.ytForm.value.width,
-        url: this.ytForm.value.url, name: this.ytForm.value.name};
+      this.widgetNew = {
+        _id: this.widgetId, widgetType: 'YOUTUBE', pageId: this.pageId, width: this.ytForm.value.width,
+        url: this.ytForm.value.url, name: this.ytForm.value.name
+      };
       this.widgetService.updateWidget(this.widgetId, this.widgetNew)
-          .subscribe((widget: any) => {
-            this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
-          });
-    }else {
-      // const newId = Math.random().toString();
+        .subscribe((widget: any) => {
+          this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+        });
+    } else {
       this.widgetExists = false;
       this.widgetNew = {
         // _id: newId,
         widgetType: 'YOUTUBE', pageId: this.pageId, width: this.ytForm.value.width,
-        url: this.ytForm.value.url, name: this.ytForm.value.name};
+        url: this.ytForm.value.url, name: this.ytForm.value.name
+      };
       this.widgetService.createWidget(this.pageId, this.widgetNew)
         .subscribe((widget: any) => {
           this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
         });
     }
-   // this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
   }
 
   deleteWidget() {

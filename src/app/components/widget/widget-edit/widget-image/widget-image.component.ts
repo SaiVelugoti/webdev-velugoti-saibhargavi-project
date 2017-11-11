@@ -26,7 +26,6 @@ export class WidgetImageComponent implements OnInit {
   widgetRet: any;
   widgetNew: {};
   widgetExists: boolean;
-  // baseUrl = environment.baseUrl;
 
   constructor(private widgetService: WidgetService, private activatedRoute: ActivatedRoute, private router: Router) {
   }
@@ -63,11 +62,9 @@ export class WidgetImageComponent implements OnInit {
   }
 
   createEditImage() {
-alert('Im here');
     if (this.name === '' || this.width === '' || this.url === '') {
       this.errMsg = 'Enter all values'
       this.errorFlag = true;
-    // } else if (this.widgetRet.toString() !== 'undefined') {
     } else if (this.widgetRet) {
       this.widgetExists = true;
       this.widgetNew = {_id: this.widgetId, widgetType: 'IMAGE', pageId: this.pageId, width: this.imgForm.value.width,
@@ -77,10 +74,8 @@ alert('Im here');
           this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
         });
     } else {
-      // const newId = Math.random().toString();
       this.widgetExists = false;
       this.widgetNew = {
-        // _id: newId,
         widgetType: 'IMAGE', pageId: this.pageId, width: this.imgForm.value.width,
         url: this.imgForm.value.url, name: this.imgForm.value.name
       };
@@ -89,7 +84,6 @@ alert('Im here');
           this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
         });
     }
-  //  this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
   }
   deleteWidget() {
     this.widgetService.deleteWidget(this.widgetId)

@@ -60,7 +60,7 @@ export class WidgetHtmlComponent implements OnInit {
           this.widtype = params['widtype'];
           // this.widgetRet = this.widgetService.findWidgetById(this.wgid);
           this.widgetService.findWidgetById(this.widgetId).subscribe((widget: any) => {
-            this.widget = widget;
+            // this.widget = widget;
             this.widgetRet = widget;
             // if (this.widgetRet !== null) {
             if (this.widgetRet) {
@@ -87,8 +87,8 @@ export class WidgetHtmlComponent implements OnInit {
         _id: this.widgetId,
         widgetType: 'HTML',
         pageId: this.pageId,
-        widgettext: this.widgettext,
-        widgetname: this.widgetname
+        text: this.widgettext,
+        name: this.widgetname
       };
       this.widgetService
         .updateWidget(this.widgetId, widgetNew)
@@ -98,7 +98,7 @@ export class WidgetHtmlComponent implements OnInit {
     } else {
       this.widgetExists = false;
       this.widgetNew = {
-        widgetType: 'HTML', pageId: this.pageId, text: this.widgettext
+        widgetType: 'HTML', pageId: this.pageId, text: this.widgettext, name: this.widgetname
       };
       this.widgetService.createWidget(this.pageId, this.widgetNew)
         .subscribe((widgets: any) => {

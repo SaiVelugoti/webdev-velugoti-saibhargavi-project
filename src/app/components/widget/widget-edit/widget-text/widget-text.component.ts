@@ -40,10 +40,8 @@ export class WidgetTextComponent implements OnInit {
           this.pageId = params['pageId'];
           this.widgetId = params['widgetId'];
           this.widtype = params['widtype'];
-          // this.widgetRet = this.widgetService.findWidgetById(this.wgid);
           this.widgetService.findWidgetById(this.widgetId).subscribe((widget: any) => {
             this.widgetRet = widget;
-            // if (this.widgetRet !== null) {
             if (this.widgetRet) {
               this.text = this.widgetRet['text'];
               this.rows = this.widgetRet['rows'];
@@ -95,7 +93,6 @@ export class WidgetTextComponent implements OnInit {
           this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
         });
     }
-    //  this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
   }
 
   deleteWidget() {
