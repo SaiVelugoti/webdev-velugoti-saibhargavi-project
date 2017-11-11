@@ -13,11 +13,12 @@ export class WidgetEditComponent implements OnInit {
   pageId: string;
   widgetId: string;
   widtype: string;
-  widget: {};
+  widget: any;
   widgetExists: boolean;
   constructor(private activatedRoute: ActivatedRoute, private widgetService: WidgetService, private router: Router) { }
 
   ngOnInit() {
+    this.widgetExists = false;
     this.activatedRoute.params
       .subscribe(
         (params: any) => {
@@ -29,21 +30,35 @@ export class WidgetEditComponent implements OnInit {
         //  this.widget = this.widgetService.findWidgetById(this.wgid);
 
           this.widgetService.findWidgetById(this.widgetId).subscribe((widget: any) => {
+            if (widget.toString() !== 'undefined') {
+              this.widget = widget;
+              this.widgetExists = true;
+            } else {
+              this.widgetExists = false;
+            }
             if (widget !== null) {
               this.widget = widget;
               this.widgetExists = true;
+            } else {
+              this.widgetExists = false;
             }
           });
         }
       );
   }
-
-  updateWidget() {
-    this.widgetService.updateWidget(this.widgetId, this.widget)
-      .subscribe((widgets: any) => {
-        this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
-      });
-  }
+  // createUpdateWidget() {
+  //   if (this.widgetExists === true) {
+  //   this.widgetService.updateWidget(this.widgetId, this.widget)
+  //     .subscribe((widgets: any) => {
+  //       this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+  //     });
+  // } else {
+  //     this.widgetService.createWidget(this.pageId, this.widget)
+  //       .subscribe((widgets: any) => {
+  //         this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+  //       });
+  //   }
+  // }
 
   deleteWidget() {
     this.widgetService.deleteWidget(this.widgetId)

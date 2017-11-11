@@ -1,53 +1,35 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {WidgetService} from '../../../../services/widget.service.client';
 
 @Component({
-  selector: 'app-widget-html',
-  templateUrl: './widget-html.component.html',
-  styleUrls: ['./widget-html.component.css']
+  selector: 'app-widget-text',
+  templateUrl: './widget-text.component.html',
+  styleUrls: ['./widget-text.component.css']
 })
-export class WidgetHtmlComponent implements OnInit {
-  // @Input()
-  widget: any;
+export class WidgetTextComponent implements OnInit {
 
   userId: string;
   websiteId: string;
   pageId: string;
   widgetId: string;
   widtype: string;
+  widText: string;
+  size: string;
   errorFlag: boolean;
   errMsg: string;
   widgetRet: {};
   widgetNew: {};
   widgetExists: boolean;
-  widgettext: string;
-  widgetname: string;
+  text: string;
+  rows: string;
+  placeholder: string;
+  name: string;
+  formatted: boolean;
 
-  public editor;
-  public editorContent = `<h3>I am Example content</h3>`;
-  public editorOptions = {
-    placeholder: 'insert content...'
-  };
   constructor(private widgetService: WidgetService, private activatedRoute: ActivatedRoute, private router: Router) {
   }
 
-  onEditorBlured(quill) {
-    console.log('editor blur!', quill);
-  }
-
-  onEditorFocused(quill) {
-    console.log('editor focus!', quill);
-  }
-
-  onEditorCreated(quill) {
-    this.editor = quill;
-    console.log('quill is ready! this is current quill instance object', quill);
-  }
-
-  onContentChanged({ quill, html, text }) {
-    console.log('quill content is changed!', quill, html, text);
-  }
   ngOnInit() {
     this.errorFlag = false;
     this.activatedRoute.params
@@ -60,17 +42,21 @@ export class WidgetHtmlComponent implements OnInit {
           this.widtype = params['widtype'];
           // this.widgetRet = this.widgetService.findWidgetById(this.wgid);
           this.widgetService.findWidgetById(this.widgetId).subscribe((widget: any) => {
-            this.widget = widget;
             this.widgetRet = widget;
             // if (this.widgetRet !== null) {
             if (this.widgetRet) {
-              this.widget = widget;
-              this.widgetname = this.widget['name'];
-              this.widgettext = this.widget['text'];
+              this.text = this.widgetRet['text'];
+              this.rows = this.widgetRet['rows'];
+              this.formatted = this.widgetRet['formatted'];
+              this.placeholder = this.widgetRet['placeholder'];
+              this.name = this.widgetRet['name'];
               this.widgetExists = true;
             } else {
-              this.widgetname = '';
-              this.widgettext = '';
+              this.text = '';
+              this.rows = '';
+              this.formatted = false;
+              this.placeholder = '';
+              this.name = '';
               this.widgetExists = false;
             }
           });
@@ -78,17 +64,20 @@ export class WidgetHtmlComponent implements OnInit {
       );
   }
 
-  createEditHeader() {
-    if (this.widgetname === '' || this.widgettext === '') {
+  createEditText() {
+    if (this.text === '' || this.rows === '') {
       this.errMsg = 'Enter all values'
       this.errorFlag = true;
     } else if (this.widgetRet) {
       const widgetNew = {
         _id: this.widgetId,
-        widgetType: 'HTML',
+        widgetType: 'TEXT',
         pageId: this.pageId,
-        widgettext: this.widgettext,
-        widgetname: this.widgetname
+        rows: this.rows,
+        text: this.text,
+        name: this.name,
+        placeholder: this.placeholder,
+        formatted: this.formatted
       };
       this.widgetService
         .updateWidget(this.widgetId, widgetNew)
@@ -98,7 +87,8 @@ export class WidgetHtmlComponent implements OnInit {
     } else {
       this.widgetExists = false;
       this.widgetNew = {
-        widgetType: 'HTML', pageId: this.pageId, text: this.widgettext
+        widgetType: 'TEXT', pageId: this.pageId, rows: this.rows,
+        text: this.text, formatted: this.formatted, placeholder: this.placeholder, name: this.name
       };
       this.widgetService.createWidget(this.pageId, this.widgetNew)
         .subscribe((widgets: any) => {

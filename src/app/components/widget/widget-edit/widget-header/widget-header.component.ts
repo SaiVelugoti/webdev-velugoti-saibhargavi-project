@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {WidgetService} from '../../../../services/widget.service.client';
 
@@ -21,6 +21,7 @@ export class WidgetHeaderComponent implements OnInit {
   widgetRet: {};
   widgetNew: {};
   widgetExists: boolean;
+
   constructor(private widgetService: WidgetService, private activatedRoute: ActivatedRoute, private router: Router) {
   }
 
@@ -37,7 +38,8 @@ export class WidgetHeaderComponent implements OnInit {
           // this.widgetRet = this.widgetService.findWidgetById(this.wgid);
           this.widgetService.findWidgetById(this.widgetId).subscribe((widget: any) => {
             this.widgetRet = widget;
-            if (this.widgetRet !== null) {
+            // if (this.widgetRet !== null) {
+            if (this.widgetRet) {
               this.widText = this.widgetRet['text'];
               this.size = this.widgetRet['size'];
               this.widgetExists = true;
@@ -50,31 +52,36 @@ export class WidgetHeaderComponent implements OnInit {
         }
       );
   }
+
   createEditHeader() {
     if (this.widText === '' || this.size === '') {
       this.errMsg = 'Enter all values'
       this.errorFlag = true;
-    } else if (this.widgetRet !== null) {
-        const widgetNew = { _id: this.widgetId,
-          widgetType: 'HEADING',
-          pageId: this.pageId,
-          size: this.size,
-          text: this.widText };
-        this.widgetService.updateWidget(this.widgetId, widgetNew)
-          .subscribe((widgets: any) => {
-            this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
-          });
-      } else {
-      const newId = Math.random().toString();
+    } else if (this.widgetRet) {
+      const widgetNew = {
+        _id: this.widgetId,
+        widgetType: 'HEADING',
+        pageId: this.pageId,
+        size: this.size,
+        text: this.widText
+      };
+      this.widgetService
+        .updateWidget(this.widgetId, widgetNew)
+        .subscribe((widgets: any) => {
+          this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+        });
+    } else {
       this.widgetExists = false;
-      this.widgetNew = {_id: newId, widgetType: 'HEADING', pageId: this.pageId, size: this.size, text: this.widText};
+      this.widgetNew = {
+        widgetType: 'HEADING', pageId: this.pageId, size: this.size, text: this.widText
+      };
       this.widgetService.createWidget(this.pageId, this.widgetNew)
         .subscribe((widgets: any) => {
           this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
         });
     }
     //  this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
-    }
+  }
 
   deleteWidget() {
     this.widgetService.deleteWidget(this.widgetId)

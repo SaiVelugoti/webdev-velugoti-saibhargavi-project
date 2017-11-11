@@ -1,4 +1,4 @@
-<form (ngSubmit)="updateWidget()" #f="ngForm">
+<!--<form (ngSubmit)="createUpdateWidget()" #f="ngForm">-->
     <div class="col-sm-4 hidden-xs vertical-line">
       <app-widget-chooser></app-widget-chooser>
 
@@ -17,6 +17,12 @@
         <div *ngSwitchCase="'YOUTUBE'">
           <app-widget-youtube></app-widget-youtube>
         </div>
+        <div *ngSwitchCase="'HTML'">
+          <app-widget-html></app-widget-html>
+        </div>
+        <div *ngSwitchCase="'TEXT'">
+          <app-widget-text></app-widget-text>
+        </div>
 
       </div>
       <!--<div *ngIf=widgetExists>-->
@@ -25,7 +31,7 @@
       <!--</button>-->
       <!--</div>-->
     </div>
-</form>
+<!--</form>-->
 
 
 <nav class="navbar navbar-fixed-bottom bg-primary btnStyle">
