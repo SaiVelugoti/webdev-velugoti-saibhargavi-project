@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {WidgetService} from '../../../services/widget.service.client';
 
@@ -15,7 +15,8 @@ export class WidgetChooserComponent implements OnInit {
   widgets = [{}];
   newWid;
 
-  constructor(private widgetService: WidgetService, private activatedRoute: ActivatedRoute) { }
+  constructor(private widgetService: WidgetService, private activatedRoute: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.activatedRoute.params
@@ -25,7 +26,6 @@ export class WidgetChooserComponent implements OnInit {
           this.websiteId = params['websiteId'];
           this.pageId = params['pageId'];
           this.widgetId = params['widgetId'];
-         // this.widgets = this.widgetService.findWidgetsByPageId(this.pid);
           this.newWid = Math.random();
         }
       );

@@ -15,7 +15,6 @@ export class WebsiteEditComponent implements OnInit {
   websiteName: string;
   webDescription: string;
   websites: [{}];
-  // editweb: {};
   errorFlag: boolean;
   errorMsg: string;
 

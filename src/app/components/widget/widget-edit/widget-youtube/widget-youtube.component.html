@@ -2,7 +2,8 @@
   <div class="container-fluid">
     <div class="navbar-header header-width header-fix">
       <p class="navbar-text pull-left p-fix">
-        <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget']" class="navbar-link glyphicon-color">
+        <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget']"
+           class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-chevron-left">
               </span>
         </a>
@@ -21,42 +22,41 @@
 </nav>
 
 
-<form (ngSubmit) = "createEditYoutube()" #f="ngForm">
-<div class="container-fluid">
+<form (ngSubmit)="createEditYoutube()" #f="ngForm">
+  <div class="container-fluid">
 
-  <label for="name">Name</label>
-  <input  [(ngModel)]="name"
-          placeholder="VideoName"
-          value={{name}}
-          type="text"
-          id="name"
-          name="name"
-          class="form-control"
-  />
-  <label for="url">URL</label>
-  <input  [(ngModel)]="url"
-          placeholder="https://www.youtube.com/embed/mu5vRI13bGc"
-          value={{url}}
-          type="text"
-          id="url"
-          name="url"
-          class="form-control"
-  />
-  <!--placeholder={{url}}-->
-  <label for="width">Width</label>
-  <input  [(ngModel)]="width"
-          placeholder="80%"
-          value={{width}}
-          type="text"
-          id="width"
-          name="width"
-          class="form-control"/>
-  <div *ngIf=widgetExists>
-    <button class="btn btn-danger btn-block "
-            (click)='deleteWidget()'>Delete
-    </button>
+    <label for="name">Name</label>
+    <input [(ngModel)]="name"
+           placeholder="VideoName"
+           value={{name}}
+           type="text"
+           id="name"
+           name="name"
+           class="form-control"
+    />
+    <label for="url">URL</label>
+    <input [(ngModel)]="url"
+           placeholder="https://www.youtube.com/embed/mu5vRI13bGc"
+           value={{url}}
+           type="text"
+           id="url"
+           name="url"
+           class="form-control"
+    />
+    <label for="width">Width</label>
+    <input [(ngModel)]="width"
+           placeholder="80%"
+           value={{width}}
+           type="text"
+           id="width"
+           name="width"
+           class="form-control"/>
+    <div *ngIf=widgetExists>
+      <button class="btn btn-danger btn-block "
+              (click)='deleteWidget()'>Delete
+      </button>
+    </div>
   </div>
-</div>
 </form>
 
 <nav class="navbar navbar-fixed-bottom btnStyle">

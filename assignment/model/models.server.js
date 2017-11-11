@@ -1,5 +1,4 @@
-var mongoose = require('mongoose');
-// var connectionString = 'mongodb://127.0.0.1:27017/test'; // for local
+var mongoose = require("mongoose");
 var connectionString = 'mongodb://localhost/cs5610';
 if (process.env.MLAB_USERNAME_WEBDEV) { // check if running remotely
   var username = process.env.MLAB_USERNAME_WEBDEV; // get from environment

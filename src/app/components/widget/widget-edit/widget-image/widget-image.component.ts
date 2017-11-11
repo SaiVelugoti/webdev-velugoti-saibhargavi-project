@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { NgForm} from '@angular/forms';
+import {NgForm} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {WidgetService} from '../../../../services/widget.service.client';
-import { environment} from '../../../../../environments/environment';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-widget-image',
@@ -40,22 +40,19 @@ export class WidgetImageComponent implements OnInit {
           this.pageId = params['pageId'];
           this.widgetId = params['widgetId'];
           this.widtype = params['widtype'];
-          // this.widgetRet = this.widgetService.findWidgetById(this.wgid);
           this.widgetService.findWidgetById(this.widgetId).subscribe((widget: any) => {
-            // if(this.widgetRet) = widget;
-            // if (this.widgetRet.toString() !== 'undefined') {
             this.widgetRet = widget;
-          if (this.widgetRet) {
-            this.width = this.widgetRet['width'];
-            this.url = this.widgetRet['url'];
-            this.name = this.widgetRet['name'];
+            if (this.widgetRet) {
+              this.width = this.widgetRet['width'];
+              this.url = this.widgetRet['url'];
+              this.name = this.widgetRet['name'];
               this.widgetExists = true;
-          } else {
-            this.url = '';
-            this.name = '';
-            this.width = '';
+            } else {
+              this.url = '';
+              this.name = '';
+              this.width = '';
               this.widgetExists = false;
-          }
+            }
           });
         }
       );
@@ -67,8 +64,10 @@ export class WidgetImageComponent implements OnInit {
       this.errorFlag = true;
     } else if (this.widgetRet) {
       this.widgetExists = true;
-      this.widgetNew = {_id: this.widgetId, widgetType: 'IMAGE', pageId: this.pageId, width: this.imgForm.value.width,
-        url: this.imgForm.value.url, name: this.imgForm.value.name};
+      this.widgetNew = {
+        _id: this.widgetId, widgetType: 'IMAGE', pageId: this.pageId, width: this.imgForm.value.width,
+        url: this.imgForm.value.url, name: this.imgForm.value.name
+      };
       this.widgetService.updateWidget(this.widgetId, this.widgetNew)
         .subscribe((widget: any) => {
           this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
@@ -85,6 +84,7 @@ export class WidgetImageComponent implements OnInit {
         });
     }
   }
+
   deleteWidget() {
     this.widgetService.deleteWidget(this.widgetId)
       .subscribe((widgets: any) => {

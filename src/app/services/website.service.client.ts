@@ -1,14 +1,15 @@
-import { Injectable } from '@angular/core';
-import { Http, RequestOptions, Response} from '@angular/http';
+import {Injectable} from '@angular/core';
+import {Http, RequestOptions, Response} from '@angular/http';
 import 'rxjs/Rx';
-import { environment } from '../../environments/environment';
-import {Router } from '@angular/router';
+import {environment} from '../../environments/environment';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class WebsiteService {
+  baseUrl = environment.baseUrl;
+
   constructor(private _http: Http) {
   }
-  baseUrl = environment.baseUrl;
 
   createWebsite(userId, website) {
     const url = this.baseUrl + '/api/user/' + userId + '/website';
@@ -16,6 +17,7 @@ export class WebsiteService {
       return response.json();
     });
   }
+
   findWebsitesByUser(userId) {
     const url = this.baseUrl + '/api/user/' + userId + '/website';
     return this._http.get(url).map((response: Response) => {
@@ -30,7 +32,7 @@ export class WebsiteService {
     });
   }
 
-  updateWebsite(websiteId, website)  {
+  updateWebsite(websiteId, website) {
     const url = this.baseUrl + '/api/website/' + websiteId;
     return this._http.put(url, website).map((response: Response) => {
       return response.json();

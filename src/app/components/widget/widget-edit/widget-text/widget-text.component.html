@@ -2,7 +2,8 @@
   <div class="container-fluid">
     <div class="navbar-header header-width header-fix">
       <p class="navbar-text pull-left p-fix">
-        <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget', 'new']" class="navbar-link glyphicon-color">
+        <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget', 'new']"
+           class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-chevron-left">
               </span>
         </a>
@@ -10,7 +11,7 @@
 
       <span class="navbar-brand">Widget Edit</span>
       <p class="navbar-text pull-right p-right-fix">
-        <a (click) = "createEditText()" class="navbar-link glyphicon-color">
+        <a (click)="createEditText()" class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-ok">
               </span>
         </a>
@@ -30,40 +31,40 @@
     <label for="text">Text</label>
     <input [(ngModel)]="text"
            placeholder="Text"
-           value = {{text}}
+           value={{text}}
            type="text"
            id="text"
            name="text"
            class="form-control"
     />
     <label for="rows">Rows</label>
-    <input  [(ngModel)]="rows"
-            placeholder=3
-            value={{rows}}
-            type="text"
-            id="rows"
-            name="rows"
-            class="form-control"
+    <input [(ngModel)]="rows"
+           placeholder=3
+           value={{rows}}
+           type="text"
+           id="rows"
+           name="rows"
+           class="form-control"
     />
     <label for="name">Name</label>
-    <input  [(ngModel)]="name"
-            placeholder=myname
-            value={{name}}
-            type="text"
-            id="name"
-            name="name"
-            class="form-control"
+    <input [(ngModel)]="name"
+           placeholder=myname
+           value={{name}}
+           type="text"
+           id="name"
+           name="name"
+           class="form-control"
     />
     <label for="placeholder">Placeholder</label>
-    <input  [(ngModel)]="placeholder"
-            placeholder=mytext
-            value={{placeholder}}
-            type="text"
-            id="placeholder"
-            name="placeholder"
-            class="form-control"
+    <input [(ngModel)]="placeholder"
+           placeholder=mytext
+           value={{placeholder}}
+           type="text"
+           id="placeholder"
+           name="placeholder"
+           class="form-control"
     />
-  <p></p>
+    <p></p>
     <div class="input-group">
       <input type="text"
              readonly

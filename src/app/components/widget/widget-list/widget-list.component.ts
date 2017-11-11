@@ -13,9 +13,11 @@ export class WidgetListComponent implements OnInit {
   websiteId: string;
   pageId: string;
   widgets = [{}]
- widWidth: string;
+  widWidth: string;
+
   constructor(private widgetService: WidgetService, private activatedRoute: ActivatedRoute,
-              private domSanitizer: DomSanitizer) {}
+              private domSanitizer: DomSanitizer) {
+  }
 
   ngOnInit() {
     this.activatedRoute.params
@@ -31,9 +33,11 @@ export class WidgetListComponent implements OnInit {
         }
       );
   }
+
   cleanURL(url: any) {
     return this.domSanitizer.bypassSecurityTrustResourceUrl(url);
   }
+
   assignWidth(width: string) {
     this.widWidth = width;
   }

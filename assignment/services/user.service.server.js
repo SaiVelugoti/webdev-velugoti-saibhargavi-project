@@ -7,26 +7,14 @@ module.exports = function (app) {
   app.get("/api/user/:userId", findUserById);
   app.put("/api/user/:userId", updateUser);
   app.delete("/api/user/:userId", deleteUser);
-  //app.get("/api/users", findAllUsers);
-
-  // users = [
-  //   {_id: '123', username: 'alice', password: 'alice', firstName: 'Alice', lastName: 'Wonder'},
-  //   {_id: '234', username: 'bob', password: 'bob', firstName: 'Bob', lastName: 'Marley'},
-  //   {_id: '345', username: 'charly', password: 'charly', firstName: 'Charly', lastName: 'Garcia'},
-  //   {_id: '456', username: 'jannunzi', password: 'jannunzi', firstName: 'Jose', lastName: 'Annunzi'}
-  // ];
 
   function createUser(req, res) {
     var newUser = req.body;
     userModel.createUser(newUser)
-      .then(function (user){
+      .then(function (user) {
         res.json(user);
-    });
+      });
   }
-
-  // function findAllUsers(req, res) {
-  //   res.json(users);
-  // }
 
   function findUsers(req, res) {
     var username = req.query["username"];
@@ -37,10 +25,10 @@ module.exports = function (app) {
         .findUserByCredentials(username, password)
         .then(function (user) {
           if (user) {
-              res.json(user);
-            } else {
-              res.json(null);
-            }
+            res.json(user);
+          } else {
+            res.json(null);
+          }
         });
       return;
 
@@ -49,21 +37,12 @@ module.exports = function (app) {
         .findUserByUsername(username)
         .then(function (user) {
           if (user) {
-              res.json(user);
-            } else {
-              res.json(null);
-            }
+            res.json(user);
+          } else {
+            res.json(null);
+          }
         });
       return;
-
-      // var user = users.find(function (user) {
-      //   return user.username === username;
-      // });
-      // if(user) {
-      //   res.json(user);
-      // } else {
-      //   res.json(null);
-      // }
     }
     return res.json({});
   }
@@ -74,10 +53,10 @@ module.exports = function (app) {
       .findUserById(userId)
       .then(function (user) {
         if (user) {
-            res.json(user);
-          } else {
-            res.json(null);
-          }
+          res.json(user);
+        } else {
+          res.json(null);
+        }
       });
     return;
     // var user;
@@ -101,14 +80,6 @@ module.exports = function (app) {
       .then(function (returnedUser) {
         res.json(returnedUser);
       });
-    // for (let x = 0; x < users.length; x++) {
-    //   if (users[x]._id === userId) {
-    //     users[x].firstName = user.firstName;
-    //     users[x].lastName = user.lastName;
-    //   }
-    // }
-    // res.json(users[userId]);
-
   }
 
   function deleteUser(req, res) {
@@ -119,10 +90,4 @@ module.exports = function (app) {
         res.json(user);
       });
   }
-  //   for (let x = 0; x < this.users.length; x++) {
-  //     if (users[x]._id === userId) {
-  //       users.splice(x, 1);
-  //     }
-  //   }
-  // }
 }

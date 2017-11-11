@@ -1,24 +1,27 @@
-import { Injectable } from '@angular/core';
-import { Http, RequestOptions, Response } from '@angular/http';
+import {Injectable} from '@angular/core';
+import {Http, RequestOptions, Response} from '@angular/http';
 import 'rxjs/Rx';
-import { environment } from '../../environments/environment';
-import { Router } from '@angular/router';
+import {environment} from '../../environments/environment';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class UserService {
 
-  constructor(private _http: Http) {}
   // Asgn 6
   options: RequestOptions = new RequestOptions();
   baseUrl = environment.baseUrl;
 
+  constructor(private _http: Http) {
+  }
+
   findUsers() {
     const url = this.baseUrl + '/api/users/';
-    return this._http.get(url).map((response: Response) => {});
+    return this._http.get(url).map((response: Response) => {
+    });
   }
 
   // Asgn 6
-  register(username, password){
+  register(username, password) {
     const url = 'http://localhost:3100/api/register';
     const credentials = {
       username: username,
@@ -27,13 +30,15 @@ export class UserService {
     this.options.withCredentials = true;
 
   }
-  login(){
+
+  login() {
   }
+
   createUser(user: any) {
     const url = this.baseUrl + '/api/user/';
     return this._http.post(url, user)
       .map((response: Response) => {
-      return response.json();
+        return response.json();
       });
   }
 
@@ -71,7 +76,6 @@ export class UserService {
   }
 
   findUserByCredentials(username, password) {
-
     const url = this.baseUrl + '/api/user?username=' + username + '&password=' + password;
     return this._http.get(url)
       .map((response: Response) => {

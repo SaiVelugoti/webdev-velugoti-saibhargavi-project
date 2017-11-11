@@ -19,7 +19,7 @@
 
   </div>
 </nav>
-<form (ngSubmit) = "createPage()" #f="ngForm">
+<form (ngSubmit)="createPage()" #f="ngForm">
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-3 visible-lg">
@@ -31,7 +31,8 @@
               </div>
 
               <div class="col-xs-3">
-                <a [routerLink]="['/user', userId, 'website', websiteId, 'page', 'new']" class="glyphicon-color pull-right">
+                <a [routerLink]="['/user', userId, 'website', websiteId, 'page', 'new']"
+                   class="glyphicon-color pull-right">
               <span class="glyphicon glyphicon-plus">
               </span>
                 </a>
@@ -40,7 +41,7 @@
             </div>
           </li>
 
-          <li class="list-group-item"  *ngFor="let page of pages">
+          <li class="list-group-item" *ngFor="let page of pages">
             <div class="row">
               <div class="col-lg-9  visible-lg">
                 <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget']">
@@ -49,7 +50,7 @@
               </div>
 
               <div class="col-xs-3">
-                <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId]" >
+                <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId]">
               <span class="glyphicon glyphicon-cog pull-right">
               </span>
                 </a>
@@ -100,14 +101,14 @@
     </div>
   </div>
 
-  </form>
-      <nav class="navbar navbar-fixed-bottom bg-primary btnStyle">
-        <div class="container-fluid">
-          <p class="navbar-text pull-right">
-            <a [routerLink]="['/user', userId]" class="navbar-link glyphicon-color">
+</form>
+<nav class="navbar navbar-fixed-bottom bg-primary btnStyle">
+  <div class="container-fluid">
+    <p class="navbar-text pull-right">
+      <a [routerLink]="['/user', userId]" class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-user">
               </span>
-            </a>
-          </p>
-        </div>
-      </nav>
+      </a>
+    </p>
+  </div>
+</nav>

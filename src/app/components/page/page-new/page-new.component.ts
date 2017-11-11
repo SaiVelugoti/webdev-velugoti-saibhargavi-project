@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm} from '@angular/forms';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {NgForm} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PageService} from '../../../services/page.service.client';
 
@@ -15,11 +15,13 @@ export class PageNewComponent implements OnInit {
   websiteId: string;
   pageName: string;
   description: string;
-  pages= [{}];
+  pages = [{}];
   errorFlag: boolean;
   errorMsg: string;
   newPageId: string;
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private pageService: PageService) { }
+
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private pageService: PageService) {
+  }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(
@@ -32,20 +34,22 @@ export class PageNewComponent implements OnInit {
       }
     );
   }
+
   createPage() {
     if (this.pageCreateForm.value.pageName === '' && this.pageCreateForm.value.description === '') {
-     this.router.navigate(['/user/', this.userId, 'website', this.websiteId, 'page']);
+      this.router.navigate(['/user/', this.userId, 'website', this.websiteId, 'page']);
     } else if (this.pageCreateForm.value.pageName !== '' && this.pageCreateForm.value.description !== '') {
-     // this.newPageId = Math.random().toString();
+      // this.newPageId = Math.random().toString();
       const page = {
         // _id: this.newPageId,
         name: this.pageCreateForm.value.pageName,
         websiteId: this.websiteId,
-        description: this.pageCreateForm.value.description};
+        description: this.pageCreateForm.value.description
+      };
       this.pageService.createPage(this.websiteId, page).subscribe((pages: any) => {
         this.router.navigate(['/user/', this.userId, 'website', this.websiteId, 'page']);
       });
-    }else {
+    } else {
       this.errorMsg = 'Enter both name and description';
       this.errorFlag = true;
     }

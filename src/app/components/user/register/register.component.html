@@ -4,17 +4,17 @@
     {{errorMsg}}
   </div>
   <h1> Register </h1>
-  <form (ngSubmit) = "register()" #f="ngForm">
+  <form (ngSubmit)="register()" #f="ngForm">
 
-      <input placeholder="username"
-             name="username"
-             type="text"
-             id="username"
-             class="form-control"
-             ngModel
-             required
-             #username="ngModel"/>
-      <span class="help-block" *ngIf="!username.valid && username.touched">
+    <input placeholder="username"
+           name="username"
+           type="text"
+           id="username"
+           class="form-control"
+           ngModel
+           required
+           #username="ngModel"/>
+    <span class="help-block" *ngIf="!username.valid && username.touched">
       Please enter username!
     </span>
 
@@ -46,9 +46,11 @@
 
     <button class="btn btn-block btnStyle bg-primary"
             type="submit"
-            [disabled]="!f.valid">Register</button>
+            [disabled]="!f.valid">Register
+    </button>
     <button class="btn btn-block btn-danger"
             type="button"
-            [routerLink]="['/login']">Cancel</button>
+            [routerLink]="['/login']">Cancel
+    </button>
   </form>
 </div>

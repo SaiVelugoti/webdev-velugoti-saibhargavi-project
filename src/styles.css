@@ -26,6 +26,7 @@ select.form-control {
 /*}*/
 
 .wd-widget > img {
+  padding: 5pt;
   width: 100%;
 }
 
@@ -34,7 +35,7 @@ select.form-control {
   right: 15px;
   background: white;
   opacity: 0.9;
-  padding: 5px;
+  padding: 10px;
   border-bottom-left-radius: 10px;
 }
 

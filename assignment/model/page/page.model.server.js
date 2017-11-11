@@ -26,10 +26,7 @@ function createPage(websiteId, page) {
 }
 
 function findAllPagesForWebsite(websiteId) {
-  return PageModel
-    .find({websiteId: websiteId});
-    // .populate('websiteId')
-    // .exec();
+  return PageModel.find({websiteId: websiteId});
 }
 
 function findPageById(pageId) {

@@ -12,7 +12,7 @@ WidgetModel.reorderWidget = reorderWidget;
 
 module.exports = WidgetModel;
 
-function createWidget(pageId, widget){
+function createWidget(pageId, widget) {
   var newWidget = null;
   delete widget._id;
   return WidgetModel.create(widget)
@@ -26,21 +26,22 @@ function createWidget(pageId, widget){
     })
 }
 
-function findAllWidgetsForPage(pageId){
-  return WidgetModel.find({pageId: pageId})
-    .populate('pageId')
-    .exec();
+function findAllWidgetsForPage(pageId) {
+  return WidgetModel.find({pageId: pageId});
 }
 
-function findWidgetById(widgetId){
+function findWidgetById(widgetId) {
   return WidgetModel.findOne({_id: widgetId});
 }
-function updateWidget(widgetId, widget){
+
+function updateWidget(widgetId, widget) {
   return WidgetModel.update({_id: widgetId}, widget);
 }
-function deleteWidget(widgetId){
+
+function deleteWidget(widgetId) {
   return WidgetModel.deleteOne({_id: widgetId});
 }
-function reorderWidget(pageId, start, end){
+
+function reorderWidget(pageId, start, end) {
 
 }

@@ -29,7 +29,7 @@ module.exports = function (app) {
             res.json(websites);
           });
       }, function (err) {
-console.log(err);
+        console.log(err);
       });
     return;
     // websites.push(website);
@@ -38,42 +38,19 @@ console.log(err);
 
   function findWebsitesByUser(req, res) {
     var userId = req.params['userId'];
-   // var websitesByUserId = [];
+    // var websitesByUserId = [];
     websiteModel.findAllWebsitesForUser(userId)
       .then(function (websitesByUserId) {
         res.json(websitesByUserId);
       });
-   // return;
-    // for (let x = 0; x < this.websites.length; x++) {
-    //   if (this.websites[x].developerId === userId) {
-    //     websitesByUserId.push(this.websites[x]);
-    //   }
-    // }
-    // res.json(websitesByUserId);
   }
 
   function findWebsiteById(req, res) {
     var websiteId = req.params['websiteId'];
-    // var website;
-    // for (let x = 0; x < this.websites.length; x++) {
-    //   if (this.websites[x]._id === websiteId) {
-    //     website = websites[x];
-    //   }
-    // }
     websiteModel.findWebsiteById(websiteId)
       .then(function (websitesById) {
-       // if (websitesByUserId){
-          res.json(websitesById);
-        // } else {
-        //   res.json(null);
-        // }
+        res.json(websitesById);
       });
-    // if (website){
-    //   res.json(website);
-    // } else {
-    //   res.json(null);
-    // }
-   // return;
   }
 
   function updateWebsite(req, res) {
@@ -83,24 +60,15 @@ console.log(err);
       .then(function (websites) {
         res.json(websites);
       });
-    // for (let x = 0; x < websites.length; x++) {
-    //   if (websites[x]._id === websiteId) {
-    //     websites[x] = website; }
-    // }
-    // res.json(websites);
     return;
   }
 
-  function deleteWebsite(req,res) {
+  function deleteWebsite(req, res) {
     var websiteId = req.params['websiteId'];
     websiteModel.deleteWebsite(websiteId)
       .then(function (websites) {
         res.json(websites);
       });
-    // for (let x = 0; x < websites.length; x++) {
-    //   if (websites[x]._id === websiteId) {  websites.splice(x, 1); }
-    // }
-    // res.json({});
     return;
   }
 }

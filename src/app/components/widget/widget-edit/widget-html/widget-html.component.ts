@@ -29,25 +29,23 @@ export class WidgetHtmlComponent implements OnInit {
   public editorOptions = {
     placeholder: 'insert content...'
   };
+
   constructor(private widgetService: WidgetService, private activatedRoute: ActivatedRoute, private router: Router) {
   }
 
   onEditorBlured(quill) {
-    console.log('editor blur!', quill);
   }
 
   onEditorFocused(quill) {
-    console.log('editor focus!', quill);
   }
 
   onEditorCreated(quill) {
     this.editor = quill;
-    console.log('quill is ready! this is current quill instance object', quill);
   }
 
-  onContentChanged({ quill, html, text }) {
-    console.log('quill content is changed!', quill, html, text);
+  onContentChanged({quill, html, text}) {
   }
+
   ngOnInit() {
     this.errorFlag = false;
     this.activatedRoute.params
@@ -58,11 +56,8 @@ export class WidgetHtmlComponent implements OnInit {
           this.pageId = params['pageId'];
           this.widgetId = params['widgetId'];
           this.widtype = params['widtype'];
-          // this.widgetRet = this.widgetService.findWidgetById(this.wgid);
           this.widgetService.findWidgetById(this.widgetId).subscribe((widget: any) => {
-            // this.widget = widget;
             this.widgetRet = widget;
-            // if (this.widgetRet !== null) {
             if (this.widgetRet) {
               this.widget = widget;
               this.widgetname = this.widget['name'];
@@ -105,7 +100,6 @@ export class WidgetHtmlComponent implements OnInit {
           this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
         });
     }
-    //  this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
   }
 
   deleteWidget() {

@@ -8,29 +8,11 @@ module.exports = function (app) {
   app.get("/api/widget/:widgetId", findWidgetById);
   app.put("/api/widget/:widgetId", updateWidget);
   app.delete("/api/widget/:widgetId", deleteWidget);
- // app.post("/api/upload", upload.single('myFile'), uploadImage);
+  // app.post("/api/upload", upload.single('myFile'), uploadImage);
 
   var widgetModel = require("../model/widget/widget.model.server")
-  // widgets = [
-  //   { '_id': '123', 'widgetType': 'HEADING', 'pageId': '321', 'size': 2, 'text': 'GIZMODO'},
-  //   { '_id': '234', 'widgetType': 'HEADING', 'pageId': '321', 'size': 4, 'text': 'Lorem ipsum'},
-  //   { '_id': '345', 'widgetType': 'IMAGE', 'pageId': '321', 'width': '100%', 'url': 'http://lorempixel.com/400/200/', 'name': 'Image1'},
-  //   { '_id': '456', 'widgetType': 'HTML', 'pageId': '321', 'text': '<p>Lorem ipsum</p>'},
-  //   { '_id': '567', 'widgetType': 'HEADING', 'pageId': '321', 'size': 4, 'text': 'Lorem ipsum'},
-  //   { '_id': '678', 'widgetType': 'YOUTUBE', 'pageId': '321', 'width': '100%',
-  //     'url': 'https://www.youtube.com/embed/mu5vRI13bGc', 'name': 'uTube1' },
-  //   { '_id': '789', 'widgetType': 'HTML', 'pageId': '321', 'text': '<p>Lorem ipsum</p>'}
-  // ];
 
-  // api = {
-  //   'createWidget': this.createWidget,
-  //   'findAllWidgetsForPage': this.findAllWidgetsForPage,
-  //   'findWidgetById': this.findWidgetById,
-  //   'updateWidget': this.updateWidget,
-  //   'deleteWidget': this.deleteWidget
-  // };
-
-  function createWidget(req, res){
+  function createWidget(req, res) {
     var widget = req.body;
     widget.pageId = req.params['pageId'];
     var pageId = req.params['pageId'];
@@ -41,24 +23,7 @@ module.exports = function (app) {
             res.json(widgets);
           });
       });
-    // this.widgets.push(widget);
-    // res.json(widgets);
   }
-
-  // function createPage(req, res) {
-  //   var page = req.body;
-  //   page.websiteId = req.params['websiteId'];
-  //   var websiteId = req.params['websiteId'];
-  //   pageModel.createPage(websiteId, page)
-  //     .then(function (page) {
-  //       pageModel.findAllPagesForWebsite(websiteId)
-  //         .then(function (retrievedPages) {
-  //           res.json(retrievedPages);
-  //         });
-  //     });
-  //   // this.pages.push(page);
-  //   // res.json(pages);
-  // }
 
   function findAllWidgetsForPage(req, res) {
     var pageId = req.params['pageId'];
@@ -67,12 +32,6 @@ module.exports = function (app) {
       .then(function (widgetsByPageId) {
         res.json(widgetsByPageId);
       })
-    // for (let x = 0; x < widgets.length; x++) {
-    //   if (widgets[x].pageId === pageId) {
-    //     widgetsByPageId.push(widgets[x]);
-    //   }
-    // }
-    // res.json(widgetsByPageId);
   }
 
   function findWidgetById(req, res) {
@@ -80,23 +39,13 @@ module.exports = function (app) {
     var widget;
     widgetModel.findWidgetById(widgetId)
       .then(function (widget) {
-        if (widget){
-            res.json(widget);
-          } else {
-            res.json(null);
-          }
+        if (widget) {
+          res.json(widget);
+        } else {
+          res.json(null);
+        }
       });
     return;
-    // for (let x = 0; x < widgets.length; x++) {
-    //   if (widgets[x]._id === widgetId) {
-    //     widget = widgets[x];
-    //   }
-    // }
-    // if (widget){
-    //   res.json(widget);
-    // } else {
-    //   res.json(null);
-    // }
   }
 
   function updateWidget(req, res) {
@@ -107,12 +56,6 @@ module.exports = function (app) {
       .then(function (widgets) {
         res.json(widgets);
       })
-    // for (let x = 0; x < this.widgets.length; x++) {
-    //   if (this.widgets[x]._id === widgetId) {
-    //     this.widgets[x] = widget;
-    //   }
-    // }
-    // res.json(widgets);
     return;
   }
 
@@ -122,12 +65,6 @@ module.exports = function (app) {
       .then(function (widgets) {
         res.json(widgets);
       })
-    // for (let x = 0; x < this.widgets.length; x++) {
-    //   if (this.widgets[x]._id === widgetId) {
-    //     this.widgets.splice(x, 1);
-    //   }
-    // }
-    // res.json(widgets);
   }
 
   // function uploadImage(req, res) {
@@ -162,7 +99,7 @@ module.exports = function (app) {
   //   var callbackUrl = '/user/' + userId + '/website/' + websiteId + '/page/' + pageId + '/widget';
   //   res.redirect(callbackUrl);
   // }
-  function getWidgetById(widgetId){
+  function getWidgetById(widgetId) {
     for (let x = 0; x < widgets.length; x++) {
       if (widgets[x]._id === widgetId) {
         return widgets[x];

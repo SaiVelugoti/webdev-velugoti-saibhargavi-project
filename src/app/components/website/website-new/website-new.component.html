@@ -20,7 +20,7 @@
   </div>
 </nav>
 
-<form (ngSubmit) = "createWebsite()" #f="ngForm">
+<form (ngSubmit)="createWebsite()" #f="ngForm">
   <div class="container-fluid ">
     <div class="row">
       <div class="col-lg-3 visible-lg">
@@ -31,7 +31,7 @@
                 Websites
               </div>
               <div class="col-xs-3">
-                <a [routerLink]="['/user', userId, 'website', 'new']"class="glyphicon-color pull-right">
+                <a [routerLink]="['/user', userId, 'website', 'new']" class="glyphicon-color pull-right">
               <span class="glyphicon glyphicon-plus">
               </span>
                 </a>
@@ -49,7 +49,7 @@
               </div>
 
               <div class="col-xs-3">
-                <a [routerLink]="['/user', userId, 'website', website['_id']]" >
+                <a [routerLink]="['/user', userId, 'website', website['_id']]">
               <span class="glyphicon glyphicon-cog pull-right">
               </span>
                 </a>
@@ -72,9 +72,9 @@
                    type="text"
                    id="websiteName"
                    class="form-control"
-            ngModel
-            required
-            #websiteName="ngModel"/>
+                   ngModel
+                   required
+                   #websiteName="ngModel"/>
             <span class="help-block" *ngIf="!websiteName.valid && websiteName.touched">
             Please enter Website Name!
             </span>
@@ -87,7 +87,7 @@
               class="form-control"
               ngModel
               required
-            #webDescription="ngModel">{{webDescription}}</textarea>
+              #webDescription="ngModel">{{webDescription}}</textarea>
             <span class="help-block" *ngIf="!webDescription.valid && webDescription.touched">
             Please describe your website!
             </span>

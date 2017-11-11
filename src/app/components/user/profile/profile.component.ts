@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../../services/user.service.client';
 import {ActivatedRoute} from '@angular/router';
 
@@ -15,7 +15,9 @@ export class ProfileComponent implements OnInit {
   firstName: string;
   lastName: string;
   password: string;
-  constructor(private userService: UserService, private activatedRoute: ActivatedRoute) { }
+
+  constructor(private userService: UserService, private activatedRoute: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.activatedRoute.params
@@ -32,17 +34,17 @@ export class ProfileComponent implements OnInit {
         this.password = returnedUser.password;
       });
   }
+
   updateUser() {
-   this.user = {
-     _id: this.userId,
-     username: this.username,
-     firstName: this.firstName,
-     lastName: this.lastName,
-     password: this.password
-   };
-    // this.user['firstName'] = this.firstName;
-    // this.user['lastName'] = this.lastName;
+    this.user = {
+      _id: this.userId,
+      username: this.username,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      password: this.password
+    };
     this.userService.updateUser(this.userId, this.user)
-      .subscribe((user: any) => {});
+      .subscribe((user: any) => {
+      });
   }
 }
