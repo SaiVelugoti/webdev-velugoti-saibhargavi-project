@@ -19,6 +19,14 @@ export class WidgetService {
       });
   }
 
+  createDummyWidget(pageId: string, widget: any) {
+    const url = this.baseUrl + '/api/page/' + pageId + '/widgetNew';
+    return this._http.post(url, widget)
+      .map((response: Response) => {
+        return response.json();
+      });
+  }
+
   findWidgetsByPageId(pageId) {
     const url = this.baseUrl + '/api/page/' + pageId + '/widget';
     return this._http.get(url)

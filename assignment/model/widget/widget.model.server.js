@@ -9,8 +9,10 @@ WidgetModel.findWidgetById = findWidgetById;
 WidgetModel.updateWidget = updateWidget;
 WidgetModel.deleteWidget = deleteWidget;
 WidgetModel.reorderWidget = reorderWidget;
+WidgetModel.createdumWidget = createdumWidget;
 
-module.exports = WidgetModel;
+
+  module.exports = WidgetModel;
 
 function createWidget(pageId, widget) {
   var newWidget = null;
@@ -22,6 +24,23 @@ function createWidget(pageId, widget) {
         .then(function (page) {
           page.widgets.push(newWidget);
           return page.save();
+        })
+    })
+}
+
+
+function createdumWidget(pageId, widget) {
+  var newWidget = null;
+  delete widget._id;
+  return WidgetModel.create(widget)
+    .then(function (widget) {
+      newWidget = widget;
+      return PageModel.findPageById(newWidget.pageId)
+        .then(function (page) {
+          page.widgets.push(newWidget);
+          page.save();
+          // acticonsole.log(newWidget);
+          return widget;
         })
     })
 }

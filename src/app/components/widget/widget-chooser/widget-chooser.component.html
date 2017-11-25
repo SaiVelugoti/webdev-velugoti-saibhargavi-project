@@ -27,8 +27,10 @@
     <li class="list-group-item"><a
       [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget', newWid, 'HEADING']">Heading</a>
     </li>
-    <li class="list-group-item"><a
-      [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget', newWid, 'IMAGE']">Image</a></li>
+    <!--<li class="list-group-item"><a-->
+      <!--[routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget', newWid, 'IMAGE']">Image</a></li>-->
+
+    <li class="list-group-item"><a (click)="createNewIm()">Image</a></li>
     <li class="list-group-item"><a
       [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget', newWid, 'YOUTUBE']">YouTube</a>
     </li>

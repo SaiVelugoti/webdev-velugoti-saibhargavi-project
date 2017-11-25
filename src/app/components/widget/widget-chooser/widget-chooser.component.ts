@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {WidgetService} from '../../../services/widget.service.client';
 
 @Component({
@@ -13,9 +13,11 @@ export class WidgetChooserComponent implements OnInit {
   pageId: string;
   widgetId: string;
   widgets = [{}];
-  newWid;
+  newWid: any;
+  widgetNew: any;
+  newWidget: any;
 
-  constructor(private widgetService: WidgetService, private activatedRoute: ActivatedRoute) {
+  constructor(private widgetService: WidgetService, private activatedRoute: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
@@ -27,7 +29,19 @@ export class WidgetChooserComponent implements OnInit {
           this.pageId = params['pageId'];
           this.widgetId = params['widgetId'];
           this.newWid = Math.random();
-        }
-      );
+        });
+  }
+
+  createNewIm() {
+    this.widgetNew = {
+      widgetType: 'IMAGE', pageId: this.pageId
+    };
+    this.widgetService.createDummyWidget(this.pageId, this.widgetNew)
+      .subscribe((widget: any) => {
+        console.log(widget['_id'])
+        this.newWidget = widget['_id'];
+
+        this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget', this.newWidget, 'IMAGE']);
+      });
   }
 }
