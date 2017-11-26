@@ -1,7 +1,7 @@
 module.exports = function (app) {
 
   var multer = require('multer');
-  var upload = multer({ dest: __dirname +'/../../src/assets/uploads'});
+  var upload = multer({ dest: __dirname +'../../src/uploads'});
 
   app.post("/api/page/:pageId/widget", createWidget);
   app.post("/api/page/:pageId/widgetNew", createDummyWidget);
@@ -111,7 +111,7 @@ module.exports = function (app) {
     // }
     // var widget = {url:'public/src/assets/uploads/' + filename, width: width , };
     // var widget = {url:'assets/uploads/' + filename, width: width , };
-    var widget = {url:'/assignment/uploads/' + filename, width: width , };
+    var widget = {url:'/src/uploads/' + filename, width: width , };
     widgetModel.updateWidget(widgetId,widget)
       .then(function (status){
           let callbackUrl = "/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget";
