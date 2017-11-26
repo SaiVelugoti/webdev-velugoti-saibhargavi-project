@@ -111,7 +111,7 @@ module.exports = function (app) {
     // }
     // var widget = {url:'public/src/assets/uploads/' + filename, width: width , };
     // var widget = {url:'assets/uploads/' + filename, width: width , };
-    var widget = {url:'./uploads/' + filename, width: width , };
+    var widget = {url:'/assignment/uploads/' + filename, width: width , };
     widgetModel.updateWidget(widgetId,widget)
       .then(function (status){
           let callbackUrl = "/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget";
