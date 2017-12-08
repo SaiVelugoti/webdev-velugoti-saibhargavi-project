@@ -32,6 +32,9 @@ import {WidgetService} from './services/widget.service.client';
 import {SharedService} from './services/shared.service.client';
 import { WidgetHtmlComponent } from './components/widget/widget-edit/widget-html/widget-html.component';
 import { WidgetTextComponent } from './components/widget/widget-edit/widget-text/widget-text.component';
+import { FlickrSearchComponent } from './components/widget/widget-edit/widget-image/flickr-search/flickr-search.component';
+import {FlickrService} from "./services/flickr.service.client";
+import {AuthGuard} from "./services/auth-guard.service";
 
 @NgModule({
   // Declare components here
@@ -56,7 +59,8 @@ import { WidgetTextComponent } from './components/widget/widget-edit/widget-text
     WidgetImageComponent,
     WidgetYoutubeComponent,
     WidgetHtmlComponent,
-    WidgetTextComponent
+    WidgetTextComponent,
+    FlickrSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +76,9 @@ import { WidgetTextComponent } from './components/widget/widget-edit/widget-text
     WebsiteService,
     PageService,
     WidgetService,
-    SharedService],
+    FlickrService,
+    SharedService,
+  AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

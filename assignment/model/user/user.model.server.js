@@ -1,7 +1,9 @@
 var mongoose = require("mongoose");
 var UserSchema = require("./user.schema.server");
 var UserModel = mongoose.model("UserModel", UserSchema);
-
+var api = {
+  findUserByFacebookId: findUserByFacebookId
+}
 UserModel.createUser = createUser;
 UserModel.findUserById = findUserById;
 UserModel.findUserByUsername = findUserByUsername;
@@ -10,6 +12,10 @@ UserModel.updateUser = updateUser;
 UserModel.deleteUser = deleteUser;
 
 module.exports = UserModel;
+
+function findUserByFacebookId(facebookId) {
+  return User.findOne({'facebook.id': facebookId});
+}
 
 function createUser(user) {
   return UserModel.create(user);

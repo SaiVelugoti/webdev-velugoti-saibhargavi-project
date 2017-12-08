@@ -9,21 +9,25 @@ const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
 const app = express();
+const passport = require('passport');
 
-// Asgn 6
-// const cookieParser = require('cookie-parser');
-// const session = require('express-session');
-// const passport = require('passport');
-//
-// app.use(cookieParser());
-// app.use(session({ secret: processs.env.SESSION_SECRET}));
-// app.use(passport.initialize());
-// app.use(passport.session());
 // -- Asgn 6
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(cookieParser());
+// app.use(session({ secret: process.env.SESSION_SECRET}));
+app.use(session({secret: 'sai-v', resave: true, saveUninitialized: true}));
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+// -- Asgn 6
+
 
 
 // Point static path to dist -- For building -- REMOVE
@@ -33,16 +37,16 @@ app.use(express.static(path.join(__dirname, 'dist')));
 // CORS
 app.use(function (req, res, next) {
 
-  res.header("Access-Control-Allow-Origin", "*");
+  // res.header("Access-Control-Allow-Origin", "*");
 
   // Asgn 6 - replace above line with this
-  // res.header("Access-Control-Allow-Origin", "http://localhost:4200");
+  res.header("Access-Control-Allow-Origin", "http://localhost:4200");
 
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
 
   // Asgn - 6
-  // res.header("Access-Control-Allow-Credentials", "true);
+  res.header("Access-Control-Allow-Credentials", "true");
   next();
 });
 
@@ -62,8 +66,10 @@ serverSide(app);
 
 // For Build: Catch all other routes and return the index file -- BUILDING
 app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, './dist/index.html'));
+  // res.sendFile(path.join(__dirname, './dist/index.html'));
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
 
-server.listen(port, () => console.log('Running'));
+// server.listen(port, () => console.log('Running'));
+server.listen(3000);

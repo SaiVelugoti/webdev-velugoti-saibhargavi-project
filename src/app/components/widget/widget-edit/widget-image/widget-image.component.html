@@ -23,7 +23,7 @@
 </nav>
 
 
-<form (ngSubmit)="createEditImage()" #f="ngForm">
+<!--<form (ngSubmit)="createEditImage()" #f="ngForm">-->
   <div class="container-fluid">
     <div *ngIf="errorFlag"
          class="alert alert-danger">
@@ -58,6 +58,14 @@
              name="width"
              class="form-control"
       />
+      <div class="input-group">
+        <span class="input-group-btn">
+                        <a class="btn btn-primary btn-block "
+                           [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget', widgetId, 'flickrSearch']">
+                            Search Flickr</a>
+                    </span>
+      </div>
+
       <form ngNoForm action="{{baseUrl}}/api/upload" method="post" enctype="multipart/form-data">
         <input  name="myFile"   type="file" class="form-control"/>
         <input  name="widgetId" value="{{widgetId}}"   style="display: none"/>
@@ -68,6 +76,7 @@
         <br/>
       </form>
 
+
       <br/>
       <div *ngIf=widgetExists>
         <button class="btn btn-danger btn-block "
@@ -77,11 +86,11 @@
     </div>
   </div>
 
-</form>
+<!--</form>-->
 <nav class="navbar navbar-fixed-bottom bg-primary btnStyle">
   <div class="container-fluid">
     <p class="navbar-text pull-right">
-      <a [routerLink]="['/user', userId]" class="navbar-link glyphicon-color">
+      <a [routerLink]="['/profile']" class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-user">
               </span>
       </a>

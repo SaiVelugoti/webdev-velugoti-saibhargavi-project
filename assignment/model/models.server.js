@@ -8,5 +8,7 @@ if (process.env.MLAB_USERNAME_WEBDEV) { // check if running remotely
 }
 
 var db = mongoose.connect(connectionString, {useMongoClient: true});
+
+// mongoose.Promise = global.Promise;
 module.exports = db;
 

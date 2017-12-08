@@ -72,7 +72,12 @@
                    name="websiteName"
                    type="text"
                    id="websiteName"
-                   class="form-control"/>
+                   class="form-control"
+                   required
+            />
+            <span class="help-block" *ngIf="!websiteName.valid">
+              Please name your website!
+            </span>
             <label for="webDescription">Description</label>
             <textarea
               [(ngModel)]="webDescription"
@@ -95,7 +100,7 @@
 <nav class="navbar navbar-fixed-bottom bg-primary btnStyle">
   <div class="container-fluid">
     <p class="navbar-text pull-right">
-      <a [routerLink]="['/user', userId]" class="navbar-link glyphicon-color">
+      <a [routerLink]="['/profile']" class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-user">
               </span>
       </a>

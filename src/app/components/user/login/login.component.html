@@ -12,7 +12,11 @@
            class="form-control"
            ngModel
            required
-           #username="ngModel"/>
+           #username="ngModel"
+           autocomplete="off"
+           autocapitalize="off"
+    />
+    <!--autofocus="on"-->
     <span class="help-block" *ngIf="!username.valid && username.touched">
       Please enter username!
     </span>
@@ -36,6 +40,11 @@
             type="button"
             [routerLink]="['/register']">Register
     </button>
+    <a href="/api/facebook/login" class="btn btn-primary btn-block">
+      <span class="fa fa-facebook"></span>
+      Facebook
+    </a>
+
 
   </form>
 </div>
