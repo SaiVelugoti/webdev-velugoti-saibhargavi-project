@@ -27,6 +27,7 @@ export class WidgetImageComponent implements OnInit {
   widgetNew: {};
   widgetExists: boolean;
   baseUrl = environment.baseUrl;
+
   constructor(private widgetService: WidgetService, private activatedRoute: ActivatedRoute, private router: Router) {
   }
 
@@ -59,29 +60,38 @@ export class WidgetImageComponent implements OnInit {
   }
 
   createEditImage() {
-    if (this.name === '' || this.width === '' || this.url === '') {
-      this.errMsg = 'Enter all values'
+    if (this.name === '' || this.name === undefined) {
+      this.errMsg = 'Enter Name'
       this.errorFlag = true;
-    } else if (this.widgetRet) {
-      this.widgetExists = true;
-      this.widgetNew = {
-        _id: this.widgetId, widgetType: 'IMAGE', pageId: this.pageId, width: this.imgForm.value.width,
-        url: this.imgForm.value.url, name: this.imgForm.value.name
-      };
-      this.widgetService.updateWidget(this.widgetId, this.widgetNew)
-        .subscribe((widget: any) => {
-          this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
-        });
     } else {
-      this.widgetExists = false;
-      this.widgetNew = {
-        widgetType: 'IMAGE', pageId: this.pageId, width: this.imgForm.value.width,
-        url: this.imgForm.value.url, name: this.imgForm.value.name
-      };
-      this.widgetService.createWidget(this.pageId, this.widgetNew)
-        .subscribe((widget: any) => {
-          this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
-        });
+      if (this.name === '' || this.width === '' || this.url === '') {
+        this.errMsg = 'Enter all values'
+        this.errorFlag = true;
+      } else if (this.widgetRet) {
+        this.widgetExists = true;
+        console.log('this.pageId', this.pageId);
+        console.log('this.imgForm.value.width', this.imgForm.value.width);
+        console.log('this.imgForm.value.url', this.imgForm.value.url);
+        console.log('this.imgForm.value.name', this.imgForm.value.name);
+        this.widgetNew = {
+          _id: this.widgetId, widgetType: 'IMAGE', pageId: this.pageId, width: this.imgForm.value.width,
+          url: this.imgForm.value.url, name: this.imgForm.value.name
+        };
+        this.widgetService.updateWidget(this.widgetId, this.widgetNew)
+          .subscribe((widget: any) => {
+            this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+          });
+      } else {
+        this.widgetExists = false;
+        this.widgetNew = {
+          widgetType: 'IMAGE', pageId: this.pageId, width: this.imgForm.value.width,
+          url: this.imgForm.value.url, name: this.imgForm.value.name
+        };
+        this.widgetService.createWidget(this.pageId, this.widgetNew)
+          .subscribe((widget: any) => {
+            this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+          });
+      }
     }
   }
 

@@ -5,7 +5,7 @@ import {Http} from '@angular/http';
 export class FlickrService {
   key = '5d9596b602c29a4986e327ebe8a77ed8';
   secret = '46d8cf97d7b21bff';
-  urlBase = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&api_ke=API_KEY&text = TEXT';
+  urlBase = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&api_key=API_KEY&text=TEXT';
 
 
   constructor(private _http: Http) {
@@ -20,3 +20,5 @@ export class FlickrService {
     return this._http.get(url);
   }
 }
+
+// 'https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&api_key=5d9596b602c29a4986e327ebe8a77ed8&text=flower'

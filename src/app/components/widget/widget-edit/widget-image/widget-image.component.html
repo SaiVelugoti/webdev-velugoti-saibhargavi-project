@@ -23,7 +23,7 @@
 </nav>
 
 
-<!--<form (ngSubmit)="createEditImage()" #f="ngForm">-->
+<form (ngSubmit)="createEditImage()" #f="ngForm">
   <div class="container-fluid">
     <div *ngIf="errorFlag"
          class="alert alert-danger">
@@ -60,7 +60,7 @@
       />
       <div class="input-group">
         <span class="input-group-btn">
-                        <a class="btn btn-primary btn-block "
+                        <a class="btn btn-primary btn-block"
                            [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget', widgetId, 'flickrSearch']">
                             Search Flickr</a>
                     </span>
@@ -86,7 +86,7 @@
     </div>
   </div>
 
-<!--</form>-->
+</form>
 <nav class="navbar navbar-fixed-bottom bg-primary btnStyle">
   <div class="container-fluid">
     <p class="navbar-text pull-right">

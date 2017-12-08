@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {WidgetService} from '../../../../services/widget.service.client';
+import {isUndefined} from "util";
 
 @Component({
   selector: 'app-widget-header',
@@ -54,34 +55,40 @@ export class WidgetHeaderComponent implements OnInit {
   }
 
   createEditHeader() {
-    if (this.widText === '' || this.size === '') {
-      this.errMsg = 'Enter all values'
-      this.errorFlag = true;
-    } else if (this.widgetRet) {
-      const widgetNew = {
-        _id: this.widgetId,
-        widgetType: 'HEADING',
-        pageId: this.pageId,
-        size: this.size,
-        text: this.widText
-      };
-      this.widgetService
-        .updateWidget(this.widgetId, widgetNew)
-        .subscribe((widgets: any) => {
-          this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
-        });
+    console.log(this.widText);
+    if (this.widText === '' || this.widText === undefined) {
+      this.errMsg = 'Enter Name',
+        this.errorFlag = true;
     } else {
-      this.widgetExists = false;
-      this.widgetNew = {
-        widgetType: 'HEADING', pageId: this.pageId, size: this.size, text: this.widText
-      };
-      this.widgetService.createWidget(this.pageId, this.widgetNew)
-        .subscribe((widgets: any) => {
-          this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
-        });
+      if (this.size === '' || this.size === undefined) {
+        this.errMsg = 'Enter all values',
+          this.errorFlag = true;
+      } else if (this.widgetRet) {
+        const widgetNew = {
+          _id: this.widgetId,
+          widgetType: 'HEADING',
+          pageId: this.pageId,
+          size: this.size,
+          text: this.widText
+        };
+        this.widgetService
+          .updateWidget(this.widgetId, widgetNew)
+          .subscribe((widgets: any) => {
+            this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+          });
+      } else {
+        this.widgetExists = false;
+        this.widgetNew = {
+          widgetType: 'HEADING', pageId: this.pageId, size: this.size, text: this.widText
+        };
+        this.widgetService.createWidget(this.pageId, this.widgetNew)
+          .subscribe((widgets: any) => {
+            this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+          });
+      }
     }
-  }
 
+  }
   deleteWidget() {
     this.widgetService.deleteWidget(this.widgetId)
       .subscribe((widgets: any) => {

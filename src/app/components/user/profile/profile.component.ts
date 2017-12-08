@@ -49,13 +49,13 @@ export class ProfileComponent implements OnInit {
 
   updateUser() {
     this.user = {
-      _id: this.userId,
+      _id: this.user._id,
       username: this.username,
       firstName: this.firstName,
       lastName: this.lastName,
       password: this.password
     };
-    this.userService.updateUser(this.userId, this.user)
+    this.userService.updateUser(this.user._id, this.user)
       .subscribe((user: any) => {
       });
   }

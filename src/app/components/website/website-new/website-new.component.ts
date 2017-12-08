@@ -37,21 +37,26 @@ export class WebsiteNewComponent implements OnInit {
   }
 
   createWebsite() {
-    if (this.webCreateForm.value.websiteName === '' && this.webCreateForm.value.webDescription === '') {
-      this.router.navigate(['/user/', this.userId, 'website']);
-    } else if (this.webCreateForm.value.websiteName !== '' && this.webCreateForm.value.webDescription !== '') {
-      const web = {
-        _id: this.newWebId,
-        name: this.webCreateForm.value.websiteName,
-        developerId: this.userId,
-        description: this.webCreateForm.value.webDescription
-      };
-      this.websiteService.createWebsite(this.userId, web).subscribe((site: any) => {
-        this.router.navigate(['/user', this.userId, 'website']);
-      });
+    if (this.webCreateForm.value.websiteName === '' || this.webCreateForm.value.websiteName === undefined) {
+      this.errorMsg = 'Enter Name',
+        this.errorFlag = true;
     } else {
-      this.errorMsg = 'Enter both name and description';
-      this.errorFlag = true;
+      if (this.webCreateForm.value.websiteName === '' && this.webCreateForm.value.webDescription === '') {
+        this.router.navigate(['/user/', this.userId, 'website']);
+      } else if (this.webCreateForm.value.websiteName !== '' && this.webCreateForm.value.webDescription !== '') {
+        const web = {
+          _id: this.newWebId,
+          name: this.webCreateForm.value.websiteName,
+          developerId: this.userId,
+          description: this.webCreateForm.value.webDescription
+        };
+        this.websiteService.createWebsite(this.userId, web).subscribe((site: any) => {
+          this.router.navigate(['/user', this.userId, 'website']);
+        });
+      } else {
+        this.errorMsg = 'Enter both name and description';
+        this.errorFlag = true;
+      }
     }
   }
 }

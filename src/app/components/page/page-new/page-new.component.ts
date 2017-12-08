@@ -36,22 +36,29 @@ export class PageNewComponent implements OnInit {
   }
 
   createPage() {
-    if (this.pageCreateForm.value.pageName === '' && this.pageCreateForm.value.description === '') {
-      this.router.navigate(['/user/', this.userId, 'website', this.websiteId, 'page']);
-    } else if (this.pageCreateForm.value.pageName !== '' && this.pageCreateForm.value.description !== '') {
-      // this.newPageId = Math.random().toString();
-      const page = {
-        // _id: this.newPageId,
-        name: this.pageCreateForm.value.pageName,
-        websiteId: this.websiteId,
-        description: this.pageCreateForm.value.description
-      };
-      this.pageService.createPage(this.websiteId, page).subscribe((pages: any) => {
-        this.router.navigate(['/user/', this.userId, 'website', this.websiteId, 'page']);
-      });
+    if (this.pageCreateForm.value.pageName === '' && this.pageCreateForm.value.pageName === undefined) {
+      this.errorMsg = 'Enter Name',
+        this.errorFlag = true;
     } else {
-      this.errorMsg = 'Enter both name and description';
-      this.errorFlag = true;
+      if (this.pageCreateForm.value.description === undefined && this.pageCreateForm.value.description === '') {
+        this.errorMsg = 'Enter description',
+          this.errorFlag = true;
+        // this.router.navigate(['/user/', this.userId, 'website', this.websiteId, 'page']);
+      } else if (this.pageCreateForm.value.pageName !== '' && this.pageCreateForm.value.description !== '') {
+        // this.newPageId = Math.random().toString();
+        const page = {
+          // _id: this.newPageId,
+          name: this.pageCreateForm.value.pageName,
+          websiteId: this.websiteId,
+          description: this.pageCreateForm.value.description
+        };
+        this.pageService.createPage(this.websiteId, page).subscribe((pages: any) => {
+          this.router.navigate(['/user/', this.userId, 'website', this.websiteId, 'page']);
+        });
+      } else {
+        this.errorMsg = 'Enter both name and description';
+        this.errorFlag = true;
+      }
     }
   }
 }

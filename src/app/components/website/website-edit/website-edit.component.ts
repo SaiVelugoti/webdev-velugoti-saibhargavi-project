@@ -41,25 +41,31 @@ export class WebsiteEditComponent implements OnInit {
   }
 
   updateWebsite() {
-    if (this.websiteName === '' || this.webDescription === '') {
-      this.errorMsg = 'Enter both name and description';
-      this.errorFlag = true;
+    if (this.websiteName === '' || this.websiteName === undefined) {
+      this.errorMsg = 'Enter Name',
+        this.errorFlag = true;
     } else {
-      const web = {
-        _id: this.websiteId,
-        name: this.webEditForm.value.websiteName,
-        developerId: this.userId,
-        description: this.webEditForm.value.webDescription
-      };
-      this.websiteService.updateWebsite(this.websiteId, web).subscribe((websites: any) => {
+      if (this.webDescription === '' || this.webDescription === undefined) {
+        this.errorMsg = 'Enter description';
+        this.errorFlag = true;
+      } else {
+        const web = {
+          _id: this.websiteId,
+          name: this.webEditForm.value.websiteName,
+          developerId: this.userId,
+          description: this.webEditForm.value.webDescription
+        };
+        this.websiteService.updateWebsite(this.websiteId, web).subscribe((websites: any) => {
+          this.router.navigate(['/user', this.userId, 'website']);
+        });
+      }
+    }
+  }
+
+    deleteWebsite()
+    {
+      this.websiteService.deleteWebsite(this.websiteId).subscribe((website: any) => {
         this.router.navigate(['/user', this.userId, 'website']);
       });
     }
   }
-
-  deleteWebsite() {
-    this.websiteService.deleteWebsite(this.websiteId).subscribe((website: any) => {
-      this.router.navigate(['/user', this.userId, 'website']);
-    });
-  }
-}

@@ -31,8 +31,8 @@ const APP_ROUTES: Routes = [
   { path : 'user/:userId/website/:websiteId/page/:pageId' , component: PageEditComponent},
   { path : 'user/:userId/website/:websiteId/page/:pageId/widget' , component: WidgetListComponent},
   { path : 'user/:userId/website/:websiteId/page/:pageId/widget/new' , component: WidgetChooserComponent},
-  { path : 'user/:userId/website/:websiteId/page/:pageId/widget/:widgetId/:widtype' , component: WidgetEditComponent},
-  { path : 'user/:userId/website/:websiteId/page/:pageId/widget/:widgetId/flickrSearch', component: FlickrSearchComponent}
+  { path : 'user/:userId/website/:websiteId/page/:pageId/widget/:widgetId/flickrSearch', component: FlickrSearchComponent},
+  { path : 'user/:userId/website/:websiteId/page/:pageId/widget/:widgetId/:widtype' , component: WidgetEditComponent}
 ];
 
 // Export the routes as module providers

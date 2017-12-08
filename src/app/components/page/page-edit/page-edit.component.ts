@@ -43,20 +43,25 @@ export class PageEditComponent implements OnInit {
   }
 
   updatePage() {
-    if (this.pageName === '' || this.description === '') {
-      this.errorMsg = 'Enter both name and description';
-      this.errorFlag = true;
+    if (this.pageName === '' || this.pageName === undefined) {
+      this.errorMsg = 'Enter Name',
+        this.errorFlag = true;
     } else {
-      const page = {
-        _id: this.pageId,
-        name: this.pageEditForm.value.pageName,
-        websiteId: this.websiteId,
-        description: this.pageEditForm.value.description
-      };
-      this.pageService.updatePage(this.pageId, page)
-        .subscribe((pageVal: any) => {
-          this.router.navigate(['/user/', this.userId, 'website', this.websiteId, 'page']);
-        });
+      if (this.description === '' || this.description === undefined) {
+        this.errorMsg = 'Enter description';
+        this.errorFlag = true;
+      } else {
+        const page = {
+          _id: this.pageId,
+          name: this.pageEditForm.value.pageName,
+          websiteId: this.websiteId,
+          description: this.pageEditForm.value.description
+        };
+        this.pageService.updatePage(this.pageId, page)
+          .subscribe((pageVal: any) => {
+            this.router.navigate(['/user/', this.userId, 'website', this.websiteId, 'page']);
+          });
+      }
     }
   }
 

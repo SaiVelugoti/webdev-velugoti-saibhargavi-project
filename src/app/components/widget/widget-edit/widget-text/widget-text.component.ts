@@ -63,35 +63,40 @@ export class WidgetTextComponent implements OnInit {
   }
 
   createEditText() {
-    if (this.text === '' || this.rows === '') {
-      this.errMsg = 'Enter all values'
+    if (this.text === '' || this.text === undefined) {
+      this.errMsg = 'Enter Name'
       this.errorFlag = true;
-    } else if (this.widgetRet) {
-      const widgetNew = {
-        _id: this.widgetId,
-        widgetType: 'TEXT',
-        pageId: this.pageId,
-        rows: this.rows,
-        text: this.text,
-        name: this.name,
-        placeholder: this.placeholder,
-        formatted: this.formatted
-      };
-      this.widgetService
-        .updateWidget(this.widgetId, widgetNew)
-        .subscribe((widgets: any) => {
-          this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
-        });
     } else {
-      this.widgetExists = false;
-      this.widgetNew = {
-        widgetType: 'TEXT', pageId: this.pageId, rows: this.rows,
-        text: this.text, formatted: this.formatted, placeholder: this.placeholder, name: this.name
-      };
-      this.widgetService.createWidget(this.pageId, this.widgetNew)
-        .subscribe((widgets: any) => {
-          this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
-        });
+      if (this.text === '' || this.rows === '') {
+        this.errMsg = 'Enter all values'
+        this.errorFlag = true;
+      } else if (this.widgetRet) {
+        const widgetNew = {
+          _id: this.widgetId,
+          widgetType: 'TEXT',
+          pageId: this.pageId,
+          rows: this.rows,
+          text: this.text,
+          name: this.name,
+          placeholder: this.placeholder,
+          formatted: this.formatted
+        };
+        this.widgetService
+          .updateWidget(this.widgetId, widgetNew)
+          .subscribe((widgets: any) => {
+            this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+          });
+      } else {
+        this.widgetExists = false;
+        this.widgetNew = {
+          widgetType: 'TEXT', pageId: this.pageId, rows: this.rows,
+          text: this.text, formatted: this.formatted, placeholder: this.placeholder, name: this.name
+        };
+        this.widgetService.createWidget(this.pageId, this.widgetNew)
+          .subscribe((widgets: any) => {
+            this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+          });
+      }
     }
   }
 
