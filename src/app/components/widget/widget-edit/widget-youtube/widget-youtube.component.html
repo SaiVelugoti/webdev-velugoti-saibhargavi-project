@@ -24,7 +24,10 @@
 
 <form (ngSubmit)="createEditYoutube()" #f="ngForm">
   <div class="container-fluid">
-
+    <div *ngIf="errorFlag"
+         class="alert alert-danger">
+      {{errMsg}}
+    </div>
     <label for="name">Name</label>
     <input [(ngModel)]="name"
            placeholder="VideoName"

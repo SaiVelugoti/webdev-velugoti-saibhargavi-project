@@ -2334,7 +2334,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/widget/widget-edit/widget-youtube/widget-youtube.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-fixed-top bg-primary btnStyle\">\n  <div class=\"container-fluid\">\n    <div class=\"navbar-header header-width header-fix\">\n      <p class=\"navbar-text pull-left p-fix\">\n        <a [routerLink]=\"['/user', userId, 'website', websiteId, 'page', pageId, 'widget']\"\n           class=\"navbar-link glyphicon-color\">\n              <span class=\"glyphicon glyphicon-chevron-left\">\n              </span>\n        </a>\n      </p>\n\n      <span class=\"navbar-brand\">Widget Edit</span>\n      <p class=\"navbar-text pull-right p-right-fix\">\n        <a (click)=\"createEditYoutube()\" class=\"navbar-link glyphicon-color\">\n              <span class=\"glyphicon glyphicon-ok\">\n              </span>\n        </a>\n      </p>\n    </div>\n\n  </div>\n</nav>\n\n\n<form (ngSubmit)=\"createEditYoutube()\" #f=\"ngForm\">\n  <div class=\"container-fluid\">\n\n    <label for=\"name\">Name</label>\n    <input [(ngModel)]=\"name\"\n           placeholder=\"VideoName\"\n           value={{name}}\n           type=\"text\"\n           id=\"name\"\n           name=\"name\"\n           class=\"form-control\"\n    />\n    <label for=\"url\">URL</label>\n    <input [(ngModel)]=\"url\"\n           placeholder=\"https://www.youtube.com/embed/mu5vRI13bGc\"\n           value={{url}}\n           type=\"text\"\n           id=\"url\"\n           name=\"url\"\n           class=\"form-control\"\n    />\n    <label for=\"width\">Width</label>\n    <input [(ngModel)]=\"width\"\n           placeholder=\"80%\"\n           value={{width}}\n           type=\"text\"\n           id=\"width\"\n           name=\"width\"\n           class=\"form-control\"/>\n    <div *ngIf=widgetExists>\n      <button class=\"btn btn-danger btn-block \"\n              (click)='deleteWidget()'>Delete\n      </button>\n    </div>\n  </div>\n</form>\n\n<nav class=\"navbar navbar-fixed-bottom btnStyle\">\n  <div class=\"container-fluid\">\n    <p class=\"navbar-text pull-right\">\n      <a [routerLink]=\"['/user', userId]\" class=\"navbar-link glyphicon-color\">\n              <span class=\"glyphicon glyphicon-user\">\n              </span>\n      </a>\n    </p>\n  </div>\n</nav>\n"
+module.exports = "<nav class=\"navbar navbar-fixed-top bg-primary btnStyle\">\n  <div class=\"container-fluid\">\n    <div class=\"navbar-header header-width header-fix\">\n      <p class=\"navbar-text pull-left p-fix\">\n        <a [routerLink]=\"['/user', userId, 'website', websiteId, 'page', pageId, 'widget']\"\n           class=\"navbar-link glyphicon-color\">\n              <span class=\"glyphicon glyphicon-chevron-left\">\n              </span>\n        </a>\n      </p>\n\n      <span class=\"navbar-brand\">Widget Edit</span>\n      <p class=\"navbar-text pull-right p-right-fix\">\n        <a (click)=\"createEditYoutube()\" class=\"navbar-link glyphicon-color\">\n              <span class=\"glyphicon glyphicon-ok\">\n              </span>\n        </a>\n      </p>\n    </div>\n\n  </div>\n</nav>\n\n\n<form (ngSubmit)=\"createEditYoutube()\" #f=\"ngForm\">\n  <div class=\"container-fluid\">\n    <div *ngIf=\"errorFlag\"\n         class=\"alert alert-danger\">\n      {{errMsg}}\n    </div>\n    <label for=\"name\">Name</label>\n    <input [(ngModel)]=\"name\"\n           placeholder=\"VideoName\"\n           value={{name}}\n           type=\"text\"\n           id=\"name\"\n           name=\"name\"\n           class=\"form-control\"\n    />\n    <label for=\"url\">URL</label>\n    <input [(ngModel)]=\"url\"\n           placeholder=\"https://www.youtube.com/embed/mu5vRI13bGc\"\n           value={{url}}\n           type=\"text\"\n           id=\"url\"\n           name=\"url\"\n           class=\"form-control\"\n    />\n    <label for=\"width\">Width</label>\n    <input [(ngModel)]=\"width\"\n           placeholder=\"80%\"\n           value={{width}}\n           type=\"text\"\n           id=\"width\"\n           name=\"width\"\n           class=\"form-control\"/>\n    <div *ngIf=widgetExists>\n      <button class=\"btn btn-danger btn-block \"\n              (click)='deleteWidget()'>Delete\n      </button>\n    </div>\n  </div>\n</form>\n\n<nav class=\"navbar navbar-fixed-bottom btnStyle\">\n  <div class=\"container-fluid\">\n    <p class=\"navbar-text pull-right\">\n      <a [routerLink]=\"['/user', userId]\" class=\"navbar-link glyphicon-color\">\n              <span class=\"glyphicon glyphicon-user\">\n              </span>\n      </a>\n    </p>\n  </div>\n</nav>\n"
 
 /***/ }),
 
@@ -2395,32 +2395,38 @@ var WidgetYoutubeComponent = (function () {
     };
     WidgetYoutubeComponent.prototype.createEditYoutube = function () {
         var _this = this;
-        if (this.name === '' || this.width === '' || this.url === '') {
-            this.errMsg = 'Enter all values';
+        if (this.name === '' || this.name === undefined) {
+            this.errMsg = 'Enter Name';
             this.errorFlag = true;
         }
-        else if (this.widgetRet) {
-            this.widgetExists = true;
-            this.widgetNew = {
-                _id: this.widgetId, widgetType: 'YOUTUBE', pageId: this.pageId, width: this.ytForm.value.width,
-                url: this.ytForm.value.url, name: this.ytForm.value.name
-            };
-            this.widgetService.updateWidget(this.widgetId, this.widgetNew)
-                .subscribe(function (widget) {
-                _this.router.navigate(['/user', _this.userId, 'website', _this.websiteId, 'page', _this.pageId, 'widget']);
-            });
-        }
         else {
-            this.widgetExists = false;
-            this.widgetNew = {
-                // _id: newId,
-                widgetType: 'YOUTUBE', pageId: this.pageId, width: this.ytForm.value.width,
-                url: this.ytForm.value.url, name: this.ytForm.value.name
-            };
-            this.widgetService.createWidget(this.pageId, this.widgetNew)
-                .subscribe(function (widget) {
-                _this.router.navigate(['/user', _this.userId, 'website', _this.websiteId, 'page', _this.pageId, 'widget']);
-            });
+            if (this.width === '' || this.url === '') {
+                this.errMsg = 'Enter all values';
+                this.errorFlag = true;
+            }
+            else if (this.widgetRet) {
+                this.widgetExists = true;
+                this.widgetNew = {
+                    _id: this.widgetId, widgetType: 'YOUTUBE', pageId: this.pageId, width: this.ytForm.value.width,
+                    url: this.ytForm.value.url, name: this.ytForm.value.name
+                };
+                this.widgetService.updateWidget(this.widgetId, this.widgetNew)
+                    .subscribe(function (widget) {
+                    _this.router.navigate(['/user', _this.userId, 'website', _this.websiteId, 'page', _this.pageId, 'widget']);
+                });
+            }
+            else {
+                this.widgetExists = false;
+                this.widgetNew = {
+                    // _id: newId,
+                    widgetType: 'YOUTUBE', pageId: this.pageId, width: this.ytForm.value.width,
+                    url: this.ytForm.value.url, name: this.ytForm.value.name
+                };
+                this.widgetService.createWidget(this.pageId, this.widgetNew)
+                    .subscribe(function (widget) {
+                    _this.router.navigate(['/user', _this.userId, 'website', _this.websiteId, 'page', _this.pageId, 'widget']);
+                });
+            }
         }
     };
     WidgetYoutubeComponent.prototype.deleteWidget = function () {

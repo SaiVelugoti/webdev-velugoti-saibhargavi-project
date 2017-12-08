@@ -58,34 +58,37 @@ export class WidgetYoutubeComponent implements OnInit {
   }
 
   createEditYoutube() {
-
-    if (this.name === '' || this.width === '' || this.url === '') {
-      this.errMsg = 'Enter all values'
+    if (this.name === '' || this.name === undefined) {
+      this.errMsg = 'Enter Name'
       this.errorFlag = true;
-    } else if (this.widgetRet) {
-      this.widgetExists = true;
-      this.widgetNew = {
-        _id: this.widgetId, widgetType: 'YOUTUBE', pageId: this.pageId, width: this.ytForm.value.width,
-        url: this.ytForm.value.url, name: this.ytForm.value.name
-      };
-      this.widgetService.updateWidget(this.widgetId, this.widgetNew)
-        .subscribe((widget: any) => {
-          this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
-        });
     } else {
-      this.widgetExists = false;
-      this.widgetNew = {
-        // _id: newId,
-        widgetType: 'YOUTUBE', pageId: this.pageId, width: this.ytForm.value.width,
-        url: this.ytForm.value.url, name: this.ytForm.value.name
-      };
-      this.widgetService.createWidget(this.pageId, this.widgetNew)
-        .subscribe((widget: any) => {
-          this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
-        });
+      if (this.width === '' || this.url === '') {
+        this.errMsg = 'Enter all values'
+        this.errorFlag = true;
+      } else if (this.widgetRet) {
+        this.widgetExists = true;
+        this.widgetNew = {
+          _id: this.widgetId, widgetType: 'YOUTUBE', pageId: this.pageId, width: this.ytForm.value.width,
+          url: this.ytForm.value.url, name: this.ytForm.value.name
+        };
+        this.widgetService.updateWidget(this.widgetId, this.widgetNew)
+          .subscribe((widget: any) => {
+            this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+          });
+      } else {
+        this.widgetExists = false;
+        this.widgetNew = {
+          // _id: newId,
+          widgetType: 'YOUTUBE', pageId: this.pageId, width: this.ytForm.value.width,
+          url: this.ytForm.value.url, name: this.ytForm.value.name
+        };
+        this.widgetService.createWidget(this.pageId, this.widgetNew)
+          .subscribe((widget: any) => {
+            this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+          });
+      }
     }
   }
-
   deleteWidget() {
     this.widgetService.deleteWidget(this.widgetId)
       .subscribe((widgets: any) => {
