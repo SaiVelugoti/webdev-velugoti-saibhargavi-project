@@ -4,6 +4,7 @@ import 'rxjs/Rx';
 import {environment} from '../../environments/environment';
 import {Router} from '@angular/router';
 import {SharedService} from './shared.service.client';
+import {send} from "q";
 
 @Injectable()
 export class UserService {
@@ -125,6 +126,14 @@ export class UserService {
     return this._http.get(url)
       .map((response: Response) => {
         return response.json();
+      });
+  }
+
+  deleteAllUsers() {
+    const url = this.baseUrl + '/api/deleteAllUsers';
+    return this._http.delete(url)
+      .map((response: Response) => {
+      return response.status;
       });
   }
 }

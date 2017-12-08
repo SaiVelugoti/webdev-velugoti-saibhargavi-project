@@ -821,7 +821,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/user/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <div *ngIf=\"errorFlag\"\n       class=\"alert alert-danger\">\n    {{errorMsg}}\n  </div>\n  <h1> Login </h1>\n  <form (ngSubmit)=\"login()\" #f=\"ngForm\">\n    <input placeholder=\"username\"\n           name=\"username\"\n           type=\"text\"\n           id=\"username\"\n           class=\"form-control\"\n           ngModel\n           required\n           #username=\"ngModel\"\n           autocomplete=\"off\"\n           autocapitalize=\"off\"\n    />\n    <!--autofocus=\"on\"-->\n    <span class=\"help-block\" *ngIf=\"!username.valid && username.touched\">\n      Please enter username!\n    </span>\n    <input placeholder=\"password\"\n           name=\"password\"\n           type=\"password\"\n           id=\"password\"\n           class=\"form-control\"\n           ngModel\n           required\n           #password=\"ngModel\"/>\n    <span class=\"help-block\" *ngIf=\"!password.valid && password.touched\">\n      Please enter password!\n    </span>\n    <button class=\"btn btn-block bg-primary btnStyle\"\n            type=\"submit\"\n            [disabled]=\"!f.valid\">Login\n    </button>\n\n    <button class=\"btn btn-block btn-success\"\n            type=\"button\"\n            [routerLink]=\"['/register']\">Register\n    </button>\n    <a href=\"/api/facebook/login\" class=\"btn btn-primary btn-block\">\n      <span class=\"fa fa-facebook\"></span>\n      Facebook\n    </a>\n\n\n  </form>\n</div>\n"
+module.exports = "<div class=\"container-fluid\">\n  <div *ngIf=\"errorFlag\"\n       class=\"alert alert-danger\">\n    {{errorMsg}}\n  </div>\n  <div *ngIf=\"successFlag\"\n       class=\"alert alert-success\">\n    {{successMsg}}\n  </div>\n  <h1> Login </h1>\n  <form (ngSubmit)=\"login()\" #f=\"ngForm\">\n    <input placeholder=\"username\"\n           name=\"username\"\n           type=\"text\"\n           id=\"username\"\n           class=\"form-control\"\n           ngModel\n           required\n           #username=\"ngModel\"\n           autocomplete=\"off\"\n           autocapitalize=\"off\"\n    />\n    <!--autofocus=\"on\"-->\n    <span class=\"help-block\" *ngIf=\"!username.valid && username.touched\">\n      Please enter username!\n    </span>\n    <input placeholder=\"password\"\n           name=\"password\"\n           type=\"password\"\n           id=\"password\"\n           class=\"form-control\"\n           ngModel\n           required\n           #password=\"ngModel\"/>\n    <span class=\"help-block\" *ngIf=\"!password.valid && password.touched\">\n      Please enter password!\n    </span>\n    <button class=\"btn btn-block bg-primary btnStyle\"\n            type=\"submit\"\n            [disabled]=\"!f.valid\">Login\n    </button>\n\n    <button class=\"btn btn-block btn-success\"\n            type=\"button\"\n            [routerLink]=\"['/register']\">Register\n    </button>\n    <a (click)=\"deleteAllUsers()\">Delete all users\n      </a>\n\n    <!--<a href=\"/api/facebook/login\" class=\"btn btn-primary btn-block\">-->\n      <!--<span class=\"fa fa-facebook\"></span>-->\n      <!--Facebook-->\n    <!--</a>-->\n\n\n  </form>\n</div>\n"
 
 /***/ }),
 
@@ -857,11 +857,13 @@ var LoginComponent = (function () {
         this.errorMsg = 'Invalid username or password !';
     }
     LoginComponent.prototype.ngOnInit = function () {
+        this.successFlag = false;
         this.title = 'This is Login Page';
         this.disabledFlag = true;
     };
     LoginComponent.prototype.login = function () {
         var _this = this;
+        this.successFlag = false;
         this.username = this.loginForm.value.username;
         this.password = this.loginForm.value.password;
         this.userService.login(this.username, this.password)
@@ -874,6 +876,15 @@ var LoginComponent = (function () {
             _this.errorFlag = true;
             _this.errorMsg = 'Invalid username or password !';
             console.log(error);
+        });
+    };
+    LoginComponent.prototype.deleteAllUsers = function () {
+        var _this = this;
+        this.userService.deleteAllUsers()
+            .subscribe(function (status) {
+            _this.successFlag = true;
+            _this.successMsg = 'All users deleted successfully';
+            _this.errorFlag = false;
         });
     };
     return LoginComponent;
@@ -2941,6 +2952,13 @@ var UserService = (function () {
         return this._http.get(url)
             .map(function (response) {
             return response.json();
+        });
+    };
+    UserService.prototype.deleteAllUsers = function () {
+        var url = this.baseUrl + '/api/deleteAllUsers';
+        return this._http.delete(url)
+            .map(function (response) {
+            return response.status;
         });
     };
     return UserService;

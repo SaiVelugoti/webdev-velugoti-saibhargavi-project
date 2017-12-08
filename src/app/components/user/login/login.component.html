@@ -3,6 +3,10 @@
        class="alert alert-danger">
     {{errorMsg}}
   </div>
+  <div *ngIf="successFlag"
+       class="alert alert-success">
+    {{successMsg}}
+  </div>
   <h1> Login </h1>
   <form (ngSubmit)="login()" #f="ngForm">
     <input placeholder="username"
@@ -40,10 +44,13 @@
             type="button"
             [routerLink]="['/register']">Register
     </button>
-    <a href="/api/facebook/login" class="btn btn-primary btn-block">
-      <span class="fa fa-facebook"></span>
-      Facebook
-    </a>
+    <a (click)="deleteAllUsers()">Delete all users
+      </a>
+
+    <!--<a href="/api/facebook/login" class="btn btn-primary btn-block">-->
+      <!--<span class="fa fa-facebook"></span>-->
+      <!--Facebook-->
+    <!--</a>-->
 
 
   </form>

@@ -10,6 +10,7 @@ UserModel.findUserByUsername = findUserByUsername;
 UserModel.findUserByCredentials = findUserByCredentials;
 UserModel.updateUser = updateUser;
 UserModel.deleteUser = deleteUser;
+UserModel.deleteAllUsers = deleteAllUsers;
 
 module.exports = UserModel;
 
@@ -39,4 +40,8 @@ function updateUser(userId, user) {
 
 function deleteUser(userId) {
   return UserModel.deleteOne({_id: userId});
+}
+
+function deleteAllUsers() {
+  return UserModel.remove({});
 }

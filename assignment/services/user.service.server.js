@@ -25,6 +25,7 @@ module.exports = function (app) {
   app.post("/api/logout", logout);
   app.post("/api/register", register);
   app.post("/api/loggedIn", loggedin);
+  app.delete('/api/deleteAllUsers', deleteAllUsers);
   app.get('/facebook/login', passport.authenticate('facebook', {scope: 'email'}));
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
@@ -202,5 +203,12 @@ module.exports = function (app) {
       .then(function (user) {
         res.json(user);
       });
+  }
+
+  function deleteAllUsers(req, res) {
+    userModel.deleteAllUsers()
+      .then(function (res1) {
+        res.json(res1);
+      })
   }
 }

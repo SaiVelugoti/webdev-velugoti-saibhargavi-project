@@ -18,17 +18,21 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
   errorFlag: boolean;
+  successMsg: string;
+  successFlag: boolean;
   errorMsg = 'Invalid username or password !';
 
   constructor(private userService: UserService, private  router: Router, private sharedService: SharedService) {
   }
 
   ngOnInit() {
+    this.successFlag = false;
     this.title = 'This is Login Page';
     this.disabledFlag = true;
   }
 
   login() {
+    this.successFlag = false;
     this.username = this.loginForm.value.username;
     this.password = this.loginForm.value.password;
 
@@ -48,18 +52,12 @@ export class LoginComponent implements OnInit {
       );
   }
 
-  // login() {
-  //   this.username = this.loginForm.value.username;
-  //   this.password = this.loginForm.value.password;
-  //
-  //   this.userService.findUserByCredentials(this.username, this.password)
-  //     .subscribe((user: any) => {
-  //       if ((user !== null)) {
-  //         this.router.navigate(['/user/', user._id]);
-  //       } else {
-  //         this.errorMsg = 'Invalid username or password !';
-  //         this.errorFlag = true;
-  //       }
-  //     });
-  // }
+  deleteAllUsers() {
+    this.userService.deleteAllUsers()
+      .subscribe((status: any) => {
+        this.successFlag = true;
+        this.successMsg = 'All users deleted successfully';
+        this.errorFlag = false;
+      });
+  }
 }
