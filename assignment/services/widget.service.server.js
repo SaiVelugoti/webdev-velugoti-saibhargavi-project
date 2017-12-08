@@ -98,7 +98,7 @@ module.exports = function (app) {
     var width = width;
 
 
-    var callbackUrl = "/api/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget" + widgetId + "/IMAGE";
+    var callbackUrl = "/api/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId + "/IMAGE";
     console.log(callbackUrl);
     res.redirect(301, callbackUrl);
   }
