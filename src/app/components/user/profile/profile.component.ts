@@ -17,6 +17,7 @@ export class ProfileComponent implements OnInit {
   lastName: string;
   password: string;
 
+
   constructor(private userService: UserService, private activatedRoute: ActivatedRoute,
               private router: Router, private sharedService: SharedService) {
   }

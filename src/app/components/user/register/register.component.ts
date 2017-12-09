@@ -22,6 +22,7 @@ export class RegisterComponent implements OnInit {
   newUserId: string;
   errorMsg = 'Invalid username or password !';
   error;
+  role: string;
 
   constructor(private userService: UserService, private sharedService: SharedService, private  router: Router) {
   }
@@ -37,6 +38,8 @@ export class RegisterComponent implements OnInit {
     this.username = this.registerForm.value.username;
     this.password = this.registerForm.value.password;
     this.verifyPassword = this.registerForm.value.verifyPassword;
+    this.role = this.registerForm.value.role;
+    console.log(this.role);
     this.userService.findUserByUsername(this.username)
       .subscribe((user: any) => {
         if (user !== null) {
@@ -46,12 +49,13 @@ export class RegisterComponent implements OnInit {
           // this.newUserId = Math.random().toString();
           const newUser = {
             username: this.username,
-            password: this.password
+            password: this.password,
+            role: this.role
           };
 
-          this.userService.register(this.username, this.password)
+          this.userService.register(this.username, this.password, this.role)
             .subscribe((data: any) => {
-                this.router.navigate(['/login']);
+                this.router.navigate(['/profile']);
               },
               (error: any) => {
                 this.error = error._body;

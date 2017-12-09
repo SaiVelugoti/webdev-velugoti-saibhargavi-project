@@ -17,6 +17,7 @@ module.exports = function (app) {
 
   app.post("/api/user", createUser);
   app.get("/api/user", findUsers);
+  app.get("/api/users", findAllUsers);
   app.get("/api/user/:userId", findUserById);
   app.put("/api/user/:userId", updateUser);
   app.delete("/api/user/:userId", deleteUser);
@@ -190,6 +191,13 @@ module.exports = function (app) {
 
   function deleteAllUsers(req, res) {
     userModel.deleteAllUsers()
+      .then(function (res1) {
+        res.json(res1);
+      })
+  }
+
+  function findAllUsers(req, res) {
+    userModel.findAllUsers()
       .then(function (res1) {
         res.json(res1);
       })

@@ -13,7 +13,8 @@ export class EventSearchService {
   apiKey = 'MkD6G4ptdWk8dbPr';
 
   proxyURL = 'https://cors-anywhere.herokuapp.com/';
-  apiURL = 'http://api.eventful.com/json/events/search/?location=VALUE&app_key=API_KEY';
+  apiURL = 'http://api.eventful.com/json/events/search/?location=VALUE&app_key=API_KEY&date=Future&page_size=50';
+  apiDetailURL = 'http://api.eventful.com/json/events/get?id=VALUE&app_key=API_KEY';
 
   constructor(private _http: Http, private router: Router) {
   }
@@ -27,4 +28,17 @@ export class EventSearchService {
       return response.json();
     });
   }
+
+  getEventDetails(id) {
+    const url =
+      this.proxyURL +
+      this.apiDetailURL.replace('VALUE', id).replace('API_KEY', this.apiKey);
+    return this._http.get(url).map((response: Response) => {
+      return response.json();
+    });
+  }
+
+
 }
+
+// http://api.eventful.com/json/events/search/?location=San Diego&app_key=MkD6G4ptdWk8dbPr

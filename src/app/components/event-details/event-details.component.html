@@ -23,7 +23,30 @@
 <!--Body-Start-->
 <!--Search Input and button-->
 <div class="container-fluid">
-  <h3></h3>
+  <div class="container-fluid">
+    <h4>Description</h4>
+    <br/>
+    {{eventDetail['description']}}
+    <br/>
+    <br/>
+    <h4>
+      Address
+    </h4>
+    {{eventDetail['address']}}
+    <br/>
+    <h4>
+      Link
+    </h4>
+    <a href="{{eventDetail['url']}}" target="_blank">{{eventDetail['url']}}</a>
+    <br/>
+    <br/>
+    <h4>
+      Start Time
+    </h4>
+    <br/>
+    {{eventDetail['start_time']}}
+    <br/>
+</div>
 </div>
 <!--Body Ends Here-->
 

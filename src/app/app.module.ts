@@ -19,6 +19,8 @@ import {AuthGuard} from './services/auth-guard.service';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
 import {EventSearchService} from './services/event-search.service.client';
 import { EventDetailsComponent } from './components/event-details/event-details.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ManageUserComponent } from './components/manage-user/manage-user.component';
 
 @NgModule({
   // Declare components here
@@ -32,6 +34,8 @@ import { EventDetailsComponent } from './components/event-details/event-details.
     RegisterComponent,
     WelcomePageComponent,
     EventDetailsComponent,
+    DashboardComponent,
+    ManageUserComponent,
   ],
   imports: [
     BrowserModule,

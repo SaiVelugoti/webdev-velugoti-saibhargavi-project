@@ -19,6 +19,7 @@ export class UserService {
   findUsers() {
     const url = this.baseUrl + '/api/users/';
     return this._http.get(url).map((response: Response) => {
+      return response.json();
     });
   }
 
@@ -42,11 +43,12 @@ export class UserService {
       });
   }
 
-  register(username: String, password: String) {
+  register(username: String, password: String, role: String) {
     this.options.withCredentials = true;
     const user = {
       username: username,
-      password: password
+      password: password,
+      role: role
     };
     return this._http.post(this.baseUrl + '/api/register', user, this.options)
       .map((res: Response) => {

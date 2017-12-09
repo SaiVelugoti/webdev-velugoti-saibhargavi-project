@@ -1,0 +1,46 @@
+<div class="container-fluid">
+    <div *ngIf="editingUser">
+      Hello
+      <div class="row">
+    <label for="username">Username</label>
+    <input [(ngModel)]="username"
+           name="username"
+           id="username"
+           placeholder={{username}}
+           class="form-control"
+           readonly>
+      </div>
+  <div class="row">
+    <label for="firstName">First Name</label>
+    <input [(ngModel)]="currentUser['firstName']"
+           name="firstname"
+           id="firstName"
+           placeholder={{currentUser['firstName']}}
+           class="form-control">
+  </div>
+      <div class="row">
+    <label for="lastName">Last Name</label>
+    <input [(ngModel)]="currentUser['lastName']"
+           name="lastname"
+           id="lastName"
+           placeholder={{currentUser['lastName']}}
+           class="form-control">
+  </div>
+  </div>
+</div>
+<div>
+<li class="list-group-item" *ngFor="let user of all_users">
+  <div class="row">
+    <div class="col-xs-9">
+      Hey
+        {{user['username']}}
+      <div class="pull-right" (click)="editUser(user['_id'])">
+        <span class="glyphicon glyphicon-pencil"></span>
+      </div>
+      <div class="pull-right" (click)="deleteUser(user['_id'])">
+        <span class="glyphicon glyphicon-trash"></span>
+      </div>
+    </div>
+  </div>
+</li>
+</div>
