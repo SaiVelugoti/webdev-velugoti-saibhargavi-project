@@ -1,0 +1,73 @@
+<!--Header-Start-->
+<div class="container-fluid">
+  <div class="pull-left">
+    <a [routerLink]="['/about']">
+      <span class="label">
+        Event Planet
+      </span>
+    </a>
+  </div>
+  <div class="pull-right">
+    <a [routerLink]="['/login']">
+      <span class="glyphicon glyphicon-log-in">
+      </span>
+    </a>
+    <a [routerLink]="['/register']">
+      <span class="glyphicon glyphicon-registration-mark">
+      </span>
+    </a>
+  </div>
+</div>
+<!--Header-End-->
+
+<!--Body-Start-->
+<!--Search Input and button-->
+<div class="container-fluid">
+  <form (ngSubmit)="search()" #f="ngForm">
+  <input ngModel={{searchTerm}}
+         name="searchTerm"
+         id="searchTerm"
+         placeholder="San Diego"
+         class="form-control">
+  <button (click)="searchForEvents(searchTerm)"
+          class="btn btn-primary btn-block btnStyle"
+          [disabled]="!f.valid">
+    Search for Events
+  </button>
+  </form>
+
+<!--Empty Search results-->
+<div *ngIf="noResults"
+     class="alert alert-danger container-fluid">
+  Sorry! We dont have any events happening at {{searchTerm}}
+</div>
+
+<!--Search Results-->
+<div *ngIf="eventsExist">
+  <div></div>
+  <div>
+    <h5>Click on any of the following events to know the details</h5>
+  </div>
+
+  <li class="list-group-item" *ngFor="let eventsFromList of searchResults">
+    <div class="row">
+      <div class="col-xs-9">
+      <a (click)="getDetails(eventsFromList['id'])">
+        {{eventsFromList['title']}}
+      </a>
+      </div>
+    </div>
+  </li>
+</div>
+</div>
+<!--Body Ends Here-->
+
+<!--Footer-->
+<div class="navbar navbar-fixed-bottom bg-primary btnStyle">
+  <div class="container-fluid pull-right">
+    <a [routerLink]="['/profile']" class="navbar-link glyphicon-color">
+      <span class="glyphicon glyphicon-user">
+      </span>
+    </a>
+  </div>
+</div>

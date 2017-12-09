@@ -57,7 +57,7 @@ app.set('port', port);
 // Create HTTP server
 const server = http.createServer(app);
 
-require("./assignment/app")(app);
+require("./project/app")(app);
 server.listen(port);
 
 var serverSide = require("./server/test-mongodb/app");

@@ -14,7 +14,6 @@ export class LoginComponent implements OnInit {
   // properties
   title: string;
   disabledFlag: boolean;
-  inputTxt: string;
   username: string;
   password: string;
   errorFlag: boolean;

@@ -22,16 +22,6 @@ export class UserService {
     });
   }
 
-  // Asgn 6
-  // register(username, password) {
-  //   const url = 'http://localhost:3100/api/register';
-  //   const credentials = {
-  //     username: username,
-  //     passwrod: password
-  //   };
-  //   this.options.withCredentials = true;
-  // }
-
   login(username: String, password: String) {
     this.options.withCredentials = true;
     const body = {

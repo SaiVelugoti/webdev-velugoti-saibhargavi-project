@@ -6,7 +6,6 @@ module.exports = function (app) {
   var FacebookStrategy = require('passport-facebook').Strategy;
   var bcrypt = require("bcrypt-nodejs");
 
-
   var facebookConfig = {
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
@@ -24,7 +23,7 @@ module.exports = function (app) {
   app.post("/api/login", passport.authenticate('local'), login);
   app.post("/api/logout", logout);
   app.post("/api/register", register);
-  app.post("/api/loggedIn", loggedin);
+  app.post("/api/loggedIn", loggedIn);
   app.delete('/api/deleteAllUsers', deleteAllUsers);
   app.get('/facebook/login', passport.authenticate('facebook', {scope: 'email'}));
   app.get('/auth/facebook/callback',
@@ -37,19 +36,6 @@ module.exports = function (app) {
     console.log("In login - after local strategy");
     var user = req.user;
     res.json(user);
-    // userModel
-    //   .findUserByUsername(user.username)
-    //   .then(function (userA) {
-    //     if (userA && bcrypt.compareSync(userA['password'], user.password)) {
-    //       return done(null, userA);
-    //     } else {
-    //       return done(null, false);
-    //     }
-    //
-    //   }, function (err) {
-    //     return done(null, false);
-    //
-    //   });
   }
 
   function logout(req, res) {
@@ -62,7 +48,6 @@ module.exports = function (app) {
     "use strict";
     var user = req.body;
     user.password = bcrypt.hashSync(user.password);
-    // return userModel.createUser(user);
 
    return userModel.createUser(user)
       .then(
@@ -79,7 +64,7 @@ module.exports = function (app) {
         })
   }
 
-  function loggedin(req, res) {
+  function loggedIn(req, res) {
     res.send(req.isAuthenticated() ? req.user : '0');
   }
 
@@ -107,8 +92,6 @@ module.exports = function (app) {
       .then(
         function (user) {
           if (user && bcrypt.compareSync(password, user.password)) {
-            console.log('user credentials matches');
-            // if (user.username == username && user.password == password) {
             return done(null, user);
           } else {
             return done(null, false);
