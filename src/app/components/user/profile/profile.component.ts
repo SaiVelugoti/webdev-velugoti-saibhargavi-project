@@ -16,7 +16,7 @@ export class ProfileComponent implements OnInit {
   firstName: string;
   lastName: string;
   password: string;
-
+  email: string;
 
   constructor(private userService: UserService, private activatedRoute: ActivatedRoute,
               private router: Router, private sharedService: SharedService) {
@@ -40,6 +40,11 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.sharedService.user;
+    this.username = this.user['username'];
+    this.firstName = this.user['firstName'];
+    this.lastName = this.user['lastName'];
+    this.email = this.user['email'];
+
   }
 
   logout() {
@@ -54,7 +59,8 @@ export class ProfileComponent implements OnInit {
       username: this.username,
       firstName: this.firstName,
       lastName: this.lastName,
-      password: this.password
+      password: this.password,
+      email: this.email
     };
     this.userService.updateUser(this.user._id, this.user)
       .subscribe((user: any) => {

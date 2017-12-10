@@ -4,7 +4,6 @@ import 'rxjs/Rx';
 import {environment} from '../../environments/environment';
 import {Router} from '@angular/router';
 import {SharedService} from './shared.service.client';
-import {send} from "q";
 
 @Injectable()
 export class UserService {
@@ -14,6 +13,39 @@ export class UserService {
   baseUrl = environment.baseUrl;
 
   constructor(private _http: Http, private sharedService: SharedService, private router: Router) {
+  }
+
+  findEventsInterested(userId) {
+    const url = this.baseUrl + '/api/getInterestedEvents/' + userId;
+    return this._http.get(url).map((response: Response) => {
+      return response.json();
+    });
+  }
+
+  addToFavorites(userId, eventId, eventName) {
+    const url = this.baseUrl + '/api/addToFavorites/';
+    const body = {
+      userId: userId,
+      eventId: eventId,
+      eventName: eventName
+    };
+    return this._http.post(url, body)
+      .map((res: Response) => {
+        return res.json();
+      });
+  }
+
+
+  removeFromFavorites(userId, eventName) {
+    const url = this.baseUrl + '/api/removeFromFavorites/';
+    const body = {
+      userId: userId,
+      eventName: eventName
+    };
+    return this._http.post(url, body)
+      .map((res: Response) => {
+        return res.json();
+      });
   }
 
   findUsers() {
@@ -125,7 +157,49 @@ export class UserService {
     const url = this.baseUrl + '/api/deleteAllUsers';
     return this._http.delete(url)
       .map((response: Response) => {
-      return response.status;
+        return response.status;
       });
   }
+
+  findUsersFollowing(userId) {
+    const url = this.baseUrl + '/api/user/' + userId + '/dashboard/following';
+    return this._http.get(url).map((response: Response) => {
+      return response.json();
+    });
+  }
+
+  findUserFollowedBy(userId) {
+    const url = this.baseUrl + '/api/user/' + userId + '/dashboard/followedBy';
+    return this._http.get(url).map((respoonse: Response) => {
+      return respoonse.json();
+    });
+  }
+
+  addUserToFollow(userId, followingId) {
+    const url = this.baseUrl + '/api/user/' + userId + '/following/' + followingId;
+    return this._http.put(url, followingId).map((response, Response) => {
+      return response.json();
+    });
+  }
+
+  addUserToFollowedBy(userId, followingId) {
+    const url = this.baseUrl + '/api/user/' + followingId + '/followedBy/' + userId;
+    return this._http.put(url, followingId).map((response, Response) => {
+      return response.json();
+    });
+  }
+  removeUserFromFollow(userId, followingId) {
+    const url = this.baseUrl + '/api/user/' + userId + '/unfollow/' + followingId;
+    return this._http.put(url, followingId).map((response, Response) => {
+      return response.json();
+    });
+  }
+  removeUserFromFollowedBy(userId, followingId) {
+    const url = this.baseUrl + '/api/user/' + followingId + '/unfollowedBy/' + userId;
+    return this._http.put(url, followingId).map((response, Response) => {
+      return response.json();
+    });
+  }
+
+
 }

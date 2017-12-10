@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WelcomePageComponent } from './welcome-page.component';
+import { WelcomePageComponent } from './event-search.component';
 
 describe('WelcomePageComponent', () => {
   let component: WelcomePageComponent;

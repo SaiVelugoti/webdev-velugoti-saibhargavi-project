@@ -1,6 +1,7 @@
 module.exports = function (app) {
 
   var userModel = require("../model/user/user.model.server");
+  var eventModel = require("../model/event/event.model.server");
   var passport = require('passport');
   var LocalStrategy = require('passport-local').Strategy;
   var FacebookStrategy = require('passport-facebook').Strategy;
@@ -15,11 +16,24 @@ module.exports = function (app) {
   passport.deserializeUser(deserializeUser);
   passport.use(new LocalStrategy(localStrategy));
 
+  app.get("/api/findAllCommentsForEvent/:eventId", findAllCommentsForEvent);
+  app.post("/api/addCommentToEvent", addCommentToEvent)
+  app.get("/api/getEventName/:eventId", getEventName);
+  app.put("/api/user/:userId/following/:followingId", addToFollowList);
+  app.put("/api/user/:userId/unFollow/:followingId", removeFromFollowList);
+  app.get("/api/user/:userId/dashboard/followedBy", findUsersFollowedBy);
+  app.get("/api/user/:userId/dashboard/following", findUsersFollowing);
+  app.put("/api/user/:followingId/followedBy/:userId", addToFollowedBy);
+  app.put("/api/user/:followingId/unfollowedBy/:userId", removeFromFollowedBy);
+
+  app.get("/api/getInterestedEvents/:userId", getInterestedEvents);
   app.post("/api/user", createUser);
   app.get("/api/user", findUsers);
   app.get("/api/users", findAllUsers);
   app.get("/api/user/:userId", findUserById);
   app.put("/api/user/:userId", updateUser);
+  app.post("/api/addToFavorites", addToFavorites);
+  app.post("/api/removeFromFavorites", removeFromFavorites);
   app.delete("/api/user/:userId", deleteUser);
   app.post("/api/login", passport.authenticate('local'), login);
   app.post("/api/logout", logout);
@@ -27,12 +41,41 @@ module.exports = function (app) {
   app.post("/api/loggedIn", loggedIn);
   app.delete('/api/deleteAllUsers', deleteAllUsers);
   app.get('/facebook/login', passport.authenticate('facebook', {scope: 'email'}));
+
+
+
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
       successRedirect: '/profile',
       failureRedirect: '/login'
     }));
 
+  function getEventName(req, res) {
+    var eventId = req.params['eventId'];
+    eventModel.getEventName(eventId)
+      .then(function (res1) {
+        res.json(res1);
+      });
+  }
+  function addCommentToEvent(req, res) {
+    var eventId = req.body.eventId;
+    var comment = req.body.comment;
+    console.log('IN Server -> addCommentToEvent');
+    eventModel.addCommentToEvent(eventId, comment)
+      .then(function (res1) {
+        res.json(res1);
+      })
+  }
+
+  function findAllCommentsForEvent(req, res) {
+    var eventId = req.params['eventId'];
+    eventModel.findAllCommentsForEvent(eventId)
+      .then(function (res1) {
+        "use strict";
+        console.log(res1);
+        res.json(res1);
+      });
+  }
   function login(req, res) {
     console.log("In login - after local strategy");
     var user = req.user;
@@ -180,6 +223,28 @@ module.exports = function (app) {
       });
   }
 
+  function addToFavorites(req, res) {
+    var userId = req.body.userId;
+    var eventId = req.body.eventId;
+    var eventName = req.body.eventName;
+    userModel.addToFavorites(userId, eventId, eventName)
+      .then(function (returnedResult) {
+        eventModel.addEvent(eventId, eventName)
+          .then(function (addedEvent) {
+            res.json(addedEvent);
+          })
+        res.json(returnedResult);
+      });
+  }
+
+  function removeFromFavorites(req, res) {
+    var userId = req.body.userId;
+    var eventName = req.body.eventName;
+    userModel.removeFromFavorites(userId, eventName)
+      .then(function (returnedResult) {
+        res.json(returnedResult);
+      });
+  }
   function deleteUser(req, res) {
     var userId = req.params['userId'];
     //var user = req.body;
@@ -202,4 +267,68 @@ module.exports = function (app) {
         res.json(res1);
       })
   }
+
+  function getInterestedEvents(req, res) {
+    "use strict";
+    // const uID = req.body.userId;
+    var userId = req.params['userId'];
+    userModel.getInterestedEvents(userId)
+      .then(function (events) {
+        res.json(events);
+      })
+  }
+
+  function findUsersFollowing(req, res) {
+    var userId = req.params["userId"];
+    return userModel.findUserById(userId)
+      .then(function (user) {
+        res.json(user);
+
+      });
+  }
+  function findUsersFollowedBy(req, res) {
+    var userId = req.params["userId"];
+    return userModel.findUsersFollowedBy(userId)
+      .then(function (users) {
+        res.json(users);
+
+      });
+  }
+  function addToFollowList(req, res) {
+    var followingId = req.params["followingId"];
+    var userId = req.params["userId"];
+    return userModel. addToFollow(userId, followingId)
+      .then(function (user) {
+        res.json(user);
+      });
+  }
+
+  function addToFollowedBy(req, res) {
+    var followingId = req.params["followingId"];
+    var userId = req.params["userId"];
+    return userModel.addToFollowedBy(userId, followingId)
+      .then(function (user) {
+        res.json(user);
+      });
+
+  }
+  function removeFromFollowList(req, res) {
+    var unfollowId = req.params["followingId"];
+    var userId = req.params["userId"];
+    return userModel.removeFromFollow(userId, unfollowId)
+      .then(function (user) {
+        res.json(user);
+      });
+  }
+
+  function removeFromFollowedBy(req, res) {
+    var unfollowedById = req.params["followingId"];
+    var userId = req.params["userId"];
+    return userModel.removeFromFollowedBy(userId, unfollowedById)
+      .then(function (user) {
+        res.json(user);
+      });
+  }
+
+
 }

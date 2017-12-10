@@ -1,0 +1,30 @@
+{{otherUserName}} is following:
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <ul class="list-group">
+        <li class="list-group-item active btnStyle">
+          <div class="row">
+            <!--<div class="col-lg-2">-->
+            <div class="container-fluid">
+              Interested Events
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item" *ngFor="let interestedEvent of otherUser_Events">
+          <div class="row">
+            <!--<div class="col-lg-3">-->
+            <!--<a [routerLink]="['/user']"-->
+            <div class="container-fluid">
+              <a (click)="goToEventDetailsComments(interestedEvent['eventId'])">
+                {{interestedEvent['eventName']}}</a>
+              <!--<button type="button" class="pull-right" (click)="removeFromFavorites(interestedEvent['eventId'])">-->
+                <!--<span class="glyphicon glyphicon-minus"></span>-->
+              <!--</button>-->
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

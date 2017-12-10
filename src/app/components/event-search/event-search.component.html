@@ -1,0 +1,117 @@
+<!--Header-Start-->
+<nav class="navbar navbar-fixed-top bg-primary btnStyle">
+  <div class="container-fluid">
+
+    <div class="navbar-header header-width header-fix">
+      <p class="navbar-text pull-left p-fix">
+        <a [routerLink]="['/about']" class="glyphicon-color">
+          Event Planet
+        </a>
+      </p>
+      <div *ngIf="!userExists">
+        <p class="navbar-text pull-right p-right-fix glyphicon-color">
+
+        <a [routerLink]="['/login']">
+      <span class="glyphicon glyphicon-log-in glyphicon-color">
+      </span>
+        </a>
+        <a [routerLink]="['/register']">
+      <span class="glyphicon glyphicon-registration-mark glyphicon-color">
+      </span>
+        </a>
+        </p>
+    </div>
+
+      <div *ngIf="userExists">
+        <p class="navbar-text pull-right p-right-fix glyphicon-color">
+
+          <a [routerLink]="['/dashboard']">
+      <span class="glyphicon glyphicon-color">Dashboard
+      </span>
+          </a>
+          <a [routerLink]="['/logout']">
+      <span class="glyphicon glyphicon-log-out glyphicon-color">
+      </span>
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</nav>
+<!--Header-End-->
+
+<!--Body-Start-->
+<div class="container-fluid">
+<div *ngIf="infoFlag"
+     class="alert alert-danger container-fluid">
+  <i class="glyphicon glyphicon-info-sign glyphicon-color"></i>
+  {{infoMsg}}
+</div>
+</div>
+<!--Search Input and button-->
+<div class="container-fluid">
+  <form (ngSubmit)="search()" #f="ngForm">
+    <input ngModel={{searchTerm}}
+           name="searchTerm"
+           id="searchTerm"
+           placeholder="San Diego"
+           class="form-control">
+    <button
+            class="btn btn-primary btn-block btnStyle"
+            [disabled]="!f.valid">
+      Search for Events
+    </button>
+    <!--(click)="searchForEvents(searchTerm)"-->
+  </form>
+
+  <div *ngIf="isSearching">
+    <div class="btn btn-block"></div>
+    <div align="center">
+         Loading events for {{searchTerm}}...
+    </div>
+  </div>
+  <!--Empty Search results-->
+  <div *ngIf="noResults"
+       class="alert alert-danger container-fluid">
+    Sorry! We dont have any events happening at {{searchTerm}}
+  </div>
+
+  <!--Search Results-->
+  <div *ngIf="eventsExist">
+    <div></div>
+    <div>
+      <h5>Click on any of the following events to know the details</h5>
+    </div>
+
+    <li class="list-group-item" *ngFor="let eventsFromList of searchResults">
+      <div class="row">
+        <div class="col-xs-9">
+          <a (click)="getDetails(eventsFromList['id'])">
+            {{eventsFromList['title']}}
+            <br/>
+            {{eventsFromList['city_name']}}
+          </a>
+        </div>
+        <div class="col-xs-3">
+          <button value="Add To Favorites"
+                  id="{{eventsFromList['id']}}"
+                  class="gray"
+                  (click)="addTofavorites(eventsFromList['id'], eventsFromList['title'], $event)">
+            {{buttonValue}}
+          </button>
+        </div>
+      </div>
+    </li>
+  </div>
+</div>
+<!--Body Ends Here-->
+
+<!--Footer-->
+<div class="navbar navbar-fixed-bottom bg-primary btnStyle">
+  <div class="container-fluid pull-right">
+    <a [routerLink]="['/profile']" class="navbar-link glyphicon-color">
+      <span class="glyphicon glyphicon-user">
+      </span>
+    </a>
+  </div>
+</div>

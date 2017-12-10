@@ -6,6 +6,10 @@ input{
   color: white;
 }
 
+.ribbon-style{
+  color: gray;
+}
+
 body{
   padding-top: 70px;
 }

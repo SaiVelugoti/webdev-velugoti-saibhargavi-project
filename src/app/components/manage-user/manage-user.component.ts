@@ -9,13 +9,18 @@ import {UserService} from '../../services/user.service.client';
 export class ManageUserComponent implements OnInit {
 
   all_users: [{}];
-  editingUser: boolean;
+  isEditing: boolean;
   currentUser: any;
 
+  editingId: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
 
-    username: string;
-    firstName: string;
-    lastName: string;
+  successMsg: string;
+  successFlag: boolean;
 
   constructor(private userService: UserService) {
     console.log('In manage user - ts - on init');
@@ -36,10 +41,30 @@ export class ManageUserComponent implements OnInit {
 
   editUser(id) {
     this.userService.findUserById(id).subscribe((user: any) => {
+      this.successFlag = false;
+      this.isEditing = true;
       this.currentUser = user;
-      console.log(user);
       this.username = user['username'];
-      this.editingUser = true;
+      this.firstName = user['firstName'];
+      this.lastName = user['lastName'];
+      this.email = user['email'];
+      this.role = user['role'];
     });
+  }
+
+  updateUser() {
+    const user = {
+      username: this.username,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      email: this.email,
+      role: this.role
+    };
+    this.userService.updateUser(this.currentUser['_id'], user)
+      .subscribe((result: any) => {
+      this.successFlag = true;
+      this.successMsg = 'User updated successfully';
+      this.isEditing = false;
+      });
   }
 }

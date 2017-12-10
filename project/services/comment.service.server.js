@@ -1,23 +1,10 @@
 module.exports = function (app) {
 
-  var userModel = require("../model/user/user.model.server");
   var eventModel = require("../model/event/event.model.server");
-
-  app.put("/api/eventDetail/:id", getEventDetails);
-  app.get("/api/getInterestedEvents/:userId", getInterestedEvents);
 
   app.get("/api/findAllCommentsForEvent/:eventId", findAllCommentsForEvent);
 
-  function findAllCommentsForEvent(req, res) {
-    var eventId = req.params['eventId'];
-    console.log(eventId);
-    eventModel.findAllCommentsForEvent(eventId)
-      .then(function (res1) {
-        // "use strict";
-        res.json(res1);
-      });
-  }
-
+  app.post("/api/addCommentToEvent", addCommentToEvent);
 
   function addCommentToEvent(req, res) {
     var eventId = req.body.eventId;
@@ -33,10 +20,8 @@ module.exports = function (app) {
     console.log(eventId);
     eventModel.findAllCommentsForEvent(eventId)
       .then(function (res1) {
-        "use strict";
+        // "use strict";
         res.json(res1);
-      })
-
-
+      });
   }
 }

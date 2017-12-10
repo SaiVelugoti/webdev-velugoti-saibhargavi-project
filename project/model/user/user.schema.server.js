@@ -8,9 +8,9 @@ var UserSchema = mongoose.Schema({
   role: {type: String, default: 'USER', enum:['ADMIN', 'USER', 'ORGANIZER']},
   commentedEvents: [{eventId: String, eventName: String, comment: String}],
   followedBy: [String],
-  following: [String],
+  followingUsers: [String],
   dateCreated: {type: Date, default: Date.now()},
-  eventsAttending: [String],
+  favoriteEvents: [{eventId: String, eventName: String}],
   facebook: {
     id: String,
     token: String

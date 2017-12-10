@@ -1,15 +1,46 @@
+<!--<div class="container-fluid">-->
+<!--<div class="row">-->
+<!--<div class="col-xs-3 label">-->
+<!--Name-->
+<!--</div>-->
+<!--<div class="col-xs-9">-->
+<!--{{event}}-->
+<!--&lt;!&ndash;{{getEventName(event)}}&ndash;&gt;-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="row">-->
+
+<!--</div>-->
+
+<!--<div *ngIf="commentsExist">-->
+<!--<div class="row">-->
+<!--<div class="col-xs-9">-->
+<!--Comments-->
+<!--</div>-->
+<!--</div>-->
+<!--<li class="list-group-item" *ngFor="let comment of commentsFound">-->
+<!--<div class="row">-->
+<!--<div class="col-xs-9">-->
+<!--{{comment['comment']}}-->
+<!--</div>-->
+<!--<div class="col-xs-3">-->
+<!--{{comment['username']}}-->
+<!--</div>-->
+<!--</div>-->
+<!--</li>-->
+<!--</div>-->
 <!--Header-Start-->
 <nav class="navbar navbar-fixed-top bg-primary btnStyle">
   <div class="container-fluid">
 
     <div class="navbar-header header-width header-fix">
       <p class="navbar-text pull-left p-fix">
-        <a (click)="searchForEvents(searchTerm)" class="navbar-link glyphicon-color">
+        <a [routerLink]="['/dashboard']" class="navbar-link glyphicon-color">
               <span class="glyphicon glyphicon-chevron-left">
               </span>
         </a>
       </p>
-      <span class="navbar-brand glyphicon-color">{{eventName}}</span>
+      <span class="navbar-brand glyphicon-color">{{eventId}} {{eventName}}</span>
 
       <p class="navbar-text pull-right p-right-fix glyphicon-color">
         <a [routerLink]="['/login']">
@@ -39,15 +70,10 @@
         {{eventDetail['description']}}
         <br/><br/>
       </div>
-      <div *ngIf="!eventDetail['description']">
-        <h3>Description</h3>
-        Description yet to come!
-        <br/><br/>
-      </div>
       <b>Address:</b>&nbsp;&nbsp;
       {{eventDetail['address']}}
       <br/><br/>
-      <b>Start Time:</b>&nbsp;&nbsp;
+      <b>Start Time</b>&nbsp;&nbsp;
       {{eventDetail['start_time']}}
       <br/><br/>
       <b>Link:</b>&nbsp;&nbsp;
@@ -56,6 +82,10 @@
   </div>
 </div>
 
+<div class="container-fluid">
+  <div class="btn btn-block"></div>
+  <div class="btn btn-block"></div>
+  <div class="container-fluid">
 
 <div *ngIf="commentsExist">
   <div class="row">
@@ -80,7 +110,10 @@
 <div class="container-fluid">
   <div class="btn btn-block"></div>
 </div>
+  </div>
+</div>
 <div class="container-fluid">
+  <div class="container-fluid">
   <div *ngIf="!commentsExist"
        class="alert alert-danger container-fluid">
     <i class="glyphicon glyphicon-info-sign glyphicon-color"></i>
@@ -88,6 +121,39 @@
   </div>
 </div>
 
+<div class="container-fluid">
+<div *ngIf="!commentsExist">
+  Be the first to comment
+</div>
+
+<div *ngIf="addingNewComment">
+  <div *ngIf="errorFlag"
+       class="alert alert-danger">
+    {{errorMsg}}
+  </div>
+  <input placeholder="Enter your comment here"
+         name="newComment"
+         type="text"
+         id="newComment"
+         class="form-control"
+         ngModel
+         required
+         [(ngModel)]="newComment"
+         autocomplete="off"
+         autocapitalize="off"
+  />
+  <button class="btn-sm" (click)="addCommentToEvent()">
+    Save Comment
+  </button>
+</div>
+
+<div *ngIf="!addingNewComment">
+  <button class="btn-sm" (click)="addNewComment()">
+    Add Comment
+  </button>
+</div>
+</div>
+</div>
 <!--Body Ends Here-->
 
 <!--Footer-->

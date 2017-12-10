@@ -44,11 +44,12 @@
       Passwords do not match
     </span>
 
-<select [(ngModel)]="role" class="form-control" name="role">
-  <option value="USER">User</option>
-  <option value="ORGANIZER">Organizer</option>
-  <option value="ADMIN">Admin</option>
-</select>
+    <select [(ngModel)]="role" class="form-control" name="role">
+      <option value="">Select Role</option>
+      <option value="USER">User</option>
+      <option value="ORGANIZER">Organizer</option>
+      <option value="ADMIN">Admin</option>
+    </select>
     <button class="btn btn-block btnStyle bg-primary"
             type="submit"
             [disabled]="!f.valid">Register

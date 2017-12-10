@@ -11,13 +11,13 @@ import {SharedService} from '../../services/shared.service.client';
 })
 export class DashboardComponent implements OnInit {
 
-  regUserId: string;
   usersFollowing: [{}];
-  followedBy: [{}];
+  followedByUsers: [{}];
   eventsInterestedIn: [{}];
   otherUsers: [{}];
   user: any;
   isAdmin: boolean;
+
 // private eventService: EventService,
   constructor(private router: Router, private activatedRoute: ActivatedRoute,
               private userService: UserService,
@@ -30,52 +30,95 @@ export class DashboardComponent implements OnInit {
       console.log('User is Admin');
       this.isAdmin = true;
     }
-    this.activatedRoute.params.subscribe((params: any) => {
-        this.regUserId = params['userId'];
-        this.userService.findUserById(this.regUserId).subscribe((user: any) => {
-          this.followedBy = user.followedBy;
+    this.userService.findUserById(this.user['_id']).subscribe((user: any) => {
+      this.followedByUsers = user.followedBy;
+      this.usersFollowing = user.followingUsers;
+    });
+    this.userService.findUsers().subscribe((users: any) => {
+      this.otherUsers = users;
+      this.otherUsers.forEach((user, index) => {
+
+        if (user['_id'] === this.user['_id']) {
+          this.otherUsers.splice(index, 1);
+        }
+      });
+      if (this.usersFollowing !== undefined && this.usersFollowing !== null) {
+        this.otherUsers.forEach((user1, index) => {
+          this.usersFollowing.forEach((user2, index1) => {
+            console.log(user1['_id'], user2);
+            if (user1['_id'] === user2) {
+              this.otherUsers.splice(index, 1);
+            }
+          });
         });
-        this.userService.findUserById(this.regUserId).subscribe((users: any) => {
-          this.usersFollowing = users.followingUsers;
-        });
-        this.userService.findUsers().subscribe((users: any) => {
-          this.otherUsers = users;
-        });
-        // this.eventService.findEventsInterested(this.regUserId).subscribe((eventsInterested: any) => {
-        //   this.eventsInterestedIn = eventsInterested;
-        // });
       }
-    );
+    });
+    this.userService.findEventsInterested(this.user['_id']).subscribe((eventsInterested: any) => {
+      console.log(eventsInterested[0].favoriteEvents);
+      this.eventsInterestedIn = eventsInterested[0].favoriteEvents;
+    });
   }
 
-  // addToFollow(userId) {
-  //   this.userService.addUserToFollow(this.regUserId, userId).subscribe((response: any) => {
-  //       // window.location.reload();
-  //       // this.router.navigate(['/user', this.regUserId, 'dashboard']);
-  //     }
-  //   );
-  //   this.userService.addUserToFollowedBy(this.regUserId, userId).subscribe((response: any) => {
-  //     // window.location.reload();
-  //     // this.router.navigate(['/user', this.regUserId, 'dashboard']);
-  //   });
-  //   window.location.reload();
-  //
-  // }
-  //
-  // unFollow(userId) {
-  //   this.userService.removeUserFromFollow(this.regUserId, userId).subscribe((response: any) => {
-  //       // window.location.reload();
-  //       // this.router.navigate(['/user', this.regUserId, 'dashboard']);
-  //     }
-  //   );
-  //   this.userService.removeUserFromFollowedBy(this.regUserId, userId).subscribe((response: any) => {
-  //   });
-  //   window.location.reload();
-  // }
+  addToFollow(userId) {
+    this.userService.addUserToFollow(this.user['_id'], userId).subscribe((response: any) => {
+      this.userService.addUserToFollowedBy(this.user['_id'], userId).subscribe((response1: any) => {
+        this.userService.findUserById(this.user['_id']).subscribe((user: any) => {
+          this.followedByUsers = user.followedBy;
+          this.usersFollowing = user.followingUsers;
+          this.otherUsers.forEach((user1, index) => {
+            console.log(user1['_id'], userId);
+            if (user1['_id'] === userId) {
+              this.otherUsers.splice(index, 1);
+            }
+          });
+        });
+      });
+    });
+  }
 
-  // removeFromWishList(eveId) {
-  //   this.eventService.removeEveFrmList(this.regUserId, eveId).subscribe((response: any) => {
-  //     window.location.reload();
-  //   });
-  // }
+  unFollow(userId) {
+    this.userService.removeUserFromFollow(this.user['_id'], userId).subscribe((response: any) => {
+      this.userService.removeUserFromFollowedBy(this.user['_id'], userId).subscribe((response1: any) => {
+        this.userService.findUserById(this.user['_id']).subscribe((user: any) => {
+          this.followedByUsers = user.followedBy;
+          this.usersFollowing = user.followingUsers;
+          this.userService.findUserById(userId).subscribe((userNew: any) => {
+            this.otherUsers.splice(1, 0, userNew);
+          });
+        });
+      });
+    });
+    // this.userService.findUserById(this.user['_id']).subscribe((users: any) => {
+    //   this.usersFollowing = users.followingUsers;
+    // });
+  }
+
+  removeFromFavorites(eveId) {
+    console.log('removeFromFavorites ->');
+    console.log(this.user['_id']);
+    this.userService.removeFromFavorites(this.user['_id'], eveId).subscribe((response: any) => {
+      // window.location.reload();
+      this.userService.findEventsInterested(this.user['_id']).subscribe((eventsInterested: any) => {
+        this.eventsInterestedIn = eventsInterested[0].favoriteEvents;
+      });
+    });
+  }
+
+  goToEventDetailsComments(interestedEvent) {
+    console.log(interestedEvent);
+    this.router.navigate(['/comments', interestedEvent]);
+  }
+
+  getUserName(uId) {
+    console.log(uId);
+    if (uId !== undefined && uId !== '') {
+      this.userService.findUserById(uId).subscribe((user: any) => {
+        console.log(user['username']);
+        return user['username'];
+      });
+    } else {
+      return;
+    }
+  }
 }
+

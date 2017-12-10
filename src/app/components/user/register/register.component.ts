@@ -28,6 +28,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+    // this.role = '';
     this.errorFlag = false;
     this.username = '';
     this.password = '';
@@ -55,7 +56,7 @@ export class RegisterComponent implements OnInit {
 
           this.userService.register(this.username, this.password, this.role)
             .subscribe((data: any) => {
-                this.router.navigate(['/profile']);
+                this.router.navigate(['/login']);
               },
               (error: any) => {
                 this.error = error._body;
