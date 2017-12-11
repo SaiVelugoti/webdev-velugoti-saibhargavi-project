@@ -1,34 +1,3 @@
-<!--<div class="container-fluid">-->
-<!--<div class="row">-->
-<!--<div class="col-xs-3 label">-->
-<!--Name-->
-<!--</div>-->
-<!--<div class="col-xs-9">-->
-<!--{{event}}-->
-<!--&lt;!&ndash;{{getEventName(event)}}&ndash;&gt;-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="row">-->
-
-<!--</div>-->
-
-<!--<div *ngIf="commentsExist">-->
-<!--<div class="row">-->
-<!--<div class="col-xs-9">-->
-<!--Comments-->
-<!--</div>-->
-<!--</div>-->
-<!--<li class="list-group-item" *ngFor="let comment of commentsFound">-->
-<!--<div class="row">-->
-<!--<div class="col-xs-9">-->
-<!--{{comment['comment']}}-->
-<!--</div>-->
-<!--<div class="col-xs-3">-->
-<!--{{comment['username']}}-->
-<!--</div>-->
-<!--</div>-->
-<!--</li>-->
-<!--</div>-->
 <!--Header-Start-->
 <nav class="navbar navbar-fixed-top bg-primary btnStyle">
   <div class="container-fluid">
@@ -95,11 +64,44 @@
   </div>
   <li class="list-group-item" *ngFor="let comment of commentsFound">
     <div class="row">
-      <div class="col-xs-9">
-        {{comment['comment']}}
+
+      <div class="col-xs-6" id="{{comment['_id']}}">
+        <!--<span id="{{comment['_id']}}">-->
+        <!--<div>{{comment['comment']}}</div>-->
+        <!--<input value="cmment"-->
+               <!--name="editComment"-->
+               <!--type="text"-->
+               <!--id="editComment"-->
+               <!--class="form-control"-->
+               <!--ngModel-->
+               <!--required-->
+               <!--autocomplete="off"-->
+               <!--autocapitalize="off"-->
+        <!--/>-->
+        <input type="text" id="editText" class="editComment" name="FirstName" [value]="comment['comment']">
+        <span class="glyphicon glyphicon-edit "  (click)="onEdit(comment['_id'])"></span>&nbsp;
+
+        <button type="button"
+                id="saveBtn"
+                class="btn btn-default saveButton"
+                (click)="saveComment(comment['_id'])">
+          Save Comment</button>
+        <button type="button"
+                id="cancelBtn"
+                class="btn btn-default cancelButton"
+                (click)="cancelEdit(comment['_id'])">
+         Cancel</button>
+          <!--</spanan>-->
       </div>
+
       <div class="col-xs-3">
         {{comment['username']}}
+      </div>
+      <div *ngIf="comment['username'] === user['username']">
+        <div class="col-xs-3">
+          <!--<span class="glyphicon glyphicon-edit " (click)="onEdit()"></span>&nbsp;-->
+          <span class="glyphicon glyphicon-trash" (click)="deleteComment(comment['_id'])"></span>
+        </div>
       </div>
     </div>
   </li>

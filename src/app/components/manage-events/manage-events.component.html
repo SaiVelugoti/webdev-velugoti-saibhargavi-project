@@ -1,0 +1,92 @@
+<nav class="navbar navbar-fixed-top bg-primary btnStyle">
+  <div class="container-fluid">
+
+    <div class="navbar-header header-width header-fix">
+      <p class="navbar-text pull-left p-fix">
+        <a [routerLink]="['/dashboard']" class="navbar-link glyphicon-color">
+              <span class="glyphicon glyphicon-chevron-left">
+              </span>
+        </a>
+      </p>
+      <span class="navbar-brand glyphicon-color">Manage Users</span>
+
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="container-fluid">
+
+    <a [routerLink]="['/addEvent']" class="btn btn-primary pull-right">
+      Add Event
+    </a>
+  </div>
+
+  <li class="list-group-item active btnStyle">
+    <div class="row">
+      <!--<div class="col-lg-2">-->
+      <div class="container-fluid">
+        Events created by you
+      </div>
+    </div>
+  </li>
+
+  <div *ngIf="userCreatedEvents">
+    <li class="list-group-item" *ngFor="let event of eventsCreated">
+      <div class="row">
+        <div class="col-xs-6">
+          <a (click)="goToEventDetails(event['eventId'])">
+          {{event['eventName']}}
+          </a>
+        </div>
+        <div class="pull-right">
+          <div class="col-xs-3">
+            <a [routerLink]="['/editEvent', event['_id']]">
+              <span class="glyphicon glyphicon-edit"></span>
+            </a>
+          </div>
+          <div class="col-xs-3">
+            <div (click)="deleteEvent(event['_id'])">
+              <span class="glyphicon glyphicon-trash"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </div>
+
+  <div *ngIf="!userCreatedEvents">
+    <div class="btn-block btn"></div>
+    Sorry! We could not find any events created by you!
+    <br/>
+    Start creating events by click on 'Add Event'
+    <br/>
+  </div>
+  <div class="btn-block btn"></div>
+  <li class="list-group-item active btnStyle">
+    <div class="row">
+      <!--<div class="col-lg-2">-->
+      <div class="container-fluid">
+        Take a look at events created by other organizers
+      </div>
+    </div>
+  </li>
+  <div class="btn-block btn"></div>
+  <div *ngIf="otherUserCreatedEvents">
+    <li class="list-group-item" *ngFor="let event of eventsCreatedbyOthers">
+      <div class="row">
+        <div class="col-xs-12">
+          <a (click)="goToEventDetails(event['eventId'])">
+            {{event['eventId']}}
+          {{event['eventName']}}
+          </a>
+        </div>
+      </div>
+    </li>
+  </div>
+
+  <div *ngIf="!otherUserCreatedEvents">
+    Other organizers are yet to create events.!
+    <br/>
+  </div>
+</div>

@@ -17,7 +17,6 @@ module.exports = function (app) {
 
   function findAllCommentsForEvent(req, res) {
     var eventId = req.params['eventId'];
-    console.log(eventId);
     eventModel.findAllCommentsForEvent(eventId)
       .then(function (res1) {
         // "use strict";

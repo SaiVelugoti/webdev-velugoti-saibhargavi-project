@@ -1,0 +1,10 @@
+.editComment{
+  pointer-events: none;
+}
+.saveButton{
+  display:none
+}
+
+.cancelButton{
+  display:none
+}

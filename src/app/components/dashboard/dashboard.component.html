@@ -1,127 +1,135 @@
 <div class="container-fluid">
   <div class="container-fluid">
-<div *ngIf="isAdmin">
-  <div class="container-fluid">
-    <a [routerLink]="['/manageUsers']" class="btn btn-block btn-primary">
-      Manage Users
-    </a>
-</div>
-</div>
+    <div *ngIf="isAdmin">
+      <div class="container-fluid">
+        <a [routerLink]="['/manageUsers']" class="btn btn-block btn-primary btnStyle">
+          Manage Users
+        </a>
+      </div>
+    </div>
+      <div *ngIf="isOrganizer">
+        <div class="container-fluid">
+          <a [routerLink]="['/manageEvents']" class="btn btn-block btn-primary btnStyle">
+            Manage Events
+          </a>
+        </div>
+      </div>
+    <div class="btn btn-block"></div>
+      <div class="container-fluid">
+        <a [routerLink]="['/eventSearch']" class="btn btn-block btn-primary btnStyle">
+          Search Events
+        </a>
+      </div>
+    </div>
+
+
     <div class="container-fluid">
-      <a [routerLink]="['/eventSearch']" class="btn btn-block btn-primary btnStyle">
-        Search Events
+      <div class="btn btn-block"></div>
+    </div>
+    <div class="container-fluid">
+
+    </div>
+    <div class="container-fluid">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12">
+            <ul class="list-group">
+              <li class="list-group-item active btnStyle">
+                <div class="row">
+                  <!--<div class="col-lg-2">-->
+                  <div class="container-fluid">
+                    Interested Events
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item" *ngFor="let interestedEvent of eventsInterestedIn">
+                <div class="row">
+                  <!--<div class="col-lg-3">-->
+                  <!--<a [routerLink]="['/user']"-->
+                  <div class="container-fluid">
+                    <a (click)="goToEventDetailsComments(interestedEvent['eventId'])">
+                      {{interestedEvent['eventName']}}</a>
+                    <button type="button" class="pull-right" (click)="removeFromFavorites(interestedEvent['eventId'])">
+                      <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4">
+            <ul class="list-group">
+              <li class="list-group-item active btnStyle">
+                <div class="row">
+                  <div class="container-fluid">
+                    Followed By
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item" *ngFor="let followedByUser of followedByUsers">
+                <div class="row">
+                  <div class="container-fluid">
+                    {{followedByUser}}
+                    <!--{{getUserName(followedByUser)}}-->
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4">
+            <ul class="list-group">
+              <li class="list-group-item active btnStyle">
+                <div class="row">
+                  <div class="container-fluid">
+                    Users you Follow
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item" *ngFor="let followingUser of usersFollowing">
+                <!--{{followingUser.username}}-->
+                <div class="row">
+                  <div class="container-fluid">
+                    <!--{{getUserName(followingUser)}}-->
+                    <a [routerLink]="['/otherUser/', followingUser]"> {{followingUser}} </a>
+                    <button type="button" class="pull-right" (click)="unFollow(followingUser)">
+                      UnFollow
+                    </button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4">
+            <ul class="list-group">
+              <li class="list-group-item active btnStyle">
+                <div class="row">
+                  <div class="container-fluid">
+                    <div> Other Users</div>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item" *ngFor="let otherUser of otherUsers">
+                <div class="row">
+                  <div class="container-fluid">
+                    {{otherUser.username}}
+                    <button type="button" class="pull-right" (click)="addToFollow(otherUser._id)">
+                      Follow
+                    </button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+
+        </div>
+      </div>
+      <a [routerLink]="['/login']" class="btn btn-block btn-danger">
+        Logout
       </a>
     </div>
-</div>
-
-
-<div class="container-fluid">
-  <div class="btn btn-block"></div>
-</div>
-  <div class="container-fluid">
-
   </div>
-<div class="container-fluid">
-  <div class="container-fluid">
-  <div class="row">
-    <div class="col-lg-12">
-      <ul class="list-group">
-        <li class="list-group-item active btnStyle">
-          <div class="row">
-            <!--<div class="col-lg-2">-->
-            <div class="container-fluid">
-              Interested Events
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item" *ngFor="let interestedEvent of eventsInterestedIn">
-          <div class="row">
-            <!--<div class="col-lg-3">-->
-            <!--<a [routerLink]="['/user']"-->
-            <div class="container-fluid">
-              <a (click)="goToEventDetailsComments(interestedEvent['eventId'])">
-                {{interestedEvent['eventName']}}</a>
-              <button type="button" class="pull-right" (click)="removeFromFavorites(interestedEvent['eventId'])">
-                <span class="glyphicon glyphicon-minus"></span>
-              </button>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
-    <div class="row">
-    <div class="col-lg-4">
-      <ul class="list-group">
-        <li class="list-group-item active btnStyle">
-          <div class="row">
-            <div class="container-fluid">
-              Followed By
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item" *ngFor="let followedByUser of followedByUsers">
-          <div class="row">
-            <div class="container-fluid">
-              {{followedByUser}}
-              <!--{{getUserName(followedByUser)}}-->
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-
-    <div class="col-lg-4">
-      <ul class="list-group">
-        <li class="list-group-item active btnStyle">
-          <div class="row">
-            <div class="container-fluid">
-              Users you Follow
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item" *ngFor="let followingUser of usersFollowing">
-          <!--{{followingUser.username}}-->
-          <div class="row">
-            <div class="container-fluid">
-              <!--{{getUserName(followingUser)}}-->
-              <a [routerLink]="['/otherUser/', followingUser]"> {{followingUser}} </a>
-              <button type="button" class="pull-right" (click)="unFollow(followingUser)">
-                UnFollow
-              </button>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-
-    <div class="col-lg-4">
-      <ul class="list-group">
-        <li class="list-group-item active btnStyle">
-          <div class="row">
-            <div class="container-fluid">
-              <div> Other Users</div>
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item" *ngFor="let otherUser of otherUsers">
-          <div class="row">
-            <div class="container-fluid">
-              {{otherUser.username}}
-              <button type="button" class="pull-right" (click)="addToFollow(otherUser._id)">
-                Follow
-              </button>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-
-
-  </div>
-  </div>
-  <a [routerLink]="['/login']" class="btn btn-block btn-danger">
-    Logout
-  </a>
-</div>
-</div>

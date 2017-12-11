@@ -1,0 +1,118 @@
+<nav class="navbar navbar-fixed-top bg-primary btnStyle">
+  <div class="container-fluid">
+    <div class="navbar-header header-width header-fix">
+      <p class="navbar-text pull-left p-fix">
+        <a [routerLink]="['/manageEvents']"
+           class="navbar-link glyphicon-color">
+              <span class="glyphicon glyphicon-chevron-left">
+              </span>
+        </a>
+      </p>
+
+      <span class="navbar-brand">Add Event</span>
+      <p class="navbar-text pull-right p-right-fix glyphicon-color">
+
+        <a [routerLink]="['/dashboard']">
+      <span class="glyphicon glyphicon-color">Dashboard
+      </span>
+        </a>
+        <a [routerLink]="['/logout']">
+      <span class="glyphicon glyphicon-log-out glyphicon-color">
+      </span>
+        </a>
+      </p>
+    </div>
+
+  </div>
+</nav>
+
+
+<form (ngSubmit)="addEvent()" #f="ngForm">
+  <div class="container-fluid">
+    <div *ngIf="successFlag"
+         class="alert alert-success">
+      {{successMsg}}
+    </div>
+    <div *ngIf="errorFlag"
+         class="alert alert-danger">
+      {{errMsg}}
+    </div>
+    <div class="form-group">
+
+      <label for="eventName">Name</label>
+      <input [(ngModel)]="eventName"
+             placeholder="Grad Meet-up"
+             value={{eventName}}
+             type="text"
+             id="eventName"
+             name="eventName"
+             class="form-control"
+      />
+      <label for="description">Description</label>
+      <textarea [(ngModel)]="description"
+                rows="6"
+                placeholder="Come, Meet your fellow Huskies.!"
+                value={{description}}
+                type="text"
+                id="description"
+                name="description"
+                class="form-control">{{description}}</textarea>
+
+      <label for="eventLocation">Happening At</label>
+      <input [(ngModel)]="eventLocation"
+             placeholder="Boston"
+             value={{eventLocation}}
+             type="text"
+             id="eventLocation"
+             name="eventLocation"
+             class="form-control"
+      />
+
+      <label for="eventUrl">Event Link</label>
+      <input [(ngModel)]="eventUrl"
+             placeholder="https://www.eventbrite.com/d/ma--boston/events/"
+             value={{eventUrl}}
+             type="text"
+             id="eventUrl"
+             name="eventUrl"
+             class="form-control"
+      />
+
+      <label for="imgSrc">Image Link</label>
+      <input [(ngModel)]="imgSrc"
+             placeholder="https://solarsystem.nasa.gov/images/galleries/soho-300.jpg"
+             value={{imgSrc}}
+             type="text"
+             id="imgSrc"
+             name="imgSrc"
+             class="form-control"
+      />
+      <div class="input-group">
+        <span class="input-group-btn">
+          <a class="btn btn-primary btn-block"
+             (click)="flickrSearch()">
+            Search Flickr</a>
+        </span>
+      </div>
+      <div class="btn btn-block"></div>
+
+      <button class="btn btn-block btnStyle bg-primary"
+              type="submit">
+        Create
+      </button>
+
+      <br/>
+    </div>
+  </div>
+
+</form>
+<nav class="navbar navbar-fixed-bottom bg-primary btnStyle">
+  <div class="container-fluid">
+    <p class="navbar-text pull-right">
+      <a [routerLink]="['/profile']" class="navbar-link glyphicon-color">
+              <span class="glyphicon glyphicon-user">
+              </span>
+      </a>
+    </p>
+  </div>
+</nav>

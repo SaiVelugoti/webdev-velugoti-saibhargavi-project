@@ -11,6 +11,9 @@ import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {ManageUserComponent} from './components/manage-user/manage-user.component';
 import {EventCommentComponent} from './components/event-comment/event-comment.component';
 import {OtherUserDashboardComponent} from "./components/other-user-dashboard/other-user-dashboard.component";
+import {ManageEventsComponent} from "./components/manage-events/manage-events.component";
+import {AddEventComponent} from "./components/add-event/add-event.component";
+import {FlickrSearchComponent} from "./components/flickr-search/flickr-search.component";
 
 const APP_ROUTES: Routes = [
   { path : '' , component: EventSearchComponent},
@@ -24,7 +27,12 @@ const APP_ROUTES: Routes = [
   { path : 'manageUsers', component: ManageUserComponent, canActivate: [AuthGuard]},
   { path : 'eventSearch', component: EventSearchComponent, canActivate: [AuthGuard]},
   { path : 'comments/:interestedEvent', component: EventCommentComponent, canActivate: [AuthGuard]},
-  { path : 'otherUser/:id', component: OtherUserDashboardComponent, canActivate: [AuthGuard]}
+  { path : 'detailsManager/:eventId', component: EventCommentComponent, canActivate: [AuthGuard]},
+  { path : 'otherUser/:id', component: OtherUserDashboardComponent, canActivate: [AuthGuard]},
+  { path : 'manageEvents', component: ManageEventsComponent, canActivate: [AuthGuard]},
+  { path : 'addEvent', component: AddEventComponent, canActivate: [AuthGuard]},
+  { path : 'flickrSearch', component: FlickrSearchComponent, canActivate: [AuthGuard]},
+  { path : 'addingImage/:url', component: AddEventComponent, canActivate: [AuthGuard]}
 ];
 
 // Export the routes as module providers

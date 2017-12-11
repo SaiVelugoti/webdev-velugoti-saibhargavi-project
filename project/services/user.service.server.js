@@ -25,7 +25,7 @@ module.exports = function (app) {
   app.get("/api/user/:userId/dashboard/following", findUsersFollowing);
   app.put("/api/user/:followingId/followedBy/:userId", addToFollowedBy);
   app.put("/api/user/:followingId/unfollowedBy/:userId", removeFromFollowedBy);
-
+  app.post("/api/modifyCommentToEvent", modifyCommentToEvent);
   app.get("/api/getInterestedEvents/:userId", getInterestedEvents);
   app.post("/api/user", createUser);
   app.get("/api/user", findUsers);
@@ -39,9 +39,13 @@ module.exports = function (app) {
   app.post("/api/logout", logout);
   app.post("/api/register", register);
   app.post("/api/loggedIn", loggedIn);
-  app.delete('/api/deleteAllUsers', deleteAllUsers);
-  app.get('/facebook/login', passport.authenticate('facebook', {scope: 'email'}));
-
+  app.delete("/api/deleteAllUsers", deleteAllUsers);
+  app.get("/facebook/login", passport.authenticate('facebook', {scope: 'email'}));
+  app.post("/api/deleteCommentToEvent", deleteCommentToEvent);
+  app.post("/api/addNewEvent", addNewEvent);
+  app.get("/api/findEventsCreated/:userId", getEventsCreated);
+  app.get("/api/findEventsCreatedByOthers/:userId", findEventsCreatedByOthers);
+  app.post("/api/deleteEvent/:eventId", deleteEvent);
 
 
   app.get('/auth/facebook/callback',
@@ -60,24 +64,39 @@ module.exports = function (app) {
   function addCommentToEvent(req, res) {
     var eventId = req.body.eventId;
     var comment = req.body.comment;
-    console.log('IN Server -> addCommentToEvent');
     eventModel.addCommentToEvent(eventId, comment)
       .then(function (res1) {
         res.json(res1);
       })
   }
+  function deleteCommentToEvent(req, res) {
+    var eventId = req.body.eventId;
+    var commentId = req.body.commentId;
+    console.log('in user server -> delete comment', eventId, commentId);
+    eventModel.deleteCommentToEvent(eventId, commentId)
+      .then((function (res1) {
+        res.json(res1);
+      }))
+  }
 
+  function modifyCommentToEvent(req, res) {
+    var eventId = req.body.eventId;
+    var commentId = req.body.commentId;
+    var commentText = req.body.commentText;
+    eventModel.modifyCommentToEvent(eventId, commentId, commentText)
+      .then((function (res1) {
+        res.json(res1);
+      }))
+  }
   function findAllCommentsForEvent(req, res) {
     var eventId = req.params['eventId'];
     eventModel.findAllCommentsForEvent(eventId)
       .then(function (res1) {
         "use strict";
-        console.log(res1);
         res.json(res1);
       });
   }
   function login(req, res) {
-    console.log("In login - after local strategy");
     var user = req.user;
     res.json(user);
   }
@@ -327,6 +346,39 @@ module.exports = function (app) {
     return userModel.removeFromFollowedBy(userId, unfollowedById)
       .then(function (user) {
         res.json(user);
+      });
+  }
+
+  function addNewEvent(req, res) {
+    console.log("In ManageEvent Server -> add new event");
+    var newEvent = req.body.eventNew;
+    eventModel.addNewEvent(newEvent)
+      .then(function (res1) {
+        res.json(res1);
+      })
+  }
+  function getEventsCreated(req, res) {
+    var userId = req.params['userId'];
+    eventModel.getEventsCreated(userId)
+      .then(function (res1) {
+        res.json(res1);
+      });
+  }
+
+  function findEventsCreatedByOthers(req, res) {
+    var userId = req.params['userId'];
+    eventModel.findEventsCreatedByOthers(userId)
+      .then(function (res1) {
+        res.json(res1);
+      });
+  }
+
+  function deleteEvent(req, res) {
+    var eventId = req.params['eventId'];
+    //var user = req.body;
+    eventModel.deleteEvent(eventId)
+      .then(function (eve) {
+        res.json(eve);
       });
   }
 

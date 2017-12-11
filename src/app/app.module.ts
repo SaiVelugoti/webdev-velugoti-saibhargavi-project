@@ -24,6 +24,12 @@ import {ManageUserComponent} from './components/manage-user/manage-user.componen
 import {EventCommentComponent} from './components/event-comment/event-comment.component';
 import {CommentService} from './services/comment.service.client';
 import { OtherUserDashboardComponent } from './components/other-user-dashboard/other-user-dashboard.component';
+import { ManageEventsComponent } from './components/manage-events/manage-events.component';
+import { AddEventComponent } from './components/add-event/add-event.component';
+import { EditEventComponent } from './components/edit-event/edit-event.component';
+import {ManageEventService} from "./services/manage-event.service.client";
+import { FlickrSearchComponent } from './components/flickr-search/flickr-search.component';
+import {FlickrService} from "./services/flickr.service.client";
 
 @NgModule({
   // Declare components here
@@ -41,6 +47,10 @@ import { OtherUserDashboardComponent } from './components/other-user-dashboard/o
     ManageUserComponent,
     EventCommentComponent,
     OtherUserDashboardComponent,
+    ManageEventsComponent,
+    AddEventComponent,
+    EditEventComponent,
+    FlickrSearchComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +66,9 @@ import { OtherUserDashboardComponent } from './components/other-user-dashboard/o
     SharedService,
     EventSearchService,
     CommentService,
-    AuthGuard],
+    AuthGuard,
+  ManageEventService,
+  FlickrService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

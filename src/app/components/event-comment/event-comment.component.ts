@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SharedService} from '../../services/shared.service.client';
 import {CommentService} from '../../services/comment.service.client';
 import {ActivatedRoute} from '@angular/router';
-import {EventSearchService} from "../../services/event-search.service.client";
+import {EventSearchService} from '../../services/event-search.service.client';
 
 @Component({
   selector: 'app-event-comment',
@@ -44,7 +44,11 @@ export class EventCommentComponent implements OnInit {
     this.user = this.sharedService.user;
     this.activatedRoute.params
       .subscribe((params: any) => {
+      if (params['interestedEvent'] === undefined) {
+        this.event = params['eventId'];
+      } else {
         this.event = params['interestedEvent'];
+      }
 
         this.eventSearchService.getEventDetails(this.event)
           .subscribe((eventDetailed: any) => {
@@ -63,14 +67,13 @@ export class EventCommentComponent implements OnInit {
         console.log(this.event);
         this.commentService.findAllCommentsForEvent(this.event)
           .subscribe((comments: any) => {
-              if (comments) {
-                this.commentsFound = comments[0].commentsOnEvent;
-                if (this.commentsFound.length > 0) {
-                  this.commentsExist = true;
-                }
+            if (comments) {
+              this.commentsFound = comments[0].commentsOnEvent;
+              if (this.commentsFound.length > 0) {
+                this.commentsExist = true;
               }
             }
-          );
+          });
       });
   }
 
@@ -78,6 +81,73 @@ export class EventCommentComponent implements OnInit {
   addNewComment() {
     this.addingNewComment = true;
   }
+
+  onEdit(commentId) {
+    const divEle = document.getElementsByTagName('div');
+    const v = divEle[14].id;
+
+    if (v === commentId) {
+      const x = document.getElementById('editText');
+      x.style.pointerEvents = 'auto';
+      const y = document.getElementById('saveBtn');
+      y.style.display = 'block';
+      const z = document.getElementById('cancelBtn');
+      z.style.display = 'block';
+    }
+  }
+
+  saveComment(commentId) {
+    const x = document.getElementById('editText');
+    x.style.pointerEvents = 'none';
+    const commentText = (<HTMLInputElement>document.getElementById('editText')).value;
+    console.log(commentText);
+    const y = document.getElementById('saveBtn');
+    y.style.display = 'none';
+    this.commentService.modifyComment(this.eventId, commentId, commentText)
+      .subscribe((resp: any) => {
+
+      });
+  }
+
+
+  cancelEdit(commentId) {
+    const y = document.getElementById('cancelBtn');
+    y.style.display = 'none';
+
+    this.commentService.findAllCommentsForEvent(this.event)
+      .subscribe((comments: any) => {
+        if (comments) {
+          this.commentsFound = comments[0].commentsOnEvent;
+          if (this.commentsFound.length > 0) {
+            this.commentsExist = true;
+          }
+        }
+      });
+  }
+
+  deleteComment(commentId) {
+    const cID = commentId;
+    // console.log(commentId);
+    // const x = document.getElementById('editText');
+    // x.style.pointerEvents = 'none';
+    // const commentText = (<HTMLInputElement>document.getElementById('editText')).value;
+    // console.log(commentText);
+    // const y = document.getElementById('deleteBtn');
+    // y.style.display = 'none';
+    this.commentService.deleteComment(this.event, cID)
+      .subscribe((resp: any) => {
+        this.commentService.findAllCommentsForEvent(this.event)
+          .subscribe((comments: any) => {
+            if (comments) {
+              this.commentsFound = comments[0].commentsOnEvent;
+              if (this.commentsFound.length > 0) {
+                this.commentsExist = true;
+              }
+            }
+          });
+      });
+  }
+
 
   addCommentToEvent() {
     if (this.newComment === '' || this.newComment === undefined) {

@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit {
   otherUsers: [{}];
   user: any;
   isAdmin: boolean;
+  isOrganizer: boolean;
 
 // private eventService: EventService,
   constructor(private router: Router, private activatedRoute: ActivatedRoute,
@@ -30,6 +31,10 @@ export class DashboardComponent implements OnInit {
       console.log('User is Admin');
       this.isAdmin = true;
     }
+    if (this.user.role === 'ORGANIZER') {
+      console.log('User is Organizer');
+      this.isOrganizer = true;
+    }
     this.userService.findUserById(this.user['_id']).subscribe((user: any) => {
       this.followedByUsers = user.followedBy;
       this.usersFollowing = user.followingUsers;
@@ -37,7 +42,6 @@ export class DashboardComponent implements OnInit {
     this.userService.findUsers().subscribe((users: any) => {
       this.otherUsers = users;
       this.otherUsers.forEach((user, index) => {
-
         if (user['_id'] === this.user['_id']) {
           this.otherUsers.splice(index, 1);
         }
@@ -45,7 +49,6 @@ export class DashboardComponent implements OnInit {
       if (this.usersFollowing !== undefined && this.usersFollowing !== null) {
         this.otherUsers.forEach((user1, index) => {
           this.usersFollowing.forEach((user2, index1) => {
-            console.log(user1['_id'], user2);
             if (user1['_id'] === user2) {
               this.otherUsers.splice(index, 1);
             }
@@ -54,7 +57,6 @@ export class DashboardComponent implements OnInit {
       }
     });
     this.userService.findEventsInterested(this.user['_id']).subscribe((eventsInterested: any) => {
-      console.log(eventsInterested[0].favoriteEvents);
       this.eventsInterestedIn = eventsInterested[0].favoriteEvents;
     });
   }
@@ -66,7 +68,6 @@ export class DashboardComponent implements OnInit {
           this.followedByUsers = user.followedBy;
           this.usersFollowing = user.followingUsers;
           this.otherUsers.forEach((user1, index) => {
-            console.log(user1['_id'], userId);
             if (user1['_id'] === userId) {
               this.otherUsers.splice(index, 1);
             }
@@ -88,16 +89,12 @@ export class DashboardComponent implements OnInit {
         });
       });
     });
-    // this.userService.findUserById(this.user['_id']).subscribe((users: any) => {
-    //   this.usersFollowing = users.followingUsers;
-    // });
   }
 
   removeFromFavorites(eveId) {
     console.log('removeFromFavorites ->');
     console.log(this.user['_id']);
     this.userService.removeFromFavorites(this.user['_id'], eveId).subscribe((response: any) => {
-      // window.location.reload();
       this.userService.findEventsInterested(this.user['_id']).subscribe((eventsInterested: any) => {
         this.eventsInterestedIn = eventsInterested[0].favoriteEvents;
       });
@@ -105,7 +102,6 @@ export class DashboardComponent implements OnInit {
   }
 
   goToEventDetailsComments(interestedEvent) {
-    console.log(interestedEvent);
     this.router.navigate(['/comments', interestedEvent]);
   }
 

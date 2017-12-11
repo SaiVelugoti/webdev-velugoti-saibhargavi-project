@@ -6,14 +6,38 @@ import {Router} from '@angular/router';
 import {SharedService} from './shared.service.client';
 
 @Injectable()
-export class CommentService {
+export class ManageEventService {
 
-  // Asgn 6
-  // options: RequestOptions = new RequestOptions();
   baseUrl = environment.baseUrl;
 
-  constructor(private _http: Http, private sharedService: SharedService, private router: Router) {
+  constructor(private _http: Http,
+              private sharedService: SharedService,
+              private router: Router) {
   }
+
+  findEventsCreated(userId) {
+    const url = this.baseUrl + '/api/findEventsCreated/' + userId;
+    return this._http.get(url).map((response: Response) => {
+      return response.json();
+    });
+  }
+
+  findEventsCreatedByOthers(userId) {
+    const url = this.baseUrl + '/api/findEventsCreatedByOthers/' + userId;
+    return this._http.get(url).map((response: Response) => {
+      return response.json();
+    });
+  }
+  addEvent(event) {
+    const eventBody = {
+      eventNew: event
+    };
+    return this._http.post(this.baseUrl + '/api/addNewEvent', eventBody)
+      .map((res: Response) => {
+        return res.json();
+      });
+  }
+
 
   modifyComment(eventId, commentId, commentText) {
     const eventComment = {
@@ -27,15 +51,11 @@ export class CommentService {
       });
   }
 
-  deleteComment(eventId, commentId) {
-    const eventComment = {
-      eventId: eventId,
-      commentId: commentId
-    };
-    console.log(eventId, commentId);
-    return this._http.post(this.baseUrl + '/api/deleteCommentToEvent', eventComment)
-      .map((res: Response) => {
-        return res.json();
+  deleteEvent(eventId) {
+    const url = this.baseUrl + '/api/deleteEvent/' + eventId;
+    return this._http.delete(url)
+      .map((response: Response) => {
+        return response.json();
       });
   }
 
@@ -47,16 +67,6 @@ export class CommentService {
     });
   }
 
-  addCommentToEvent(event, comment) {
-    const eventComment = {
-      eventId: event,
-      comment: comment
-    };
-    return this._http.post(this.baseUrl + '/api/addCommentToEvent', eventComment)
-      .map((res: Response) => {
-        return res.json();
-      });
-  }
 
   getEventName(eventId) {
     const url = this.baseUrl + '/api/getEventName/' + eventId;
