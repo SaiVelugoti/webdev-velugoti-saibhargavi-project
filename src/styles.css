@@ -11,6 +11,11 @@ body{
   padding-bottom: 70px;
 }
 
+
+.heading-color {
+  background-color: #8a6d3b;
+}
+
 .header-width{
   width:100%;
 }
@@ -68,6 +73,15 @@ select.form-control {
 .btnStyle{
   background-color: #049fd9!important;
   border-color: #049fd9!important;
+}
+
+.btnStyl{
+  background-color: #999999!important;
+  border-color: #049fd9!important;
+}
+
+.heading-bar-color{
+  background-color: lightslategray!important;
 }
 .colorBlue{
   color:#049fd9!important;

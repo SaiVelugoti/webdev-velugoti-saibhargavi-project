@@ -9,70 +9,111 @@
         </a>
       </p>
       <span class="navbar-brand glyphicon-color">Manage Users</span>
+      <p class="navbar-text pull-right p-right-fix">
 
+        <a (click)="logout()" class="navbar-link glyphicon-color">
+      <span class="glyphicon glyphicon-log-out">
+      </span> &nbsp;
+        </a>
+      </p>
       <!--<p class="navbar-text pull-right p-right-fix">-->
-        <!--<a [routerLink]="['/user', userId, 'website', 'new']" class="navbar-link glyphicon-color">-->
-              <!--<span class="glyphicon glyphicon-plus">-->
-              <!--</span>-->
-        <!--</a>-->
+      <!--<a [routerLink]="['/user', userId, 'website', 'new']" class="navbar-link glyphicon-color">-->
+      <!--<span class="glyphicon glyphicon-plus">-->
+      <!--</span>-->
+      <!--</a>-->
       <!--</p>-->
     </div>
   </div>
 </nav>
 
 
+<div class="container-fluid">
   <div class="container-fluid">
-    <div class="container-fluid">
     <div *ngIf="successFlag"
          class="alert alert-success">
       {{successMsg}}
     </div>
-    <div *ngIf="isEditing">
+    <div *ngIf="errFlag"
+         class="alert alert-danger">
+      {{errMsg}}
+    </div>
+    <div *ngIf="isEditing || isCreatingNewUser">
       <!--<div class="row container-fluid ribbon-style">-->
-        <!--You are editing the profile of {{username}}-->
+      <!--You are editing the profile of {{username}}-->
       <!--<div class="pull-right">-->
-        <!--<a (click)="updateUser()" class="navbar-link ">-->
-                <!--<span class="glyphicon glyphicon-ok">-->
-                <!--</span>-->
-        <!--</a>-->
+      <!--<a (click)="updateUser()" class="navbar-link ">-->
+      <!--<span class="glyphicon glyphicon-ok">-->
+      <!--</span>-->
+      <!--</a>-->
       <!--</div>-->
 
       <div class="row">
         <div class="col-xs-3">
-    <label for="username">Username</label>
-    <input [(ngModel)]="username"
-           name="username"
-           id="username"
-           placeholder={{username}}
-           class="form-control"
-           readonly>
+          <label for="username">Username</label>
+          <div *ngIf="isEditing">
+            <input [(ngModel)]="username"
+                   name="username"
+                   id="username"
+                   placeholder={{username}}
+                   class="form-control"
+                   readonly>
+          </div>
+          <div *ngIf="isCreatingNewUser">
+            <input [(ngModel)]="newusername"
+                   name="newusername"
+                   id="newusername"
+                   placeholder={{newusername}}
+                   class="form-control">
+          </div>
+        </div>
+        <div class="col-xs-3">
+          <label for="firstName">First Name</label>
+          <input [(ngModel)]="firstName"
+                 name="firstName"
+                 id="firstName"
+                 placeholder={{firstName}}
+                 class="form-control">
+        </div>
+        <div class="col-xs-3">
+          <label for="lastName">Last Name</label>
+          <input [(ngModel)]="lastName"
+                 name="lastname"
+                 id="lastName"
+                 placeholder={{lastName}}
+                 class="form-control">
+        </div>
       </div>
-        <div class="col-xs-3">
-    <label for="firstName">First Name</label>
-    <input [(ngModel)]="firstName"
-           name="firstName"
-           id="firstName"
-           placeholder={{firstName}}
-           class="form-control">
-  </div>
-        <div class="col-xs-3">
-    <label for="lastName">Last Name</label>
-    <input [(ngModel)]="lastName"
-           name="lastname"
-           id="lastName"
-           placeholder={{lastName}}
-           class="form-control">
-  </div>
+      <div *ngIf="isCreatingNewUser">
+        <div class="row">
+          <div class="col-xs-3">
+            <label for="password">Password</label>
+            <input [(ngModel)]="password"
+                   name="password"
+                   id="password"
+                   placeholder={{password}}
+                   type=password
+                   class="form-control">
+          </div>
+          <div class="col-xs-3">
+            <label for="verifyPwd">Verify Password</label>
+            <input [(ngModel)]="verifyPwd"
+                   name="verifyPwd"
+                   id="verifyPwd"
+                   type="password"
+                   placeholder={{verifyPwd}}
+                   class="form-control">
+          </div>
+        </div>
       </div>
       <div class="row">
         <div class="col-xs-3">
-        <label for="email">E-Mail</label>
-        <input [(ngModel)]="email"
-               name="email"
-               id="email"
-               placeholder={{email}}
-               class="form-control">
-      </div>
+          <label for="email">E-Mail</label>
+          <input [(ngModel)]="email"
+                 name="email"
+                 id="email"
+                 placeholder={{email}}
+                 class="form-control">
+        </div>
         <div class="col-xs-3">
           <label for="role">Role</label>
           <select [(ngModel)]="role" class="form-control" name="role" id="role">
@@ -81,30 +122,76 @@
             <option value="ADMIN">Admin</option>
           </select>
         </div>
-        <div class="col-xs-3">
-          <label></label>
-          <a (click)="updateUser()" class="btn btn-block btnStyle">
-           <div class="glyphicon-color"> Update {{username}}'s profile
+        <div *ngIf="!isCreatingNewUser">
+          <div class="col-xs-3">
+            <label></label>
+            <a (click)="updateUser()" class="btn btn-block btnStyle">
+              <div class="glyphicon-color"> Update {{username}}'s profile
+              </div>
+            </a>
           </div>
-          </a>
+        </div>
+        <div *ngIf="isCreatingNewUser">
+          <div class="col-xs-3">
+            <label></label>
+            <a (click)="createNewUser()" class="btn btn-block btnStyle">
+              <div class="glyphicon-color"> Create new user
+              </div>
+            </a>
+          </div>
         </div>
       </div>
-      </div>
+    </div>
+    <div class="btn btn-block"></div>
+    <div class="btn btn-block"></div>
+    <!--<div class="btn btn-block glyphicon-color btnStyle">-->
+      <!--All registered users-->
+    <!--</div>-->
+    <div class="btn btn-block"></div>
+    <ul class="list-group">
+      <li class="list-group-item active btnStyl">
+        <div class="row">
+          <div class="col-xs-3">
+            Username
+          </div>
+
+          <div class="col-xs-3">
+            First Name
+          </div>
+
+          <div class="col-xs-3">
+            Last Name
+          </div>
+
+        </div>
+      </li>
+      <li class="list-group-item" *ngFor="let user of all_users">
+        <div class="row">
+          <div class="col-xs-3">
+            {{user['username']}}
+          </div>
+          <div class="col-xs-3">
+            {{user['firstName']}}
+          </div>
+
+          <div class="col-xs-3">
+            {{user['lastName']}}
+          </div>
+          <div class="col-xs-3">
+            <div class="pull-right" (click)="editUser(user['_id'])">
+              <span class="glyphicon glyphicon-pencil"></span>
+            </div>&nbsp;&nbsp;
+            <div class="pull-right" (click)="deleteUser(user['_id'])">
+              <span class="glyphicon glyphicon-trash"></span>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
   </div>
-</div>
-<div class="container-fluid">
-<li class="list-group-item" *ngFor="let user of all_users">
-  <div class="row">
-    <div class="col-xs-9">
-      Hey
-        {{user['username']}}
-      <div class="pull-right" (click)="editUser(user['_id'])">
-        <span class="glyphicon glyphicon-pencil"></span>
-      </div>
-      <div class="pull-right" (click)="deleteUser(user['_id'])">
-        <span class="glyphicon glyphicon-trash"></span>
-      </div>
+  <div class="container-fluid">
+    <div class="btn btn-block btnStyle glyphicon-color" (click)="onCreate()">
+      Create New User
     </div>
   </div>
-</li>
 </div>

@@ -14,6 +14,10 @@
   </div>
 </nav>
 
+<div *ngIf="successFlg"
+     class="alert alert-success">
+  {{successMsg}}
+</div>
 
 <div class="container-fluid">
   <label for="username">Username</label>
@@ -44,10 +48,18 @@
          id="email"
          placeholder={{email}}
          class="form-control">
-  <a [routerLink]="['/dashboard']" class="btn btn-block btn-primary">
+
+    <label for="role">Role</label>
+    <select [(ngModel)]="role" class="form-control" name="role" id="role" readonly disabled>
+      <option value="USER">User</option>
+      <option value="ORGANIZER">Organizer</option>
+      <option value="ADMIN">Admin</option>
+    </select>
+
+  <a [routerLink]="['/dashboard']" class="btn btn-block btn-primary btnStyle">
     Dashboard
   </a>
-  <a [routerLink]="['/login']" class="btn btn-block btn-danger">
+  <a (click)="logout()" class="btn btn-block btn-danger">
     Logout
   </a>
 </div>

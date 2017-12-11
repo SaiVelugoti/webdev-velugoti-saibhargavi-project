@@ -27,6 +27,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.sharedService.user;
+    console.log(this.user);
     if (this.user.role === 'ADMIN') {
       console.log('User is Admin');
       this.isAdmin = true;
@@ -59,6 +60,22 @@ export class DashboardComponent implements OnInit {
     this.userService.findEventsInterested(this.user['_id']).subscribe((eventsInterested: any) => {
       this.eventsInterestedIn = eventsInterested[0].favoriteEvents;
     });
+
+    if (this.followedByUsers !== undefined) {
+      this.followedByUsers.forEach((user, index) => {
+        this.userService.findUserById(user[0]).subscribe((n: any) => {
+          this.followedByUsers.splice(index, 1, {_id: user[0], username: n['username']});
+        });
+      });
+    }
+
+    if (this.usersFollowing !== undefined) {
+      this.usersFollowing.forEach((user, index) => {
+        this.userService.findUserById(user[0]).subscribe((n: any) => {
+          this.usersFollowing.splice(index, 1, {_id: user[0], username: n['username']});
+        });
+      });
+    }
   }
 
   addToFollow(userId) {
@@ -102,6 +119,7 @@ export class DashboardComponent implements OnInit {
   }
 
   goToEventDetailsComments(interestedEvent) {
+    console.log(interestedEvent);
     this.router.navigate(['/comments', interestedEvent]);
   }
 
@@ -110,11 +128,15 @@ export class DashboardComponent implements OnInit {
     if (uId !== undefined && uId !== '') {
       this.userService.findUserById(uId).subscribe((user: any) => {
         console.log(user['username']);
-        return user['username'];
+        return user;
       });
-    } else {
-      return;
     }
+  }
+
+  logout() {
+    this.userService.logout().subscribe((user: any) => {
+      this.router.navigate(['/login']);
+    });
   }
 }
 

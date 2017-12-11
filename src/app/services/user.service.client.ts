@@ -98,6 +98,7 @@ export class UserService {
           this.sharedService.user = user;
           return true;
         } else {
+          this.sharedService.user = '';
           this.router.navigate(['/login']);
           return false;
         }
@@ -106,6 +107,7 @@ export class UserService {
 
   createUser(user: any) {
     const url = this.baseUrl + '/api/user/';
+    console.log('creating new user-> user service client');
     return this._http.post(url, user)
       .map((response: Response) => {
         return response.json();

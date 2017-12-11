@@ -138,7 +138,7 @@ export class EventCommentComponent implements OnInit {
       .subscribe((resp: any) => {
         this.commentService.findAllCommentsForEvent(this.event)
           .subscribe((comments: any) => {
-            if (comments) {
+            if (comments[0] !== undefined) {
               this.commentsFound = comments[0].commentsOnEvent;
               if (this.commentsFound.length > 0) {
                 this.commentsExist = true;

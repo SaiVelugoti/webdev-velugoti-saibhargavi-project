@@ -10,6 +10,9 @@ input{
   color: gray;
 }
 
+.heading-color {
+  background-color: #8a6d3b;
+}
 body{
   padding-top: 70px;
 }

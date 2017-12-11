@@ -17,6 +17,8 @@ import {FlickrSearchComponent} from "./components/flickr-search/flickr-search.co
 
 const APP_ROUTES: Routes = [
   { path : '' , component: EventSearchComponent},
+  { path : 'eventSearchAnonymous' , component: EventSearchComponent},
+  { path : 'about' , component: EventSearchComponent, canActivate: [AuthGuard]},
   { path : 'test', component: TestComponent},
   { path : 'login' , component: LoginComponent},
   { path : 'register' , component: RegisterComponent},

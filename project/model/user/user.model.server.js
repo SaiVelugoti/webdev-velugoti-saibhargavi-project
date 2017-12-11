@@ -43,6 +43,7 @@ function findUserByFacebookId(facebookId) {
 }
 
 function createUser(user) {
+  console.log('--');
   return UserModel.create(user);
 }
 

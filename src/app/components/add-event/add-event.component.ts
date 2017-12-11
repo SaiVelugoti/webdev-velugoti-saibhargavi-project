@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {environment} from '../../../environments/environment';
 import {SharedService} from '../../services/shared.service.client';
 import {ManageEventService} from '../../services/manage-event.service.client';
+import {UserService} from "../../services/user.service.client";
 
 @Component({
   selector: 'app-add-event',
@@ -29,7 +30,8 @@ export class AddEventComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private sharedService: SharedService,
-              private manageEventService: ManageEventService) {
+              private manageEventService: ManageEventService,
+              private userService: UserService) {
   }
 
   ngOnInit() {
@@ -81,5 +83,10 @@ export class AddEventComponent implements OnInit {
           .subscribe((event1: any) => {
           });
       });
+  }
+  logout() {
+    this.userService.logout().subscribe((user: any) => {
+      this.router.navigate(['/login']);
+    });
   }
 }

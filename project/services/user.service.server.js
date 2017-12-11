@@ -16,38 +16,35 @@ module.exports = function (app) {
   passport.deserializeUser(deserializeUser);
   passport.use(new LocalStrategy(localStrategy));
 
-  app.get("/api/findAllCommentsForEvent/:eventId", findAllCommentsForEvent);
-  app.post("/api/addCommentToEvent", addCommentToEvent)
-  app.get("/api/getEventName/:eventId", getEventName);
-  app.put("/api/user/:userId/following/:followingId", addToFollowList);
-  app.put("/api/user/:userId/unFollow/:followingId", removeFromFollowList);
-  app.get("/api/user/:userId/dashboard/followedBy", findUsersFollowedBy);
-  app.get("/api/user/:userId/dashboard/following", findUsersFollowing);
-  app.put("/api/user/:followingId/followedBy/:userId", addToFollowedBy);
-  app.put("/api/user/:followingId/unfollowedBy/:userId", removeFromFollowedBy);
-  app.post("/api/modifyCommentToEvent", modifyCommentToEvent);
-  app.get("/api/getInterestedEvents/:userId", getInterestedEvents);
   app.post("/api/user", createUser);
-  app.get("/api/user", findUsers);
+  app.put("/api/user/:userId", updateUser);
+
+  app.get("/api/user", findUser);
   app.get("/api/users", findAllUsers);
   app.get("/api/user/:userId", findUserById);
-  app.put("/api/user/:userId", updateUser);
-  app.post("/api/addToFavorites", addToFavorites);
-  app.post("/api/removeFromFavorites", removeFromFavorites);
+
   app.delete("/api/user/:userId", deleteUser);
+  app.delete("/api/deleteAllUsers", deleteAllUsers);
+
   app.post("/api/login", passport.authenticate('local'), login);
   app.post("/api/logout", logout);
   app.post("/api/register", register);
   app.post("/api/loggedIn", loggedIn);
-  app.delete("/api/deleteAllUsers", deleteAllUsers);
-  app.get("/facebook/login", passport.authenticate('facebook', {scope: 'email'}));
-  app.post("/api/deleteCommentToEvent", deleteCommentToEvent);
-  app.post("/api/addNewEvent", addNewEvent);
-  app.post("/api/updateNewEvent", updateNewEvent);
-  app.get("/api/findEventsCreated/:userId", getEventsCreated);
-  app.get("/api/findEventsCreatedByOthers/:userId", findEventsCreatedByOthers);
-  app.delete("/api/deleteEvent/:eventId", deleteEvent);
 
+  app.get("/facebook/login", passport.authenticate('facebook', {scope: 'email'}));
+
+  app.post("/api/addToFavorites", addToFavorites);
+  app.post("/api/removeFromFavorites", removeFromFavorites);
+  app.get("/api/getInterestedEvents/:userId", getInterestedEvents);
+
+  app.get("/api/user/:userId/dashboard/followedBy", findUsersFollowedBy);
+  app.get("/api/user/:userId/dashboard/following", findUsersFollowing);
+
+  app.put("/api/user/:userId/following/:followingId", addToFollowList);
+  app.put("/api/user/:userId/unFollow/:followingId", removeFromFollowList);
+
+  app.put("/api/user/:followingId/followedBy/:userId", addToFollowedBy);
+  app.put("/api/user/:followingId/unfollowedBy/:userId", removeFromFollowedBy);
 
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
@@ -55,55 +52,12 @@ module.exports = function (app) {
       failureRedirect: '/login'
     }));
 
-  function getEventName(req, res) {
-    var eventId = req.params['eventId'];
-    eventModel.getEventName(eventId)
-      .then(function (res1) {
-        res.json(res1);
-      });
-  }
-  function addCommentToEvent(req, res) {
-    var eventId = req.body.eventId;
-    var comment = req.body.comment;
-    eventModel.addCommentToEvent(eventId, comment)
-      .then(function (res1) {
-        res.json(res1);
-      })
-  }
-  function deleteCommentToEvent(req, res) {
-    var eventId = req.body.eventId;
-    var commentId = req.body.commentId;
-    console.log('in user server -> delete comment', eventId, commentId);
-    eventModel.deleteCommentToEvent(eventId, commentId)
-      .then((function (res1) {
-        res.json(res1);
-      }))
-  }
-
-  function modifyCommentToEvent(req, res) {
-    var eventId = req.body.eventId;
-    var commentId = req.body.commentId;
-    var commentText = req.body.commentText;
-    eventModel.modifyCommentToEvent(eventId, commentId, commentText)
-      .then((function (res1) {
-        res.json(res1);
-      }))
-  }
-  function findAllCommentsForEvent(req, res) {
-    var eventId = req.params['eventId'];
-    eventModel.findAllCommentsForEvent(eventId)
-      .then(function (res1) {
-        "use strict";
-        res.json(res1);
-      });
-  }
   function login(req, res) {
     var user = req.user;
     res.json(user);
   }
 
   function logout(req, res) {
-    "use strict";
     req.logOut();
     res.send(200);
   }
@@ -113,12 +67,12 @@ module.exports = function (app) {
     var user = req.body;
     user.password = bcrypt.hashSync(user.password);
 
-   return userModel.createUser(user)
+    return userModel.createUser(user)
       .then(
         function (user) {
-          if(user){
+          if (user) {
             req.login(user, function (err) {
-              if(err) {
+              if (err) {
                 res.status(400).send(err);
               } else {
                 res.json(user);
@@ -170,14 +124,18 @@ module.exports = function (app) {
   }
 
   function createUser(req, res) {
-    var newUser = req.body;
-    userModel.createUser(newUser)
-      .then(function (user) {
-        res.json(user);
-      });
+    var user = req.body;
+    user.password = bcrypt.hashSync(user.password);
+    console.log('creating new user-> user service server');
+    return userModel.createUser(user)
+      .then(
+        function (user) {
+          console.log('--1--');
+                res.json(user);
+        });
   }
 
-  function findUsers(req, res) {
+  function findUser(req, res) {
     var username = req.query["username"];
     var password = req.query["password"];
 
@@ -220,17 +178,6 @@ module.exports = function (app) {
         }
       });
     return;
-    // var user;
-    // for (let x = 0; x < users.length; x++) {
-    //   if (users[x]._id === userId) {
-    //     user = users[x];
-    //   }
-    // }
-    // if (user) {
-    //   res.json(user);
-    // } else {
-    //   res.json(null);
-    // }
   }
 
   function updateUser(req, res) {
@@ -265,6 +212,7 @@ module.exports = function (app) {
         res.json(returnedResult);
       });
   }
+
   function deleteUser(req, res) {
     var userId = req.params['userId'];
     //var user = req.body;
@@ -306,6 +254,7 @@ module.exports = function (app) {
 
       });
   }
+
   function findUsersFollowedBy(req, res) {
     var userId = req.params["userId"];
     return userModel.findUsersFollowedBy(userId)
@@ -314,10 +263,11 @@ module.exports = function (app) {
 
       });
   }
+
   function addToFollowList(req, res) {
     var followingId = req.params["followingId"];
     var userId = req.params["userId"];
-    return userModel. addToFollow(userId, followingId)
+    return userModel.addToFollow(userId, followingId)
       .then(function (user) {
         res.json(user);
       });
@@ -332,6 +282,7 @@ module.exports = function (app) {
       });
 
   }
+
   function removeFromFollowList(req, res) {
     var unfollowId = req.params["followingId"];
     var userId = req.params["userId"];
@@ -349,49 +300,4 @@ module.exports = function (app) {
         res.json(user);
       });
   }
-
-  function addNewEvent(req, res) {
-    console.log("In ManageEvent Server -> add new event");
-    var newEvent = req.body.eventNew;
-    eventModel.addNewEvent(newEvent)
-      .then(function (res1) {
-        res.json(res1);
-      })
-  }
-
-  function updateNewEvent(req, res) {
-    var eventId = req.body.eventId;
-    console.log('-------', eventId);
-    eventModel.updateNewEvent(eventId)
-      .then(function (res1) {
-        res.json(res1);
-      })
-  }
-
-  function getEventsCreated(req, res) {
-    var userId = req.params['userId'];
-    eventModel.getEventsCreated(userId)
-      .then(function (res1) {
-        res.json(res1);
-      });
-  }
-
-  function findEventsCreatedByOthers(req, res) {
-    var userId = req.params['userId'];
-    eventModel.findEventsCreatedByOthers(userId)
-      .then(function (res1) {
-        res.json(res1);
-      });
-  }
-
-  function deleteEvent(req, res) {
-    var eventId = req.params['eventId'];
-    //var user = req.body;
-    eventModel.deleteEvent(eventId)
-      .then(function (eve) {
-        res.json(eve);
-      });
-  }
-
-
 }

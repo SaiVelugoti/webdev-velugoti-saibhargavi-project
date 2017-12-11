@@ -229,6 +229,8 @@ AppModule = __decorate([
 
 var APP_ROUTES = [
     { path: '', component: __WEBPACK_IMPORTED_MODULE_6__components_event_search_event_search_component__["a" /* EventSearchComponent */] },
+    { path: 'eventSearchAnonymous', component: __WEBPACK_IMPORTED_MODULE_6__components_event_search_event_search_component__["a" /* EventSearchComponent */] },
+    { path: 'about', component: __WEBPACK_IMPORTED_MODULE_6__components_event_search_event_search_component__["a" /* EventSearchComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_5__services_auth_guard_service__["a" /* AuthGuard */]] },
     { path: 'test', component: __WEBPACK_IMPORTED_MODULE_1__components_test_test_component__["a" /* TestComponent */] },
     { path: 'login', component: __WEBPACK_IMPORTED_MODULE_2__components_user_login_login_component__["a" /* LoginComponent */] },
     { path: 'register', component: __WEBPACK_IMPORTED_MODULE_3__components_user_register_register_component__["a" /* RegisterComponent */] },
@@ -334,7 +336,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/add-event/add-event.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-fixed-top bg-primary btnStyle\">\n  <div class=\"container-fluid\">\n    <div class=\"navbar-header header-width header-fix\">\n      <p class=\"navbar-text pull-left p-fix\">\n        <a [routerLink]=\"['/manageEvents']\"\n           class=\"navbar-link glyphicon-color\">\n              <span class=\"glyphicon glyphicon-chevron-left\">\n              </span>\n        </a>\n      </p>\n\n      <span class=\"navbar-brand\">Add Event</span>\n      <p class=\"navbar-text pull-right p-right-fix glyphicon-color\">\n\n        <a [routerLink]=\"['/dashboard']\">\n      <span class=\"glyphicon glyphicon-color\">Dashboard\n      </span>\n        </a>\n        <a [routerLink]=\"['/logout']\">\n      <span class=\"glyphicon glyphicon-log-out glyphicon-color\">\n      </span>\n        </a>\n      </p>\n    </div>\n\n  </div>\n</nav>\n\n\n<form (ngSubmit)=\"addEvent()\" #f=\"ngForm\">\n  <div class=\"container-fluid\">\n    <div *ngIf=\"successFlag\"\n         class=\"alert alert-success\">\n      {{successMsg}}\n    </div>\n    <div *ngIf=\"errorFlag\"\n         class=\"alert alert-danger\">\n      {{errMsg}}\n    </div>\n    <div class=\"form-group\">\n\n      <label for=\"eventName\">Name</label>\n      <input [(ngModel)]=\"eventName\"\n             placeholder=\"Grad Meet-up\"\n             value={{eventName}}\n             type=\"text\"\n             id=\"eventName\"\n             name=\"eventName\"\n             class=\"form-control\"\n      />\n      <label for=\"description\">Description</label>\n      <textarea [(ngModel)]=\"description\"\n                rows=\"6\"\n                placeholder=\"Come, Meet your fellow Huskies.!\"\n                value={{description}}\n                type=\"text\"\n                id=\"description\"\n                name=\"description\"\n                class=\"form-control\">{{description}}</textarea>\n\n      <label for=\"eventLocation\">Happening At</label>\n      <input [(ngModel)]=\"eventLocation\"\n             placeholder=\"Boston\"\n             value={{eventLocation}}\n             type=\"text\"\n             id=\"eventLocation\"\n             name=\"eventLocation\"\n             class=\"form-control\"\n      />\n\n      <label for=\"eventUrl\">Event Link</label>\n      <input [(ngModel)]=\"eventUrl\"\n             placeholder=\"https://www.eventbrite.com/d/ma--boston/events/\"\n             value={{eventUrl}}\n             type=\"text\"\n             id=\"eventUrl\"\n             name=\"eventUrl\"\n             class=\"form-control\"\n      />\n\n      <label for=\"imgSrc\">Image Link</label>\n      <input [(ngModel)]=\"imgSrc\"\n             placeholder=\"https://solarsystem.nasa.gov/images/galleries/soho-300.jpg\"\n             value={{imgSrc}}\n             type=\"text\"\n             id=\"imgSrc\"\n             name=\"imgSrc\"\n             class=\"form-control\"\n      />\n      <div class=\"input-group\">\n        <span class=\"input-group-btn\">\n          <a class=\"btn btn-primary btn-block\"\n             (click)=\"flickrSearch()\">\n            Search Flickr</a>\n        </span>\n      </div>\n      <div class=\"btn btn-block\"></div>\n\n      <button class=\"btn btn-block btnStyle bg-primary\"\n              type=\"submit\">\n        Create\n      </button>\n\n      <br/>\n    </div>\n  </div>\n\n</form>\n<nav class=\"navbar navbar-fixed-bottom bg-primary btnStyle\">\n  <div class=\"container-fluid\">\n    <p class=\"navbar-text pull-right\">\n      <a [routerLink]=\"['/profile']\" class=\"navbar-link glyphicon-color\">\n              <span class=\"glyphicon glyphicon-user\">\n              </span>\n      </a>\n    </p>\n  </div>\n</nav>\n"
+module.exports = "<nav class=\"navbar navbar-fixed-top bg-primary btnStyle\">\n  <div class=\"container-fluid\">\n    <div class=\"navbar-header header-width header-fix\">\n      <p class=\"navbar-text pull-left p-fix\">\n        <a [routerLink]=\"['/manageEvents']\"\n           class=\"navbar-link glyphicon-color\">\n              <span class=\"glyphicon glyphicon-chevron-left\">\n              </span>\n        </a>\n      </p>\n\n      <span class=\"navbar-brand\">Add Event</span>\n      <p class=\"navbar-text pull-right p-right-fix glyphicon-color\">\n\n        <a [routerLink]=\"['/dashboard']\">\n      <span class=\"glyphicon glyphicon-color\">Dashboard\n      </span>\n        </a>\n        <a (click)=\"logout()\">\n      <span class=\"glyphicon glyphicon-log-out glyphicon-color\">\n      </span>\n        </a>\n      </p>\n    </div>\n\n  </div>\n</nav>\n\n\n<form (ngSubmit)=\"addEvent()\" #f=\"ngForm\">\n  <div class=\"container-fluid\">\n    <div *ngIf=\"successFlag\"\n         class=\"alert alert-success\">\n      {{successMsg}}\n    </div>\n    <div *ngIf=\"errorFlag\"\n         class=\"alert alert-danger\">\n      {{errMsg}}\n    </div>\n    <div class=\"form-group\">\n\n      <label for=\"eventName\">Name</label>\n      <input [(ngModel)]=\"eventName\"\n             placeholder=\"Grad Meet-up\"\n             value={{eventName}}\n             type=\"text\"\n             id=\"eventName\"\n             name=\"eventName\"\n             class=\"form-control\"\n      />\n      <label for=\"description\">Description</label>\n      <textarea [(ngModel)]=\"description\"\n                rows=\"6\"\n                placeholder=\"Come, Meet your fellow Huskies.!\"\n                value={{description}}\n                type=\"text\"\n                id=\"description\"\n                name=\"description\"\n                class=\"form-control\">{{description}}</textarea>\n\n      <label for=\"eventLocation\">Happening At</label>\n      <input [(ngModel)]=\"eventLocation\"\n             placeholder=\"Boston\"\n             value={{eventLocation}}\n             type=\"text\"\n             id=\"eventLocation\"\n             name=\"eventLocation\"\n             class=\"form-control\"\n      />\n\n      <label for=\"eventUrl\">Event Link</label>\n      <input [(ngModel)]=\"eventUrl\"\n             placeholder=\"https://www.eventbrite.com/d/ma--boston/events/\"\n             value={{eventUrl}}\n             type=\"text\"\n             id=\"eventUrl\"\n             name=\"eventUrl\"\n             class=\"form-control\"\n      />\n\n      <label for=\"imgSrc\">Image Link</label>\n      <input [(ngModel)]=\"imgSrc\"\n             placeholder=\"https://solarsystem.nasa.gov/images/galleries/soho-300.jpg\"\n             value={{imgSrc}}\n             type=\"text\"\n             id=\"imgSrc\"\n             name=\"imgSrc\"\n             class=\"form-control\"\n      />\n      <div class=\"input-group\">\n        <span class=\"input-group-btn\">\n          <a class=\"btn btn-primary btn-block\"\n             (click)=\"flickrSearch()\">\n            Search Flickr</a>\n        </span>\n      </div>\n      <div class=\"btn btn-block\"></div>\n\n      <button class=\"btn btn-block btnStyle bg-primary\"\n              type=\"submit\">\n        Create\n      </button>\n\n      <br/>\n    </div>\n  </div>\n\n</form>\n<nav class=\"navbar navbar-fixed-bottom bg-primary btnStyle\">\n  <div class=\"container-fluid\">\n    <p class=\"navbar-text pull-right\">\n      <a [routerLink]=\"['/profile']\" class=\"navbar-link glyphicon-color\">\n              <span class=\"glyphicon glyphicon-user\">\n              </span>\n      </a>\n    </p>\n  </div>\n</nav>\n"
 
 /***/ }),
 
@@ -349,6 +351,7 @@ module.exports = "<nav class=\"navbar navbar-fixed-top bg-primary btnStyle\">\n 
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_shared_service_client__ = __webpack_require__("../../../../../src/app/services/shared.service.client.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_manage_event_service_client__ = __webpack_require__("../../../../../src/app/services/manage-event.service.client.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_user_service_client__ = __webpack_require__("../../../../../src/app/services/user.service.client.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -364,12 +367,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AddEventComponent = (function () {
-    function AddEventComponent(activatedRoute, router, sharedService, manageEventService) {
+    function AddEventComponent(activatedRoute, router, sharedService, manageEventService, userService) {
         this.activatedRoute = activatedRoute;
         this.router = router;
         this.sharedService = sharedService;
         this.manageEventService = manageEventService;
+        this.userService = userService;
         this.baseUrl = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].baseUrl;
     }
     AddEventComponent.prototype.ngOnInit = function () {
@@ -422,6 +427,12 @@ var AddEventComponent = (function () {
             });
         });
     };
+    AddEventComponent.prototype.logout = function () {
+        var _this = this;
+        this.userService.logout().subscribe(function (user) {
+            _this.router.navigate(['/login']);
+        });
+    };
     return AddEventComponent;
 }());
 __decorate([
@@ -434,10 +445,10 @@ AddEventComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/add-event/add-event.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/add-event/add-event.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__services_shared_service_client__["a" /* SharedService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_shared_service_client__["a" /* SharedService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__services_manage_event_service_client__["a" /* ManageEventService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_manage_event_service_client__["a" /* ManageEventService */]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__services_shared_service_client__["a" /* SharedService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_shared_service_client__["a" /* SharedService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__services_manage_event_service_client__["a" /* ManageEventService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_manage_event_service_client__["a" /* ManageEventService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_6__services_user_service_client__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__services_user_service_client__["a" /* UserService */]) === "function" && _f || Object])
 ], AddEventComponent);
 
-var _a, _b, _c, _d, _e;
+var _a, _b, _c, _d, _e, _f;
 //# sourceMappingURL=add-event.component.js.map
 
 /***/ }),
@@ -463,7 +474,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/dashboard/dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <div class=\"container-fluid\">\n    <div *ngIf=\"isAdmin\">\n      <div class=\"container-fluid\">\n        <a [routerLink]=\"['/manageUsers']\" class=\"btn btn-block btn-primary btnStyle\">\n          Manage Users\n        </a>\n      </div>\n    </div>\n      <div *ngIf=\"isOrganizer\">\n        <div class=\"container-fluid\">\n          <a [routerLink]=\"['/manageEvents']\" class=\"btn btn-block btn-primary btnStyle\">\n            Manage Events\n          </a>\n        </div>\n      </div>\n    <div class=\"btn btn-block\"></div>\n      <div class=\"container-fluid\">\n        <a [routerLink]=\"['/eventSearch']\" class=\"btn btn-block btn-primary btnStyle\">\n          Search Events\n        </a>\n      </div>\n    </div>\n\n\n    <div class=\"container-fluid\">\n      <div class=\"btn btn-block\"></div>\n    </div>\n    <div class=\"container-fluid\">\n\n    </div>\n    <div class=\"container-fluid\">\n      <div class=\"container-fluid\">\n        <div class=\"row\">\n          <div class=\"col-lg-12\">\n            <ul class=\"list-group\">\n              <li class=\"list-group-item active btnStyle\">\n                <div class=\"row\">\n                  <!--<div class=\"col-lg-2\">-->\n                  <div class=\"container-fluid\">\n                    Interested Events\n                  </div>\n                </div>\n              </li>\n              <li class=\"list-group-item\" *ngFor=\"let interestedEvent of eventsInterestedIn\">\n                <div class=\"row\">\n                  <!--<div class=\"col-lg-3\">-->\n                  <!--<a [routerLink]=\"['/user']\"-->\n                  <div class=\"container-fluid\">\n                    <a (click)=\"goToEventDetailsComments(interestedEvent['eventId'])\">\n                      {{interestedEvent['eventName']}}</a>\n                    <button type=\"button\" class=\"pull-right\" (click)=\"removeFromFavorites(interestedEvent['eventId'])\">\n                      <span class=\"glyphicon glyphicon-minus\"></span>\n                    </button>\n                  </div>\n                </div>\n              </li>\n            </ul>\n          </div>\n        </div>\n        <div class=\"row\">\n          <div class=\"col-lg-4\">\n            <ul class=\"list-group\">\n              <li class=\"list-group-item active btnStyle\">\n                <div class=\"row\">\n                  <div class=\"container-fluid\">\n                    Followed By\n                  </div>\n                </div>\n              </li>\n              <li class=\"list-group-item\" *ngFor=\"let followedByUser of followedByUsers\">\n                <div class=\"row\">\n                  <div class=\"container-fluid\">\n                    {{followedByUser}}\n                    <!--{{getUserName(followedByUser)}}-->\n                  </div>\n                </div>\n              </li>\n            </ul>\n          </div>\n\n          <div class=\"col-lg-4\">\n            <ul class=\"list-group\">\n              <li class=\"list-group-item active btnStyle\">\n                <div class=\"row\">\n                  <div class=\"container-fluid\">\n                    Users you Follow\n                  </div>\n                </div>\n              </li>\n              <li class=\"list-group-item\" *ngFor=\"let followingUser of usersFollowing\">\n                <!--{{followingUser.username}}-->\n                <div class=\"row\">\n                  <div class=\"container-fluid\">\n                    <!--{{getUserName(followingUser)}}-->\n                    <a [routerLink]=\"['/otherUser/', followingUser]\"> {{followingUser}} </a>\n                    <button type=\"button\" class=\"pull-right\" (click)=\"unFollow(followingUser)\">\n                      UnFollow\n                    </button>\n                  </div>\n                </div>\n              </li>\n            </ul>\n          </div>\n\n          <div class=\"col-lg-4\">\n            <ul class=\"list-group\">\n              <li class=\"list-group-item active btnStyle\">\n                <div class=\"row\">\n                  <div class=\"container-fluid\">\n                    <div> Other Users</div>\n                  </div>\n                </div>\n              </li>\n              <li class=\"list-group-item\" *ngFor=\"let otherUser of otherUsers\">\n                <div class=\"row\">\n                  <div class=\"container-fluid\">\n                    {{otherUser.username}}\n                    <button type=\"button\" class=\"pull-right\" (click)=\"addToFollow(otherUser._id)\">\n                      Follow\n                    </button>\n                  </div>\n                </div>\n              </li>\n            </ul>\n          </div>\n\n\n        </div>\n      </div>\n      <a [routerLink]=\"['/login']\" class=\"btn btn-block btn-danger\">\n        Logout\n      </a>\n    </div>\n  </div>\n"
+module.exports = "<nav class=\"navbar navbar-fixed-top bg-primary btnStyle\">\n  <div class=\"container-fluid\">\n\n    <div class=\"navbar-header header-width header-fix\">\n      <p class=\"navbar-text pull-left p-fix\">\n        <!--<a [routerLink]=\"['/dashboard']\" class=\"navbar-link glyphicon-color\">-->\n        <!--<span class=\"glyphicon glyphicon-chevron-left\">-->\n        <!--</span>-->\n        <!--</a>-->\n      </p>\n      <span class=\"navbar-brand glyphicon-color\">Dashboard</span>\n\n      <p class=\"navbar-text pull-right p-right-fix\">\n\n        <a (click)=\"logout()\" class=\"navbar-link glyphicon-color\">\n      <span class=\"glyphicon glyphicon-log-out\">\n      </span> &nbsp;\n        </a>\n      </p>\n    </div>\n  </div>\n</nav>\n\n<div class=\"container-fluid\">\n  <div class=\"container-fluid\">\n    <div *ngIf=\"isAdmin\">\n      <div class=\"container-fluid\">\n        <a [routerLink]=\"['/manageUsers']\" class=\"btn btn-block btn-primary btnStyle\">\n          Manage Users\n        </a>\n      </div>\n    </div>\n    <div *ngIf=\"isOrganizer\">\n      <div class=\"container-fluid\">\n        <a [routerLink]=\"['/manageEvents']\" class=\"btn btn-block btn-primary btnStyle\">\n          Manage Events\n        </a>\n      </div>\n    </div>\n    <div class=\"btn btn-block\"></div>\n    <div class=\"container-fluid\">\n      <a [routerLink]=\"['/eventSearch']\" class=\"btn btn-block btn-primary btnStyle\">\n        Search Events\n      </a>\n    </div>\n  </div>\n\n\n  <div class=\"container-fluid\">\n    <div class=\"btn btn-block\"></div>\n  </div>\n  <div class=\"container-fluid\">\n\n  </div>\n  <div class=\"container-fluid\">\n    <div class=\"container-fluid\">\n      <div class=\"row\">\n        <div class=\"col-lg-12\">\n          <ul class=\"list-group\">\n            <li class=\"list-group-item active btnStyle\">\n              <div class=\"row\">\n                <!--<div class=\"col-lg-2\">-->\n                <div class=\"container-fluid\">\n                  Interested Events\n                </div>\n              </div>\n            </li>\n            <li class=\"list-group-item\" *ngFor=\"let interestedEvent of eventsInterestedIn\">\n              <div class=\"row\">\n                <!--<div class=\"col-lg-3\">-->\n                <!--<a [routerLink]=\"['/user']\"-->\n                <div class=\"container-fluid\">\n                  <a (click)=\"goToEventDetailsComments(interestedEvent['eventId'])\">\n                    {{interestedEvent['eventName']}}</a>\n                  <button type=\"button\" class=\"pull-right\" (click)=\"removeFromFavorites(interestedEvent['eventId'])\">\n                    <span class=\"glyphicon glyphicon-minus\"></span>\n                  </button>\n                </div>\n              </div>\n            </li>\n          </ul>\n        </div>\n      </div>\n      <div class=\"row\">\n        <div class=\"col-lg-4\">\n          <ul class=\"list-group\">\n            <li class=\"list-group-item active btnStyle\">\n              <div class=\"row\">\n                <div class=\"container-fluid\">\n                  Followed By\n                </div>\n              </div>\n            </li>\n            <li class=\"list-group-item\" *ngFor=\"let followedByUser of followedByUsers\">\n              <div class=\"row\">\n                <div class=\"container-fluid\">\n                  {{followedByUser}}\n                  <!--{{getUserName(followedByUser)}}-->\n                </div>\n              </div>\n            </li>\n          </ul>\n        </div>\n\n        <div class=\"col-lg-4\">\n          <ul class=\"list-group\">\n            <li class=\"list-group-item active btnStyle\">\n              <div class=\"row\">\n                <div class=\"container-fluid\">\n                  Users you Follow\n                </div>\n              </div>\n            </li>\n            <li class=\"list-group-item\" *ngFor=\"let followingUser of usersFollowing\">\n              <div class=\"row\">\n                <div class=\"container-fluid\">\n                  <a [routerLink]=\"['/otherUser/', followingUser]\">\n                    <!--{{followingUser['_id']}}-->\n                    {{followingUser}}\n                    <!--{{getUserName(followingUser)}}-->\n                  </a>\n                  <button type=\"button\" class=\"pull-right\" (click)=\"unFollow(followingUser)\">\n                    UnFollow\n                  </button>\n                </div>\n              </div>\n            </li>\n          </ul>\n        </div>\n\n        <div class=\"col-lg-4\">\n          <ul class=\"list-group\">\n            <li class=\"list-group-item active btnStyle\">\n              <div class=\"row\">\n                <div class=\"container-fluid\">\n                  <div> Other Users</div>\n                </div>\n              </div>\n            </li>\n            <li class=\"list-group-item\" *ngFor=\"let otherUser of otherUsers\">\n              <div class=\"row\">\n                <div class=\"container-fluid\">\n                  {{otherUser.username}}\n                  <button type=\"button\" class=\"pull-right\" (click)=\"addToFollow(otherUser._id)\">\n                    Follow\n                  </button>\n                </div>\n              </div>\n            </li>\n          </ul>\n        </div>\n\n\n      </div>\n    </div>\n    <a (click)=\"logout()\" class=\"btn btn-block btn-danger\">\n      Logout\n    </a>\n  </div>\n</div>\n\n<nav class=\"navbar navbar-fixed-bottom bg-primary btnStyle\">\n  <div class=\"container-fluid\">\n    <p class=\"navbar-text pull-left\">\n      @Sai Bhargavi\n    </p>\n    <p class=\"navbar-text pull-right\">\n      <a [routerLink]=\"['/profile']\" class=\"navbar-link glyphicon-color\">\n        <span class=\"glyphicon glyphicon-user\"></span>\n      </a>\n    </p>\n  </div>\n</nav>\n"
 
 /***/ }),
 
@@ -501,6 +512,7 @@ var DashboardComponent = (function () {
     DashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.user = this.sharedService.user;
+        console.log(this.user);
         if (this.user.role === 'ADMIN') {
             console.log('User is Admin');
             this.isAdmin = true;
@@ -533,6 +545,20 @@ var DashboardComponent = (function () {
         this.userService.findEventsInterested(this.user['_id']).subscribe(function (eventsInterested) {
             _this.eventsInterestedIn = eventsInterested[0].favoriteEvents;
         });
+        if (this.followedByUsers !== undefined) {
+            this.followedByUsers.forEach(function (user, index) {
+                _this.userService.findUserById(user[0]).subscribe(function (n) {
+                    _this.followedByUsers.splice(index, 1, { _id: user[0], username: n['username'] });
+                });
+            });
+        }
+        if (this.usersFollowing !== undefined) {
+            this.usersFollowing.forEach(function (user, index) {
+                _this.userService.findUserById(user[0]).subscribe(function (n) {
+                    _this.usersFollowing.splice(index, 1, { _id: user[0], username: n['username'] });
+                });
+            });
+        }
     };
     DashboardComponent.prototype.addToFollow = function (userId) {
         var _this = this;
@@ -575,6 +601,7 @@ var DashboardComponent = (function () {
         });
     };
     DashboardComponent.prototype.goToEventDetailsComments = function (interestedEvent) {
+        console.log(interestedEvent);
         this.router.navigate(['/comments', interestedEvent]);
     };
     DashboardComponent.prototype.getUserName = function (uId) {
@@ -582,12 +609,15 @@ var DashboardComponent = (function () {
         if (uId !== undefined && uId !== '') {
             this.userService.findUserById(uId).subscribe(function (user) {
                 console.log(user['username']);
-                return user['username'];
+                return user;
             });
         }
-        else {
-            return;
-        }
+    };
+    DashboardComponent.prototype.logout = function () {
+        var _this = this;
+        this.userService.logout().subscribe(function (user) {
+            _this.router.navigate(['/login']);
+        });
     };
     return DashboardComponent;
 }());
@@ -811,7 +841,7 @@ var EventCommentComponent = (function () {
             .subscribe(function (resp) {
             _this.commentService.findAllCommentsForEvent(_this.event)
                 .subscribe(function (comments) {
-                if (comments) {
+                if (comments[0] !== undefined) {
                     _this.commentsFound = comments[0].commentsOnEvent;
                     if (_this.commentsFound.length > 0) {
                         _this.commentsExist = true;
@@ -907,7 +937,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/event-details/event-details.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--Header-Start-->\n<nav class=\"navbar navbar-fixed-top bg-primary btnStyle\">\n  <div class=\"container-fluid\">\n\n    <div class=\"navbar-header header-width header-fix\">\n      <p class=\"navbar-text pull-left p-fix\">\n        <a (click)=\"searchForEvents(searchTerm)\" class=\"navbar-link glyphicon-color\">\n              <span class=\"glyphicon glyphicon-chevron-left\">\n              </span>\n        </a>\n      </p>\n      <span class=\"navbar-brand glyphicon-color\">{{eventName}}</span>\n\n      <p class=\"navbar-text pull-right p-right-fix glyphicon-color\">\n        <a [routerLink]=\"['/login']\">\n      <span class=\"glyphicon glyphicon-log-in glyphicon-color\">\n      </span>\n        </a>\n        <a [routerLink]=\"['/register']\">\n      <span class=\"glyphicon glyphicon-registration-mark glyphicon-color\">\n      </span>\n        </a>\n        <a [routerLink]=\"['/about']\" class=\"glyphicon-color\">\n          Event Planet\n        </a>\n      </p>\n    </div>\n  </div>\n</nav>\n<!--Header-End-->\n\n<!--Body-Start-->\n<!--Search Input and button-->\n<div class=\"container-fluid\">\n  <div *ngIf=\"eventDetailsExist\">\n    <div class=\"container-fluid\">\n      <div *ngIf=\"eventDetail['description']\">\n        <h3>Description</h3>\n        {{eventDetail['description']}}\n        <br/><br/>\n      </div>\n      <div *ngIf=\"!eventDetail['description']\">\n        <h3>Description</h3>\n        Description yet to come!\n        <br/><br/>\n      </div>\n      <b>Address:</b>&nbsp;&nbsp;\n      {{eventDetail['address']}}\n      <br/><br/>\n      <b>Start Time:</b>&nbsp;&nbsp;\n      {{eventDetail['start_time']}}\n      <br/><br/>\n      <b>Link:</b>&nbsp;&nbsp;\n      <a href=\"{{eventDetail['url']}}\" target=\"_blank\">{{eventDetail['url']}}</a>\n    </div>\n  </div>\n</div>\n\n\n<div *ngIf=\"commentsExist\">\n  <div class=\"row\">\n    <div class=\"col-xs-9\">\n      Comments\n    </div>\n  </div>\n  <li class=\"list-group-item\" *ngFor=\"let comment of commentsFound\">\n    <div class=\"row\">\n      <div class=\"col-xs-9\">\n        {{comment['comment']}}\n      </div>\n      <div class=\"col-xs-3\">\n        {{comment['username']}}\n      </div>\n    </div>\n  </li>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"btn btn-block\"></div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"btn btn-block\"></div>\n</div>\n<div class=\"container-fluid\">\n  <div *ngIf=\"!commentsExist\"\n       class=\"alert alert-danger container-fluid\">\n    <i class=\"glyphicon glyphicon-info-sign glyphicon-color\"></i>\n    There are no comments for this event!!!\n  </div>\n</div>\n\n<!--Body Ends Here-->\n\n<!--Footer-->\n<div class=\"navbar navbar-fixed-bottom bg-primary btnStyle\">\n  <div class=\"container-fluid pull-right\">\n    <a [routerLink]=\"['/profile']\" class=\"navbar-link glyphicon-color\">\n      <span class=\"glyphicon glyphicon-user\">\n      </span>\n    </a>\n  </div>\n</div>\n"
+module.exports = "<!--Header-Start-->\n<nav class=\"navbar navbar-fixed-top bg-primary btnStyle\">\n  <div class=\"container-fluid\">\n\n    <div class=\"navbar-header header-width header-fix\">\n      <p class=\"navbar-text pull-left p-fix\">\n        <a (click)=\"searchForEvents(searchTerm)\" class=\"navbar-link glyphicon-color\">\n              <span class=\"glyphicon glyphicon-chevron-left\">\n              </span>\n        </a>\n      </p>\n      <span class=\"navbar-brand glyphicon-color\">{{eventName}}</span>\n\n      <p class=\"navbar-text pull-right p-right-fix glyphicon-color\">\n        <a [routerLink]=\"['/login']\">\n      <span class=\"glyphicon glyphicon-log-in glyphicon-color\">\n      </span>\n        </a>\n        <a [routerLink]=\"['/register']\">\n      <span class=\"glyphicon glyphicon-registration-mark glyphicon-color\">\n      </span>\n        </a>\n        <a [routerLink]=\"['/about']\" class=\"glyphicon-color\">\n          Event Planet\n        </a>\n      </p>\n    </div>\n  </div>\n</nav>\n<!--Header-End-->\n\n<!--Body-Start-->\n<!--Search Input and button-->\n<div class=\"container-fluid\">\n  <div *ngIf=\"eventDetailsExist\">\n    <div class=\"container-fluid\">\n      <div *ngIf=\"eventDetail['description']\">\n        <h3>Description</h3>\n        {{eventDetail['description']}}\n        <br/><br/>\n      </div>\n      <div *ngIf=\"!eventDetail['description']\">\n        <h3>Description</h3>\n        Description yet to come!\n        <br/><br/>\n      </div>\n      <b>Address:</b>&nbsp;&nbsp;\n      {{eventDetail['address']}}\n      <br/><br/>\n      <b>Start Time:</b>&nbsp;&nbsp;\n      {{eventDetail['start_time']}}\n      <br/><br/>\n      <b>Link:</b>&nbsp;&nbsp;\n      <a href=\"{{eventDetail['url']}}\" target=\"_blank\">{{eventDetail['url']}}</a>\n    </div>\n  </div>\n</div>\n\n\n<div *ngIf=\"commentsExist\">\n  <div class=\"row\">\n    <div class=\"col-xs-9\">\n      Comments\n    </div>\n  </div>\n  <li class=\"list-group-item\" *ngFor=\"let comment of commentsFound\">\n    <div class=\"row\">\n      <div class=\"col-xs-9\">\n        {{comment['comment']}}\n      </div>\n      <div class=\"col-xs-3\">\n        {{comment['username']}}\n      </div>\n    </div>\n  </li>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"btn btn-block\"></div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"btn btn-block\"></div>\n</div>\n<div class=\"container-fluid\">\n  <div *ngIf=\"!commentsExist && !isLoading\"\n       class=\"alert alert-danger container-fluid\">\n    <i class=\"glyphicon glyphicon-info-sign glyphicon-color\"></i>\n    There are no comments for this event!!!\n  </div>\n  <div *ngIf=\"isLoading\">\n    <div>\n    Loading details of the event..\n    </div>\n  </div>\n</div>\n\n<!--Body Ends Here-->\n\n<!--Footer-->\n<div class=\"navbar navbar-fixed-bottom bg-primary btnStyle\">\n  <div class=\"container-fluid pull-right\">\n    <a [routerLink]=\"['/profile']\" class=\"navbar-link glyphicon-color\">\n      <span class=\"glyphicon glyphicon-user\">\n      </span>\n    </a>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -942,7 +972,7 @@ var EventDetailsComponent = (function () {
     }
     EventDetailsComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.commentsExist = false;
+        this.isLoading = true;
         this.activatedRoute.params
             .subscribe(function (params) {
             _this.eventId = params['id'];
@@ -953,15 +983,19 @@ var EventDetailsComponent = (function () {
                     _this.eventDetailsExist = true;
                     _this.eventDetail = eventDetailed;
                     _this.eventName = eventDetailed['title'];
+                    _this.commentService.findAllCommentsForEvent(_this.eventId)
+                        .subscribe(function (comments) {
+                        _this.isLoading = false;
+                        if (comments[0] !== undefined) {
+                            _this.commentsExist = true;
+                            _this.commentsFound = comments[0].commentsOnEvent;
+                        }
+                        else {
+                            _this.commentsExist = false;
+                        }
+                    });
                 }
             });
-        });
-        this.commentService.findAllCommentsForEvent(this.eventId)
-            .subscribe(function (comments) {
-            if (comments[0] !== undefined) {
-                _this.commentsExist = true;
-                _this.commentsFound = comments[0].commentsOnEvent;
-            }
         });
     };
     EventDetailsComponent.prototype.searchForEvents = function (searchTerm) {
@@ -1018,7 +1052,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/event-search/event-search.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--Header-Start-->\n<nav class=\"navbar navbar-fixed-top bg-primary btnStyle\">\n  <div class=\"container-fluid\">\n\n    <div class=\"navbar-header header-width header-fix\">\n      <p class=\"navbar-text pull-left p-fix\">\n        <a [routerLink]=\"['/about']\" class=\"glyphicon-color\">\n          Event Planet\n        </a>\n      </p>\n      <div *ngIf=\"!userExists\">\n        <p class=\"navbar-text pull-right p-right-fix glyphicon-color\">\n\n        <a [routerLink]=\"['/login']\">\n      <span class=\"glyphicon glyphicon-log-in glyphicon-color\">\n      </span>\n        </a>\n        <a [routerLink]=\"['/register']\">\n      <span class=\"glyphicon glyphicon-registration-mark glyphicon-color\">\n      </span>\n        </a>\n        </p>\n    </div>\n\n      <div *ngIf=\"userExists\">\n        <p class=\"navbar-text pull-right p-right-fix glyphicon-color\">\n\n          <a [routerLink]=\"['/dashboard']\">\n      <span class=\"glyphicon glyphicon-color\">Dashboard\n      </span>\n          </a>\n          <a [routerLink]=\"['/logout']\">\n      <span class=\"glyphicon glyphicon-log-out glyphicon-color\">\n      </span>\n          </a>\n        </p>\n      </div>\n    </div>\n  </div>\n</nav>\n<!--Header-End-->\n\n<!--Body-Start-->\n<div class=\"container-fluid\">\n<div *ngIf=\"infoFlag\"\n     class=\"alert alert-danger container-fluid\">\n  <i class=\"glyphicon glyphicon-info-sign glyphicon-color\"></i>\n  {{infoMsg}}\n</div>\n</div>\n<!--Search Input and button-->\n<div class=\"container-fluid\">\n  <form (ngSubmit)=\"search()\" #f=\"ngForm\">\n    <input ngModel={{searchTerm}}\n           name=\"searchTerm\"\n           id=\"searchTerm\"\n           placeholder=\"San Diego\"\n           class=\"form-control\">\n    <button\n            class=\"btn btn-primary btn-block btnStyle\"\n            [disabled]=\"!f.valid\">\n      Search for Events\n    </button>\n    <!--(click)=\"searchForEvents(searchTerm)\"-->\n  </form>\n\n  <div *ngIf=\"isSearching\">\n    <div class=\"btn btn-block\"></div>\n    <div align=\"center\">\n         Loading events for {{searchTerm}}...\n    </div>\n  </div>\n  <!--Empty Search results-->\n  <div *ngIf=\"noResults\"\n       class=\"alert alert-danger container-fluid\">\n    Sorry! We dont have any events happening at {{searchTerm}}\n  </div>\n\n  <!--Search Results-->\n  <div *ngIf=\"eventsExist\">\n    <div></div>\n    <div>\n      <h5>Click on any of the following events to know the details</h5>\n    </div>\n\n    <li class=\"list-group-item\" *ngFor=\"let eventsFromList of searchResults\">\n      <div class=\"row\">\n        <div class=\"col-xs-9\">\n          <a (click)=\"getDetails(eventsFromList['id'])\">\n            {{eventsFromList['title']}}\n            <br/>\n            {{eventsFromList['city_name']}}\n          </a>\n        </div>\n        <div class=\"col-xs-3\">\n          <button value=\"Add To Favorites\"\n                  id=\"{{eventsFromList['id']}}\"\n                  class=\"gray\"\n                  (click)=\"addTofavorites(eventsFromList['id'], eventsFromList['title'], $event)\">\n            {{buttonValue}}\n          </button>\n        </div>\n      </div>\n    </li>\n  </div>\n</div>\n<!--Body Ends Here-->\n\n<!--Footer-->\n<div class=\"navbar navbar-fixed-bottom bg-primary btnStyle\">\n  <div class=\"container-fluid pull-right\">\n    <a [routerLink]=\"['/profile']\" class=\"navbar-link glyphicon-color\">\n      <span class=\"glyphicon glyphicon-user\">\n      </span>\n    </a>\n  </div>\n</div>\n"
+module.exports = "<!--Header-Start-->\n<nav class=\"navbar navbar-fixed-top bg-primary btnStyle\">\n  <div class=\"container-fluid\">\n\n    <div class=\"navbar-header header-width header-fix\">\n      <p class=\"navbar-text pull-left p-fix\">\n        <a [routerLink]=\"['/about']\" class=\"glyphicon-color\">\n          Event Planet\n        </a>\n      </p>\n      <div *ngIf=\"!userExists\">\n        <p class=\"navbar-text pull-right p-right-fix glyphicon-color\">\n\n        <a [routerLink]=\"['/login']\">\n      <span class=\"glyphicon glyphicon-log-in glyphicon-color\">\n      </span>\n        </a>\n          &nbsp;&nbsp;\n        <a [routerLink]=\"['/register']\">\n      <span class=\"glyphicon glyphicon-registration-mark glyphicon-color\">\n      </span>\n        </a>\n        </p>\n    </div>\n\n      <div *ngIf=\"userExists\">\n        <p class=\"navbar-text pull-right p-right-fix glyphicon-color\">\n\n          <a [routerLink]=\"['/dashboard']\">\n      <span class=\"glyphicon glyphicon-color\">Dashboard\n      </span>\n          </a>\n          <a [routerLink]=\"['/logout']\">\n      <span class=\"glyphicon glyphicon-log-out glyphicon-color\">\n      </span>\n          </a>\n        </p>\n      </div>\n    </div>\n  </div>\n</nav>\n<!--Header-End-->\n\n<!--Body-Start-->\n<div class=\"container-fluid\">\n<div *ngIf=\"infoFlag\"\n     class=\"alert alert-danger container-fluid\">\n  <i class=\"glyphicon glyphicon-info-sign glyphicon-color\"></i>\n  {{infoMsg}}\n</div>\n</div>\n<!--Search Input and button-->\n<div class=\"container-fluid\">\n  <form (ngSubmit)=\"search()\" #f=\"ngForm\">\n    <input ngModel={{searchTerm}}\n           name=\"searchTerm\"\n           id=\"searchTerm\"\n           placeholder=\"San Diego\"\n           class=\"form-control\">\n    <button\n            class=\"btn btn-primary btn-block btnStyle\"\n            [disabled]=\"!f.valid\">\n      Search for Events\n    </button>\n    <!--(click)=\"searchForEvents(searchTerm)\"-->\n  </form>\n\n  <div *ngIf=\"isSearching\">\n    <div class=\"btn btn-block\"></div>\n    <div align=\"center\">\n         Loading events for {{searchTerm}}...\n    </div>\n  </div>\n  <!--Empty Search results-->\n  <div *ngIf=\"noResults\"\n       class=\"alert alert-danger container-fluid\">\n    Sorry! We dont have any events happening at {{searchTerm}}\n  </div>\n\n  <!--Search Results-->\n  <div *ngIf=\"eventsExist\">\n    <div></div>\n    <div>\n      <h5>Click on any of the following events to know the details</h5>\n    </div>\n\n    <li class=\"list-group-item\" *ngFor=\"let eventsFromList of searchResults\">\n      <div class=\"row\">\n        <div class=\"col-xs-9\">\n          <a (click)=\"getDetails(eventsFromList['id'])\">\n            {{eventsFromList['title']}}\n            <br/>\n            {{eventsFromList['city_name']}}\n          </a>\n        </div>\n        <div class=\"col-xs-3\">\n          <button value=\"Add To Favorites\"\n                  id=\"{{eventsFromList['id']}}\"\n                  class=\"gray\"\n                  (click)=\"addTofavorites(eventsFromList['id'], eventsFromList['title'], $event)\">\n            {{buttonValue}}\n          </button>\n        </div>\n      </div>\n    </li>\n  </div>\n</div>\n<!--Body Ends Here-->\n\n<!--Footer-->\n<div class=\"navbar navbar-fixed-bottom bg-primary btnStyle\">\n  <div class=\"container-fluid pull-right\">\n    <!--<a [routerLink]=\"['/profile']\" class=\"navbar-link glyphicon-color\">-->\n      <!--<span class=\"glyphicon glyphicon-user\">-->\n      <!--</span>-->\n    <!--</a>-->\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1234,15 +1268,6 @@ var FlickrSearchComponent = (function () {
         var url = 'https://farm' + photo.farm + '.staticflickr.com/' + photo.server;
         url += '/' + photo.id + '_' + photo.secret + '_b.jpg';
         this.router.navigate(['/addingImage/', url]);
-        // this.widgetService.createWidget(this.pageId, widget)
-        //   .subscribe((widgetRet: any) => {
-        //     console.log(widgetRet);
-        //     console.log(widgetRet.length);
-        //     const flickrWid = widgetRet[widgetRet.length - 1];
-        //     console.log(flickrWid);
-        //     this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId,
-        //       'widget', flickrWid._id, 'IMAGE']);
-        //   });
     };
     return FlickrSearchComponent;
 }());
@@ -1443,7 +1468,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/manage-user/manage-user.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-fixed-top bg-primary btnStyle\">\n  <div class=\"container-fluid\">\n\n    <div class=\"navbar-header header-width header-fix\">\n      <p class=\"navbar-text pull-left p-fix\">\n        <a [routerLink]=\"['/dashboard']\" class=\"navbar-link glyphicon-color\">\n              <span class=\"glyphicon glyphicon-chevron-left\">\n              </span>\n        </a>\n      </p>\n      <span class=\"navbar-brand glyphicon-color\">Manage Users</span>\n\n      <!--<p class=\"navbar-text pull-right p-right-fix\">-->\n        <!--<a [routerLink]=\"['/user', userId, 'website', 'new']\" class=\"navbar-link glyphicon-color\">-->\n              <!--<span class=\"glyphicon glyphicon-plus\">-->\n              <!--</span>-->\n        <!--</a>-->\n      <!--</p>-->\n    </div>\n  </div>\n</nav>\n\n\n  <div class=\"container-fluid\">\n    <div class=\"container-fluid\">\n    <div *ngIf=\"successFlag\"\n         class=\"alert alert-success\">\n      {{successMsg}}\n    </div>\n    <div *ngIf=\"isEditing\">\n      <!--<div class=\"row container-fluid ribbon-style\">-->\n        <!--You are editing the profile of {{username}}-->\n      <!--<div class=\"pull-right\">-->\n        <!--<a (click)=\"updateUser()\" class=\"navbar-link \">-->\n                <!--<span class=\"glyphicon glyphicon-ok\">-->\n                <!--</span>-->\n        <!--</a>-->\n      <!--</div>-->\n\n      <div class=\"row\">\n        <div class=\"col-xs-3\">\n    <label for=\"username\">Username</label>\n    <input [(ngModel)]=\"username\"\n           name=\"username\"\n           id=\"username\"\n           placeholder={{username}}\n           class=\"form-control\"\n           readonly>\n      </div>\n        <div class=\"col-xs-3\">\n    <label for=\"firstName\">First Name</label>\n    <input [(ngModel)]=\"firstName\"\n           name=\"firstName\"\n           id=\"firstName\"\n           placeholder={{firstName}}\n           class=\"form-control\">\n  </div>\n        <div class=\"col-xs-3\">\n    <label for=\"lastName\">Last Name</label>\n    <input [(ngModel)]=\"lastName\"\n           name=\"lastname\"\n           id=\"lastName\"\n           placeholder={{lastName}}\n           class=\"form-control\">\n  </div>\n      </div>\n      <div class=\"row\">\n        <div class=\"col-xs-3\">\n        <label for=\"email\">E-Mail</label>\n        <input [(ngModel)]=\"email\"\n               name=\"email\"\n               id=\"email\"\n               placeholder={{email}}\n               class=\"form-control\">\n      </div>\n        <div class=\"col-xs-3\">\n          <label for=\"role\">Role</label>\n          <select [(ngModel)]=\"role\" class=\"form-control\" name=\"role\" id=\"role\">\n            <option value=\"USER\">User</option>\n            <option value=\"ORGANIZER\">Organizer</option>\n            <option value=\"ADMIN\">Admin</option>\n          </select>\n        </div>\n        <div class=\"col-xs-3\">\n          <label></label>\n          <a (click)=\"updateUser()\" class=\"btn btn-block btnStyle\">\n           <div class=\"glyphicon-color\"> Update {{username}}'s profile\n          </div>\n          </a>\n        </div>\n      </div>\n      </div>\n  </div>\n</div>\n<div class=\"container-fluid\">\n<li class=\"list-group-item\" *ngFor=\"let user of all_users\">\n  <div class=\"row\">\n    <div class=\"col-xs-9\">\n      Hey\n        {{user['username']}}\n      <div class=\"pull-right\" (click)=\"editUser(user['_id'])\">\n        <span class=\"glyphicon glyphicon-pencil\"></span>\n      </div>\n      <div class=\"pull-right\" (click)=\"deleteUser(user['_id'])\">\n        <span class=\"glyphicon glyphicon-trash\"></span>\n      </div>\n    </div>\n  </div>\n</li>\n</div>\n"
+module.exports = "<nav class=\"navbar navbar-fixed-top bg-primary btnStyle\">\n  <div class=\"container-fluid\">\n\n    <div class=\"navbar-header header-width header-fix\">\n      <p class=\"navbar-text pull-left p-fix\">\n        <a [routerLink]=\"['/dashboard']\" class=\"navbar-link glyphicon-color\">\n              <span class=\"glyphicon glyphicon-chevron-left\">\n              </span>\n        </a>\n      </p>\n      <span class=\"navbar-brand glyphicon-color\">Manage Users</span>\n      <p class=\"navbar-text pull-right p-right-fix\">\n\n        <a (click)=\"logout()\" class=\"navbar-link glyphicon-color\">\n      <span class=\"glyphicon glyphicon-log-out\">\n      </span> &nbsp;\n        </a>\n      </p>\n      <!--<p class=\"navbar-text pull-right p-right-fix\">-->\n      <!--<a [routerLink]=\"['/user', userId, 'website', 'new']\" class=\"navbar-link glyphicon-color\">-->\n      <!--<span class=\"glyphicon glyphicon-plus\">-->\n      <!--</span>-->\n      <!--</a>-->\n      <!--</p>-->\n    </div>\n  </div>\n</nav>\n\n\n<div class=\"container-fluid\">\n  <div class=\"container-fluid\">\n    <div *ngIf=\"successFlag\"\n         class=\"alert alert-success\">\n      {{successMsg}}\n    </div>\n    <div *ngIf=\"errFlag\"\n         class=\"alert alert-danger\">\n      {{errMsg}}\n    </div>\n    <div *ngIf=\"isEditing || isCreatingNewUser\">\n      <!--<div class=\"row container-fluid ribbon-style\">-->\n      <!--You are editing the profile of {{username}}-->\n      <!--<div class=\"pull-right\">-->\n      <!--<a (click)=\"updateUser()\" class=\"navbar-link \">-->\n      <!--<span class=\"glyphicon glyphicon-ok\">-->\n      <!--</span>-->\n      <!--</a>-->\n      <!--</div>-->\n\n      <div class=\"row\">\n        <div class=\"col-xs-3\">\n          <label for=\"username\">Username</label>\n          <div *ngIf=\"isEditing\">\n            <input [(ngModel)]=\"username\"\n                   name=\"username\"\n                   id=\"username\"\n                   placeholder={{username}}\n                   class=\"form-control\"\n                   readonly>\n          </div>\n          <div *ngIf=\"isCreatingNewUser\">\n            <input [(ngModel)]=\"newusername\"\n                   name=\"newusername\"\n                   id=\"newusername\"\n                   placeholder={{newusername}}\n                   class=\"form-control\">\n          </div>\n        </div>\n        <div class=\"col-xs-3\">\n          <label for=\"firstName\">First Name</label>\n          <input [(ngModel)]=\"firstName\"\n                 name=\"firstName\"\n                 id=\"firstName\"\n                 placeholder={{firstName}}\n                 class=\"form-control\">\n        </div>\n        <div class=\"col-xs-3\">\n          <label for=\"lastName\">Last Name</label>\n          <input [(ngModel)]=\"lastName\"\n                 name=\"lastname\"\n                 id=\"lastName\"\n                 placeholder={{lastName}}\n                 class=\"form-control\">\n        </div>\n      </div>\n      <div *ngIf=\"isCreatingNewUser\">\n        <div class=\"row\">\n          <div class=\"col-xs-3\">\n            <label for=\"password\">Password</label>\n            <input [(ngModel)]=\"password\"\n                   name=\"password\"\n                   id=\"password\"\n                   placeholder={{password}}\n                   type=password\n                   class=\"form-control\">\n          </div>\n          <div class=\"col-xs-3\">\n            <label for=\"verifyPwd\">Verify Password</label>\n            <input [(ngModel)]=\"verifyPwd\"\n                   name=\"verifyPwd\"\n                   id=\"verifyPwd\"\n                   type=\"password\"\n                   placeholder={{verifyPwd}}\n                   class=\"form-control\">\n          </div>\n        </div>\n      </div>\n      <div class=\"row\">\n        <div class=\"col-xs-3\">\n          <label for=\"email\">E-Mail</label>\n          <input [(ngModel)]=\"email\"\n                 name=\"email\"\n                 id=\"email\"\n                 placeholder={{email}}\n                 class=\"form-control\">\n        </div>\n        <div class=\"col-xs-3\">\n          <label for=\"role\">Role</label>\n          <select [(ngModel)]=\"role\" class=\"form-control\" name=\"role\" id=\"role\">\n            <option value=\"USER\">User</option>\n            <option value=\"ORGANIZER\">Organizer</option>\n            <option value=\"ADMIN\">Admin</option>\n          </select>\n        </div>\n        <div *ngIf=\"!isCreatingNewUser\">\n          <div class=\"col-xs-3\">\n            <label></label>\n            <a (click)=\"updateUser()\" class=\"btn btn-block btnStyle\">\n              <div class=\"glyphicon-color\"> Update {{username}}'s profile\n              </div>\n            </a>\n          </div>\n        </div>\n        <div *ngIf=\"isCreatingNewUser\">\n          <div class=\"col-xs-3\">\n            <label></label>\n            <a (click)=\"createNewUser()\" class=\"btn btn-block btnStyle\">\n              <div class=\"glyphicon-color\"> Create new user\n              </div>\n            </a>\n          </div>\n        </div>\n      </div>\n    </div>\n    <div class=\"btn btn-block\"></div>\n    <div class=\"btn btn-block\"></div>\n    <!--<div class=\"btn btn-block glyphicon-color btnStyle\">-->\n      <!--All registered users-->\n    <!--</div>-->\n    <div class=\"btn btn-block\"></div>\n    <ul class=\"list-group\">\n      <li class=\"list-group-item active btnStyl\">\n        <div class=\"row\">\n          <div class=\"col-xs-3\">\n            Username\n          </div>\n\n          <div class=\"col-xs-3\">\n            First Name\n          </div>\n\n          <div class=\"col-xs-3\">\n            Last Name\n          </div>\n\n        </div>\n      </li>\n      <li class=\"list-group-item\" *ngFor=\"let user of all_users\">\n        <div class=\"row\">\n          <div class=\"col-xs-3\">\n            {{user['username']}}\n          </div>\n          <div class=\"col-xs-3\">\n            {{user['firstName']}}\n          </div>\n\n          <div class=\"col-xs-3\">\n            {{user['lastName']}}\n          </div>\n          <div class=\"col-xs-3\">\n            <div class=\"pull-right\" (click)=\"editUser(user['_id'])\">\n              <span class=\"glyphicon glyphicon-pencil\"></span>\n            </div>&nbsp;&nbsp;\n            <div class=\"pull-right\" (click)=\"deleteUser(user['_id'])\">\n              <span class=\"glyphicon glyphicon-trash\"></span>\n            </div>\n          </div>\n        </div>\n      </li>\n    </ul>\n  </div>\n  <div class=\"container-fluid\">\n    <div class=\"btn btn-block btnStyle glyphicon-color\" (click)=\"onCreate()\">\n      Create New User\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1454,6 +1479,8 @@ module.exports = "<nav class=\"navbar navbar-fixed-top bg-primary btnStyle\">\n 
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ManageUserComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_user_service_client__ = __webpack_require__("../../../../../src/app/services/user.service.client.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_shared_service_client__ = __webpack_require__("../../../../../src/app/services/shared.service.client.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1465,21 +1492,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
 var ManageUserComponent = (function () {
-    function ManageUserComponent(userService) {
+    function ManageUserComponent(userService, sharedService, router) {
         this.userService = userService;
+        this.sharedService = sharedService;
+        this.router = router;
         console.log('In manage user - ts - on init');
     }
     ManageUserComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.user = this.sharedService.user;
         this.userService.findUsers().subscribe(function (userList) {
-            console.log(userList);
             _this.all_users = userList;
+            _this.all_users.forEach(function (user, index) {
+                if (user['_id'] === _this.user['_id']) {
+                    _this.all_users.splice(index, 1);
+                }
+            });
         });
     };
     ManageUserComponent.prototype.deleteUser = function (id) {
+        var _this = this;
         this.userService.deleteUser(id).subscribe(function (user) {
-            window.location.reload();
+            _this.userService.findUsers().subscribe(function (userList) {
+                _this.all_users = userList;
+            });
         });
     };
     ManageUserComponent.prototype.editUser = function (id) {
@@ -1487,6 +1526,7 @@ var ManageUserComponent = (function () {
         this.userService.findUserById(id).subscribe(function (user) {
             _this.successFlag = false;
             _this.isEditing = true;
+            _this.isCreatingNewUser = false;
             _this.currentUser = user;
             _this.username = user['username'];
             _this.firstName = user['firstName'];
@@ -1509,7 +1549,73 @@ var ManageUserComponent = (function () {
             _this.successFlag = true;
             _this.successMsg = 'User updated successfully';
             _this.isEditing = false;
+            _this.userService.findUsers().subscribe(function (userList) {
+                _this.all_users = userList;
+                _this.all_users.forEach(function (user1, index) {
+                    if (user1['_id'] === _this.user['_id']) {
+                        _this.all_users.splice(index, 1);
+                    }
+                });
+            });
         });
+    };
+    ManageUserComponent.prototype.onCreate = function () {
+        this.isEditing = false;
+        this.isCreatingNewUser = true;
+        this.successFlag = false;
+        this.firstName = '';
+        this.lastName = '';
+        this.password = '';
+        this.verifyPwd = '';
+        this.email = '';
+        this.role = '';
+        this.newusername = '';
+    };
+    ManageUserComponent.prototype.logout = function () {
+        var _this = this;
+        this.userService.logout().subscribe(function (user) {
+            _this.router.navigate(['/login']);
+        });
+    };
+    ManageUserComponent.prototype.createNewUser = function () {
+        var _this = this;
+        if (this.newusername === undefined || this.newusername === ''
+            || this.password === undefined || this.password === ''
+            || this.verifyPwd === undefined || this.verifyPwd === '') {
+            this.errMsg = 'Username, password and verify password fields are mandatory';
+            this.errFlag = true;
+        }
+        else if (this.password !== this.verifyPwd) {
+            this.errMsg = 'Password and verify password fields do not match';
+            this.errFlag = true;
+        }
+        else {
+            this.errFlag = false;
+            var user = {
+                username: this.newusername,
+                password: this.password,
+                firstName: this.firstName || '',
+                lastName: this.lastName || '',
+                email: this.email || '',
+                role: this.role || 'USER'
+            };
+            this.userService.createUser(user)
+                .subscribe(function (user1) {
+                console.log('creating new user');
+                _this.successFlag = true;
+                _this.successMsg = 'Created user successfully!';
+                _this.userService.findUsers().subscribe(function (userList) {
+                    _this.all_users = userList;
+                    _this.all_users.forEach(function (user2, index) {
+                        if (user2['_id'] === _this.user['_id']) {
+                            _this.all_users.splice(index, 1);
+                        }
+                    });
+                });
+                _this.isCreatingNewUser = false;
+                _this.errFlag = false;
+            });
+        }
     };
     return ManageUserComponent;
 }());
@@ -1519,10 +1625,10 @@ ManageUserComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/manage-user/manage-user.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/manage-user/manage-user.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_user_service_client__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_user_service_client__["a" /* UserService */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_user_service_client__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_user_service_client__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_shared_service_client__["a" /* SharedService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_shared_service_client__["a" /* SharedService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]) === "function" && _c || Object])
 ], ManageUserComponent);
 
-var _a;
+var _a, _b, _c;
 //# sourceMappingURL=manage-user.component.js.map
 
 /***/ }),
@@ -1548,7 +1654,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/other-user-dashboard/other-user-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "{{otherUserName}} is following:\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-lg-12\">\n      <ul class=\"list-group\">\n        <li class=\"list-group-item active btnStyle\">\n          <div class=\"row\">\n            <!--<div class=\"col-lg-2\">-->\n            <div class=\"container-fluid\">\n              Interested Events\n            </div>\n          </div>\n        </li>\n        <li class=\"list-group-item\" *ngFor=\"let interestedEvent of otherUser_Events\">\n          <div class=\"row\">\n            <!--<div class=\"col-lg-3\">-->\n            <!--<a [routerLink]=\"['/user']\"-->\n            <div class=\"container-fluid\">\n              <a (click)=\"goToEventDetailsComments(interestedEvent['eventId'])\">\n                {{interestedEvent['eventName']}}</a>\n              <!--<button type=\"button\" class=\"pull-right\" (click)=\"removeFromFavorites(interestedEvent['eventId'])\">-->\n                <!--<span class=\"glyphicon glyphicon-minus\"></span>-->\n              <!--</button>-->\n            </div>\n          </div>\n        </li>\n      </ul>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container\">\n  {{otherUserName}} is following:\n</div>\n  <div class=\"container-fluid\">\n    <div class=\"row\">\n      <div class=\"col-lg-12\">\n        <ul class=\"list-group\">\n          <li class=\"list-group-item active btnStyle\">\n            <div class=\"row\">\n              <!--<div class=\"col-lg-2\">-->\n              <div class=\"container-fluid\">\n                Interested Events\n              </div>\n            </div>\n          </li>\n          <li class=\"list-group-item\" *ngFor=\"let interestedEvent of otherUser_Events\">\n            <div class=\"row\">\n              <!--<div class=\"col-lg-3\">-->\n              <!--<a [routerLink]=\"['/user']\"-->\n              <div class=\"container-fluid\">\n                <a (click)=\"goToEventDetailsComments(interestedEvent['eventId'])\">\n                  {{interestedEvent['eventName']}}</a>\n                <!--<button type=\"button\" class=\"pull-right\" (click)=\"removeFromFavorites(interestedEvent['eventId'])\">-->\n                <!--<span class=\"glyphicon glyphicon-minus\"></span>-->\n                <!--</button>-->\n              </div>\n            </div>\n          </li>\n        </ul>\n      </div>\n    </div>\n  </div>\n"
 
 /***/ }),
 
@@ -1729,7 +1835,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/user/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <div *ngIf=\"errorFlag\"\n       class=\"alert alert-danger\">\n    {{errorMsg}}\n  </div>\n  <!--<div *ngIf=\"successFlag\"-->\n       <!--class=\"alert alert-success\">-->\n    <!--{{successMsg}}-->\n  <!--</div>-->\n  <h1> Login </h1>\n  <form (ngSubmit)=\"login()\" #f=\"ngForm\">\n    <input placeholder=\"username\"\n           name=\"username\"\n           type=\"text\"\n           id=\"username\"\n           class=\"form-control\"\n           ngModel\n           required\n           #username=\"ngModel\"\n           autocomplete=\"off\"\n           autocapitalize=\"off\"\n    />\n\n    <span class=\"help-block\" *ngIf=\"!username.valid && username.touched\">\n      Please enter username!\n    </span>\n    <input placeholder=\"password\"\n           name=\"password\"\n           type=\"password\"\n           id=\"password\"\n           class=\"form-control\"\n           ngModel\n           required\n           #password=\"ngModel\"/>\n    <span class=\"help-block\" *ngIf=\"!password.valid && password.touched\">\n      Please enter password!\n    </span>\n    <button class=\"btn btn-block bg-primary btnStyle\"\n            type=\"submit\"\n            [disabled]=\"!f.valid\">Login\n    </button>\n\n    <button class=\"btn btn-block btn-success\"\n            type=\"button\"\n            [routerLink]=\"['/register']\">Register\n    </button>\n    <!--<a (click)=\"deleteAllUsers()\">Delete all users-->\n      <!--</a>-->\n\n    <!--<a href=\"/api/facebook/login\" class=\"btn btn-primary btn-block\">-->\n      <!--<span class=\"fa fa-facebook\"></span>-->\n      <!--Facebook-->\n    <!--</a>-->\n\n\n  </form>\n</div>\n"
+module.exports = "<nav class=\"navbar navbar-fixed-top bg-primary btnStyle\">\n  <div class=\"container-fluid\">\n\n    <div class=\"navbar-header header-width header-fix\">\n      <p class=\"navbar-text pull-left p-fix\">\n        <a [routerLink]=\"['/about']\" class=\"navbar-link glyphicon-color\">\n          <b>EventPlanet</b>\n        </a>\n      </p>\n    </div>\n  </div>\n</nav>\n\n<div class=\"container-fluid\">\n  <div *ngIf=\"errorFlag\"\n       class=\"alert alert-danger\">\n    {{errorMsg}}\n  </div>\n  <!--<div *ngIf=\"successFlag\"-->\n       <!--class=\"alert alert-success\">-->\n    <!--{{successMsg}}-->\n  <!--</div>-->\n  <h1> Login </h1>\n  <form (ngSubmit)=\"login()\" #f=\"ngForm\">\n    <input placeholder=\"username\"\n           name=\"username\"\n           type=\"text\"\n           id=\"username\"\n           class=\"form-control\"\n           ngModel\n           required\n           #username=\"ngModel\"\n           autocomplete=\"off\"\n           autocapitalize=\"off\"\n    />\n\n    <span class=\"help-block\" *ngIf=\"!username.valid && username.touched\">\n      Please enter username!\n    </span>\n    <input placeholder=\"password\"\n           name=\"password\"\n           type=\"password\"\n           id=\"password\"\n           class=\"form-control\"\n           ngModel\n           required\n           #password=\"ngModel\"/>\n    <span class=\"help-block\" *ngIf=\"!password.valid && password.touched\">\n      Please enter password!\n    </span>\n    <button class=\"btn btn-block bg-primary btnStyle\"\n            type=\"submit\"\n            [disabled]=\"!f.valid\">Login\n    </button>\n\n    <button class=\"btn btn-block btn-success\"\n            type=\"button\"\n            [routerLink]=\"['/register']\">Register\n    </button>\n    <button class=\"btn btn-block btn-success\"\n            type=\"button\"\n            [routerLink]=\"['/eventSearchAnonymous']\">Cancel\n    </button>\n    <!--<a (click)=\"deleteAllUsers()\">Delete all users-->\n      <!--</a>-->\n\n    <!--<a href=\"/api/facebook/login\" class=\"btn btn-primary btn-block\">-->\n      <!--<span class=\"fa fa-facebook\"></span>-->\n      <!--Facebook-->\n    <!--</a>-->\n\n\n  </form>\n</div>\n\n<nav class=\"navbar navbar-fixed-bottom bg-primary btnStyle\">\n  <div class=\"container-fluid\">\n    <p class=\"navbar-text pull-left\">\n      @Sai Bhargavi\n    </p>\n  </div>\n</nav>\n"
 
 /***/ }),
 
@@ -1836,7 +1942,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/user/profile/profile.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-fixed-top bg-primary \">\n  <div class=\"container-fluid btnStyle\">\n    <div class=\"navbar-header header-width header-fix\">\n\n      <span class=\"navbar-brand\">Profile</span>\n      <p class=\"navbar-text pull-right p-fix\">\n        <a (click)=\"updateUser()\" class=\"navbar-link glyphicon-color \">\n                <span class=\"glyphicon glyphicon-ok\">\n                </span>\n        </a>\n      </p>\n    </div>\n\n  </div>\n</nav>\n\n\n<div class=\"container-fluid\">\n  <label for=\"username\">Username</label>\n  <input [(ngModel)]=\"username\"\n         name=\"username\"\n         id=\"username\"\n         placeholder={{username}}\n         class=\"form-control\"\n         readonly>\n\n  <label for=\"firstName\">First Name</label>\n  <input [(ngModel)]=\"firstName\"\n         name=\"firstname\"\n         id=\"firstName\"\n         placeholder={{firstName}}\n         class=\"form-control\">\n\n  <label for=\"lastName\">Last Name</label>\n  <input [(ngModel)]=\"lastName\"\n         name=\"lastname\"\n         id=\"lastName\"\n         placeholder={{lastName}}\n         class=\"form-control\">\n\n  <label for=\"email\">Email</label>\n  <input [(ngModel)]=\"email\"\n         name=\"email\"\n         id=\"email\"\n         placeholder={{email}}\n         class=\"form-control\">\n  <a [routerLink]=\"['/dashboard']\" class=\"btn btn-block btn-primary\">\n    Dashboard\n  </a>\n  <a [routerLink]=\"['/login']\" class=\"btn btn-block btn-danger\">\n    Logout\n  </a>\n</div>\n\n<nav class=\"navbar navbar-fixed-bottom bg-primary btnStyle\">\n  <div class=\"container-fluid\">\n    <p class=\"navbar-text pull-right\">\n      <a [routerLink]=\"['/profile']\" class=\"navbar-link glyphicon-color\">\n                <span class=\"glyphicon glyphicon-user\">\n                </span>\n      </a>\n    </p>\n  </div>\n</nav>\n"
+module.exports = "<nav class=\"navbar navbar-fixed-top bg-primary \">\n  <div class=\"container-fluid btnStyle\">\n    <div class=\"navbar-header header-width header-fix\">\n\n      <span class=\"navbar-brand\">Profile</span>\n      <p class=\"navbar-text pull-right p-fix\">\n        <a (click)=\"updateUser()\" class=\"navbar-link glyphicon-color \">\n                <span class=\"glyphicon glyphicon-ok\">\n                </span>\n        </a>\n      </p>\n    </div>\n\n  </div>\n</nav>\n\n<div *ngIf=\"successFlg\"\n     class=\"alert alert-success\">\n  {{successMsg}}\n</div>\n\n<div class=\"container-fluid\">\n  <label for=\"username\">Username</label>\n  <input [(ngModel)]=\"username\"\n         name=\"username\"\n         id=\"username\"\n         placeholder={{username}}\n         class=\"form-control\"\n         readonly>\n\n  <label for=\"firstName\">First Name</label>\n  <input [(ngModel)]=\"firstName\"\n         name=\"firstname\"\n         id=\"firstName\"\n         placeholder={{firstName}}\n         class=\"form-control\">\n\n  <label for=\"lastName\">Last Name</label>\n  <input [(ngModel)]=\"lastName\"\n         name=\"lastname\"\n         id=\"lastName\"\n         placeholder={{lastName}}\n         class=\"form-control\">\n\n  <label for=\"email\">Email</label>\n  <input [(ngModel)]=\"email\"\n         name=\"email\"\n         id=\"email\"\n         placeholder={{email}}\n         class=\"form-control\">\n\n    <label for=\"role\">Role</label>\n    <select [(ngModel)]=\"role\" class=\"form-control\" name=\"role\" id=\"role\" readonly disabled>\n      <option value=\"USER\">User</option>\n      <option value=\"ORGANIZER\">Organizer</option>\n      <option value=\"ADMIN\">Admin</option>\n    </select>\n\n  <a [routerLink]=\"['/dashboard']\" class=\"btn btn-block btn-primary btnStyle\">\n    Dashboard\n  </a>\n  <a (click)=\"logout()\" class=\"btn btn-block btn-danger\">\n    Logout\n  </a>\n</div>\n\n<nav class=\"navbar navbar-fixed-bottom bg-primary btnStyle\">\n  <div class=\"container-fluid\">\n    <p class=\"navbar-text pull-right\">\n      <a [routerLink]=\"['/profile']\" class=\"navbar-link glyphicon-color\">\n                <span class=\"glyphicon glyphicon-user\">\n                </span>\n      </a>\n    </p>\n  </div>\n</nav>\n"
 
 /***/ }),
 
@@ -1869,27 +1975,13 @@ var ProfileComponent = (function () {
         this.router = router;
         this.sharedService = sharedService;
     }
-    // ngOnInit() {
-    //   this.activatedRoute.params
-    //     .subscribe(
-    //       (params: any) => {
-    //         this.userId = params['userId'];
-    //       }
-    //     );
-    //   this.userService.findUserById(this.userId)
-    //     .subscribe((returnedUser: any) => {
-    //       this.username = returnedUser.username;
-    //       this.firstName = returnedUser.firstName;
-    //       this.lastName = returnedUser.lastName;
-    //       this.password = returnedUser.password;
-    //     });
-    // }
     ProfileComponent.prototype.ngOnInit = function () {
         this.user = this.sharedService.user;
         this.username = this.user['username'];
         this.firstName = this.user['firstName'];
         this.lastName = this.user['lastName'];
         this.email = this.user['email'];
+        this.role = this.user['role'];
     };
     ProfileComponent.prototype.logout = function () {
         var _this = this;
@@ -1897,6 +1989,7 @@ var ProfileComponent = (function () {
             .subscribe(function (data) { return _this.router.navigate(['/login']); });
     };
     ProfileComponent.prototype.updateUser = function () {
+        var _this = this;
         this.user = {
             _id: this.user._id,
             username: this.username,
@@ -1907,6 +2000,8 @@ var ProfileComponent = (function () {
         };
         this.userService.updateUser(this.user._id, this.user)
             .subscribe(function (user) {
+            _this.successMsg = 'Profile updated successfully';
+            _this.successFlg = true;
         });
     };
     return ProfileComponent;
@@ -1946,7 +2041,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/user/register/register.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <div *ngIf=\"errorFlag\"\n       class=\"alert alert-danger\">\n    {{errorMsg}}\n  </div>\n  <h1> Register </h1>\n  <form (ngSubmit)=\"register()\" #f=\"ngForm\">\n\n    <input placeholder=\"username\"\n           name=\"username\"\n           type=\"text\"\n           id=\"username\"\n           class=\"form-control\"\n           ngModel\n           required\n           #username=\"ngModel\"/>\n    <span class=\"help-block\" *ngIf=\"!username.valid && username.touched\">\n      Please enter username!\n    </span>\n\n    <input placeholder=\"password\"\n           name=\"password\"\n           type=\"password\"\n           id=\"password\"\n           class=\"form-control\"\n           ngModel\n           required\n           #password=\"ngModel\"/>\n    <span class=\"help-block\" *ngIf=\"!password.valid && password.touched\">\n      Please enter password!\n    </span>\n    <input placeholder=\"verify password\"\n           name=\"verifyPassword\"\n           type=\"password\"\n           id=\"verifyPassword\"\n           class=\"form-control\"\n           ngModel\n           required\n           #verifyPassword=\"ngModel\"/>\n    <span class=\"help-block\" *ngIf=\"!verifyPassword.valid && verifyPassword.touched\">\n      Please verify password!\n    </span>\n    <span class=\"help-block\" *ngIf=\"password.value != verifyPassword.value\">\n      Passwords do not match\n    </span>\n\n    <select [(ngModel)]=\"role\" class=\"form-control\" name=\"role\">\n      <option value=\"\">Select Role</option>\n      <option value=\"USER\">User</option>\n      <option value=\"ORGANIZER\">Organizer</option>\n      <option value=\"ADMIN\">Admin</option>\n    </select>\n    <button class=\"btn btn-block btnStyle bg-primary\"\n            type=\"submit\"\n            [disabled]=\"!f.valid\">Register\n    </button>\n    <button class=\"btn btn-block btn-danger\"\n            type=\"button\"\n            [routerLink]=\"['/login']\">Cancel\n    </button>\n  </form>\n</div>\n"
+module.exports = "<nav class=\"navbar navbar-fixed-top bg-primary btnStyle\">\n  <div class=\"container-fluid\">\n\n    <div class=\"navbar-header header-width header-fix\">\n      <p class=\"navbar-text pull-left p-fix\">\n        <a [routerLink]=\"['/about']\" class=\"navbar-link glyphicon-color\">\n          <b>EventPlanet</b>\n        </a>\n      </p>\n    </div>\n  </div>\n</nav>\n\n<div class=\"container-fluid\">\n  <div *ngIf=\"errorFlag\"\n       class=\"alert alert-danger\">\n    {{errorMsg}}\n  </div>\n  <h1> Register </h1>\n  <form (ngSubmit)=\"register()\" #f=\"ngForm\">\n\n    <input placeholder=\"username\"\n           name=\"username\"\n           type=\"text\"\n           id=\"username\"\n           class=\"form-control\"\n           ngModel\n           required\n           #username=\"ngModel\"/>\n    <span class=\"help-block\" *ngIf=\"!username.valid && username.touched\">\n      Please enter username!\n    </span>\n\n    <input placeholder=\"password\"\n           name=\"password\"\n           type=\"password\"\n           id=\"password\"\n           class=\"form-control\"\n           ngModel\n           required\n           #password=\"ngModel\"/>\n    <span class=\"help-block\" *ngIf=\"!password.valid && password.touched\">\n      Please enter password!\n    </span>\n    <input placeholder=\"verify password\"\n           name=\"verifyPassword\"\n           type=\"password\"\n           id=\"verifyPassword\"\n           class=\"form-control\"\n           ngModel\n           required\n           #verifyPassword=\"ngModel\"/>\n    <span class=\"help-block\" *ngIf=\"!verifyPassword.valid && verifyPassword.touched\">\n      Please verify password!\n    </span>\n    <span class=\"help-block\" *ngIf=\"password.value != verifyPassword.value\">\n      Passwords do not match\n    </span>\n\n    <select [(ngModel)]=\"role\" class=\"form-control\" name=\"role\">\n      <option value=\"\">Select Role</option>\n      <option value=\"USER\">User</option>\n      <option value=\"ORGANIZER\">Organizer</option>\n      <option value=\"ADMIN\">Admin</option>\n    </select>\n    <button class=\"btn btn-block btnStyle bg-primary\"\n            type=\"submit\"\n            [disabled]=\"!f.valid\">Register\n    </button>\n    <button class=\"btn btn-block btn-danger\"\n            type=\"button\"\n            [routerLink]=\"['/login']\">Cancel\n    </button>\n  </form>\n</div>\n<nav class=\"navbar navbar-fixed-bottom bg-primary btnStyle\">\n  <div class=\"container-fluid\">\n    <p class=\"navbar-text pull-left\">\n      @Sai Bhargavi\n    </p>\n  </div>\n</nav>\n"
 
 /***/ }),
 
@@ -2590,6 +2685,7 @@ var UserService = (function () {
                 return true;
             }
             else {
+                _this.sharedService.user = '';
                 _this.router.navigate(['/login']);
                 return false;
             }
@@ -2597,6 +2693,7 @@ var UserService = (function () {
     };
     UserService.prototype.createUser = function (user) {
         var url = this.baseUrl + '/api/user/';
+        console.log('creating new user-> user service client');
         return this._http.post(url, user)
             .map(function (response) {
             return response.json();

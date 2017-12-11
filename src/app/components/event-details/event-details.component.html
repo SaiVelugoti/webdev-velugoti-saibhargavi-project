@@ -81,10 +81,15 @@
   <div class="btn btn-block"></div>
 </div>
 <div class="container-fluid">
-  <div *ngIf="!commentsExist"
+  <div *ngIf="!commentsExist && !isLoading"
        class="alert alert-danger container-fluid">
     <i class="glyphicon glyphicon-info-sign glyphicon-color"></i>
     There are no comments for this event!!!
+  </div>
+  <div *ngIf="isLoading">
+    <div>
+    Loading details of the event..
+    </div>
   </div>
 </div>
 

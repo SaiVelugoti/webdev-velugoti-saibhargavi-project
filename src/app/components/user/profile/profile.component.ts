@@ -17,26 +17,12 @@ export class ProfileComponent implements OnInit {
   lastName: string;
   password: string;
   email: string;
-
+  successFlg: boolean;
+  successMsg: string;
+  role: string;
   constructor(private userService: UserService, private activatedRoute: ActivatedRoute,
               private router: Router, private sharedService: SharedService) {
   }
-
-  // ngOnInit() {
-  //   this.activatedRoute.params
-  //     .subscribe(
-  //       (params: any) => {
-  //         this.userId = params['userId'];
-  //       }
-  //     );
-  //   this.userService.findUserById(this.userId)
-  //     .subscribe((returnedUser: any) => {
-  //       this.username = returnedUser.username;
-  //       this.firstName = returnedUser.firstName;
-  //       this.lastName = returnedUser.lastName;
-  //       this.password = returnedUser.password;
-  //     });
-  // }
 
   ngOnInit() {
     this.user = this.sharedService.user;
@@ -44,6 +30,7 @@ export class ProfileComponent implements OnInit {
     this.firstName = this.user['firstName'];
     this.lastName = this.user['lastName'];
     this.email = this.user['email'];
+    this.role = this.user['role'];
 
   }
 
@@ -64,6 +51,8 @@ export class ProfileComponent implements OnInit {
     };
     this.userService.updateUser(this.user._id, this.user)
       .subscribe((user: any) => {
+      this.successMsg = 'Profile updated successfully';
+      this.successFlg = true;
       });
   }
 }

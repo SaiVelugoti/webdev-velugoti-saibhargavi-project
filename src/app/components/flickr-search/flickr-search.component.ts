@@ -58,15 +58,5 @@ export class FlickrSearchComponent implements OnInit {
     url += '/' + photo.id + '_' + photo.secret + '_b.jpg';
 
     this.router.navigate(['/addingImage/', url]);
-    // this.widgetService.createWidget(this.pageId, widget)
-    //   .subscribe((widgetRet: any) => {
-    //     console.log(widgetRet);
-    //     console.log(widgetRet.length);
-    //     const flickrWid = widgetRet[widgetRet.length - 1];
-    //     console.log(flickrWid);
-    //     this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page', this.pageId,
-    //       'widget', flickrWid._id, 'IMAGE']);
-    //   });
-
   }
 }

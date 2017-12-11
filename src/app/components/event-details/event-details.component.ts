@@ -26,6 +26,7 @@ export class EventDetailsComponent implements OnInit {
   isSearching: boolean;
   infoMsg: string;
   infoFlag: boolean;
+  isLoading: boolean;
 
   constructor(private eventSearchService: EventSearchService,
               private activatedRoute: ActivatedRoute,
@@ -34,7 +35,7 @@ export class EventDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.commentsExist = false;
+    this.isLoading = true;
     this.activatedRoute.params
       .subscribe((params: any) => {
         this.eventId = params['id'];
@@ -45,18 +46,21 @@ export class EventDetailsComponent implements OnInit {
                 this.eventDetailsExist = true;
                 this.eventDetail = eventDetailed;
                 this.eventName = eventDetailed['title'];
+                this.commentService.findAllCommentsForEvent(this.eventId)
+                  .subscribe((comments: any) => {
+                    this.isLoading = false;
+                      if (comments[0] !== undefined) {
+                        this.commentsExist = true;
+                        this.commentsFound = comments[0].commentsOnEvent;
+                      } else {
+                        this.commentsExist = false;
+                      }
+                    }
+                  );
               }
             }
           );
       });
-    this.commentService.findAllCommentsForEvent(this.eventId)
-      .subscribe((comments: any) => {
-          if (comments[0] !== undefined) {
-            this.commentsExist = true;
-            this.commentsFound = comments[0].commentsOnEvent;
-          }
-        }
-      );
   }
 
   searchForEvents(searchTerm) {
