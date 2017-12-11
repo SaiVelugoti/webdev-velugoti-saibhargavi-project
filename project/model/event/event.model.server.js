@@ -12,7 +12,7 @@ EventModel.getEventsCreated = getEventsCreated;
 EventModel.addNewEvent = addNewEvent;
 EventModel.deleteEvent = deleteEvent;
 EventModel.findEventsCreatedByOthers = findEventsCreatedByOthers;
-
+EventModel.updateNewEvent = updateNewEvent;
 module.exports = EventModel;
 
 function addCommentToEvent(eventId, comment) {
@@ -24,6 +24,10 @@ function addNewEvent(event) {
   return EventModel.create(event);
 }
 
+function updateNewEvent(eventId) {
+  console.log('updating.....');
+  return EventModel.update({_id: eventId}, {$set: {eventId: eventId}});
+}
 function getEventsCreated(userId) {
   "use strict";
   return EventModel.find({createdBy: userId});
@@ -40,7 +44,8 @@ function modifyCommentToEvent(eventId, commentId, commentText) {
 
 function deleteCommentToEvent(eventId, commentId) {
   console.log('in model -> delete comment', eventId, commentId);
-  return EventModel.update({'eventId': eventId}, {$pull: {'commentsOnEvent._id': commentId}});
+  return EventModel.remove({'commentsOnEvent._id': commentId});
+  // return EventModel.update({'eventId': eventId}, {$pull: {'commentsOnEvent._id': commentId}});
 }
 
 function findAllCommentsForEvent(eventId) {
@@ -48,6 +53,7 @@ function findAllCommentsForEvent(eventId) {
 }
 
 function addEvent(eventId, eventName) {
+  console.log('creating event');
   return EventModel.create({eventId: eventId, eventName: eventName});
 }
 

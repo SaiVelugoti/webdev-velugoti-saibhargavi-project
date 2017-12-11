@@ -1,14 +1,14 @@
 var mongoose = require("mongoose");
 var EventSchema = mongoose.Schema({
-  eventName: String,
+  title: String,
   description: String,
-  eventLocation: String,
+  address: String,
   eventId: String,
   imgSrc: String,
-  eventUrl: String,
+  url: String,
   createdBy: String,
   commentsOnEvent: [{userId: String, username: String, comment: String}],
-  dateCreated: {type: Date, default: Date.now()},
+  start_time: {type: Date, default: Date.now()},
 }, {collection: 'event'});
 
 module.exports = EventSchema;

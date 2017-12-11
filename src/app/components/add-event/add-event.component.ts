@@ -63,11 +63,11 @@ export class AddEventComponent implements OnInit {
       this.errorFlag = true;
     }
     const newEvent = {
-      eventName: this.eventForm.value.eventName,
-      eventDescription: this.eventForm.value.description,
-      eventLocation: this.eventForm.value.eventLocation,
+      title: this.eventForm.value.eventName,
+      description: this.eventForm.value.description,
+      address: this.eventForm.value.eventLocation,
       imgSrc: this.eventForm.value.imgSrc,
-      eventUrl: this.eventForm.value.eventUrl,
+      url: this.eventForm.value.eventUrl,
       createdBy: this.user['_id']
     };
     console.log(newEvent);
@@ -76,6 +76,10 @@ export class AddEventComponent implements OnInit {
         this.successFlag = true;
         this.successMsg = 'Event created successfully';
         this.eventForm.reset();
+        const newEventId = event['_id'];
+        this.manageEventService.updateNewEvent(newEventId)
+          .subscribe((event1: any) => {
+          });
       });
   }
 }

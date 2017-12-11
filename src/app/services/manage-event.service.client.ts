@@ -37,6 +37,16 @@ export class ManageEventService {
         return res.json();
       });
   }
+  updateNewEvent(id) {
+    const reqBody = {
+      eventId: id
+    };
+    console.log('---- manage - evnet - client', reqBody);
+    return this._http.post(this.baseUrl + '/api/updateNewEvent', reqBody)
+      .map((res: Response) => {
+        return res.json();
+      });
+  }
 
 
   modifyComment(eventId, commentId, commentText) {

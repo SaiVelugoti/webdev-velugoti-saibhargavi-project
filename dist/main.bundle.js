@@ -239,6 +239,7 @@ var APP_ROUTES = [
     { path: 'manageUsers', component: __WEBPACK_IMPORTED_MODULE_9__components_manage_user_manage_user_component__["a" /* ManageUserComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_5__services_auth_guard_service__["a" /* AuthGuard */]] },
     { path: 'eventSearch', component: __WEBPACK_IMPORTED_MODULE_6__components_event_search_event_search_component__["a" /* EventSearchComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_5__services_auth_guard_service__["a" /* AuthGuard */]] },
     { path: 'comments/:interestedEvent', component: __WEBPACK_IMPORTED_MODULE_10__components_event_comment_event_comment_component__["a" /* EventCommentComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_5__services_auth_guard_service__["a" /* AuthGuard */]] },
+    { path: 'detailsManager/:eventId', component: __WEBPACK_IMPORTED_MODULE_10__components_event_comment_event_comment_component__["a" /* EventCommentComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_5__services_auth_guard_service__["a" /* AuthGuard */]] },
     { path: 'otherUser/:id', component: __WEBPACK_IMPORTED_MODULE_11__components_other_user_dashboard_other_user_dashboard_component__["a" /* OtherUserDashboardComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_5__services_auth_guard_service__["a" /* AuthGuard */]] },
     { path: 'manageEvents', component: __WEBPACK_IMPORTED_MODULE_12__components_manage_events_manage_events_component__["a" /* ManageEventsComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_5__services_auth_guard_service__["a" /* AuthGuard */]] },
     { path: 'addEvent', component: __WEBPACK_IMPORTED_MODULE_13__components_add_event_add_event_component__["a" /* AddEventComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_5__services_auth_guard_service__["a" /* AuthGuard */]] },
@@ -402,11 +403,11 @@ var AddEventComponent = (function () {
             this.errorFlag = true;
         }
         var newEvent = {
-            eventName: this.eventForm.value.eventName,
-            eventDescription: this.eventForm.value.description,
-            eventLocation: this.eventForm.value.eventLocation,
+            title: this.eventForm.value.eventName,
+            description: this.eventForm.value.description,
+            address: this.eventForm.value.eventLocation,
             imgSrc: this.eventForm.value.imgSrc,
-            eventUrl: this.eventForm.value.eventUrl,
+            url: this.eventForm.value.eventUrl,
             createdBy: this.user['_id']
         };
         console.log(newEvent);
@@ -415,6 +416,10 @@ var AddEventComponent = (function () {
             _this.successFlag = true;
             _this.successMsg = 'Event created successfully';
             _this.eventForm.reset();
+            var newEventId = event['_id'];
+            _this.manageEventService.updateNewEvent(newEventId)
+                .subscribe(function (event1) {
+            });
         });
     };
     return AddEventComponent;
@@ -722,7 +727,12 @@ var EventCommentComponent = (function () {
         this.user = this.sharedService.user;
         this.activatedRoute.params
             .subscribe(function (params) {
-            _this.event = params['interestedEvent'];
+            if (params['interestedEvent'] === undefined) {
+                _this.event = params['eventId'];
+            }
+            else {
+                _this.event = params['interestedEvent'];
+            }
             _this.eventSearchService.getEventDetails(_this.event)
                 .subscribe(function (eventDetailed) {
                 if (eventDetailed !== undefined) {
@@ -738,7 +748,7 @@ var EventCommentComponent = (function () {
             console.log(_this.event);
             _this.commentService.findAllCommentsForEvent(_this.event)
                 .subscribe(function (comments) {
-                if (comments) {
+                if (comments[0] !== undefined) {
                     _this.commentsFound = comments[0].commentsOnEvent;
                     if (_this.commentsFound.length > 0) {
                         _this.commentsExist = true;
@@ -1332,7 +1342,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/manage-events/manage-events.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-fixed-top bg-primary btnStyle\">\n  <div class=\"container-fluid\">\n\n    <div class=\"navbar-header header-width header-fix\">\n      <p class=\"navbar-text pull-left p-fix\">\n        <a [routerLink]=\"['/dashboard']\" class=\"navbar-link glyphicon-color\">\n              <span class=\"glyphicon glyphicon-chevron-left\">\n              </span>\n        </a>\n      </p>\n      <span class=\"navbar-brand glyphicon-color\">Manage Users</span>\n\n    </div>\n  </div>\n</nav>\n\n<div class=\"container-fluid\">\n  <div class=\"container-fluid\">\n\n    <a [routerLink]=\"['/addEvent']\" class=\"btn btn-primary pull-right\">\n      Add Event\n    </a>\n  </div>\n\n  <li class=\"list-group-item active btnStyle\">\n    <div class=\"row\">\n      <!--<div class=\"col-lg-2\">-->\n      <div class=\"container-fluid\">\n        Events created by you\n      </div>\n    </div>\n  </li>\n\n  <div *ngIf=\"userCreatedEvents\">\n    <li class=\"list-group-item\" *ngFor=\"let event of eventsCreated\">\n      <div class=\"row\">\n        <div class=\"col-xs-6\">\n          {{event['eventName']}}\n        </div>\n        <div class=\"pull-right\">\n          <div class=\"col-xs-3\">\n            <a [routerLink]=\"['/editEvent', event['_id']]\">\n              <span class=\"glyphicon glyphicon-edit\"></span>\n            </a>\n          </div>\n          <div class=\"col-xs-3\">\n            <div (click)=\"deleteEvent(event['_id'])\">\n              <span class=\"glyphicon glyphicon-trash\"></span>\n            </div>\n          </div>\n        </div>\n      </div>\n    </li>\n  </div>\n\n  <div *ngIf=\"!userCreatedEvents\">\n    Sorry! We could not find any events created by you!\n    <br/>\n    Start creating events by click on 'Add Event'\n    <br/>\n  </div>\n\n  <div *ngIf=\"otherUserCreatedEvents\">\n    <li class=\"list-group-item\" *ngFor=\"let event of eventsCreatedbyOthers\">\n      <div class=\"row\">\n        <div class=\"col-xs-12\">\n          <a (click)=\"goToEventDetailsComments(event['eventId'])\">\n          {{event['eventName']}}\n          </a>\n        </div>\n      </div>\n    </li>\n  </div>\n\n  <div *ngIf=\"!otherUserCreatedEvents\">\n    Other organizers are yet to create events.!\n    <br/>\n  </div>\n</div>\n"
+module.exports = "<nav class=\"navbar navbar-fixed-top bg-primary btnStyle\">\n  <div class=\"container-fluid\">\n\n    <div class=\"navbar-header header-width header-fix\">\n      <p class=\"navbar-text pull-left p-fix\">\n        <a [routerLink]=\"['/dashboard']\" class=\"navbar-link glyphicon-color\">\n              <span class=\"glyphicon glyphicon-chevron-left\">\n              </span>\n        </a>\n      </p>\n      <span class=\"navbar-brand glyphicon-color\">Manage Users</span>\n\n    </div>\n  </div>\n</nav>\n\n<div class=\"container-fluid\">\n  <div class=\"container-fluid\">\n\n    <a [routerLink]=\"['/addEvent']\" class=\"btn btn-primary pull-right\">\n      Add Event\n    </a>\n  </div>\n\n  <li class=\"list-group-item active btnStyle\">\n    <div class=\"row\">\n      <!--<div class=\"col-lg-2\">-->\n      <div class=\"container-fluid\">\n        Events created by you\n      </div>\n    </div>\n  </li>\n\n  <div *ngIf=\"userCreatedEvents\">\n    <li class=\"list-group-item\" *ngFor=\"let event of eventsCreated\">\n      <div class=\"row\">\n        <div class=\"col-xs-6\">\n          <a (click)=\"goToEventDetails(event['eventId'])\">\n          {{event['eventName']}}\n          </a>\n        </div>\n        <div class=\"pull-right\">\n          <div class=\"col-xs-3\">\n            <a [routerLink]=\"['/editEvent', event['_id']]\">\n              <span class=\"glyphicon glyphicon-edit\"></span>\n            </a>\n          </div>\n          <div class=\"col-xs-3\">\n            <div (click)=\"deleteEvent(event['_id'])\">\n              <span class=\"glyphicon glyphicon-trash\"></span>\n            </div>\n          </div>\n        </div>\n      </div>\n    </li>\n  </div>\n\n  <div *ngIf=\"!userCreatedEvents\">\n    <div class=\"btn-block btn\"></div>\n    Sorry! We could not find any events created by you!\n    <br/>\n    Start creating events by click on 'Add Event'\n    <br/>\n  </div>\n  <div class=\"btn-block btn\"></div>\n  <li class=\"list-group-item active btnStyle\">\n    <div class=\"row\">\n      <!--<div class=\"col-lg-2\">-->\n      <div class=\"container-fluid\">\n        Take a look at events created by other organizers\n      </div>\n    </div>\n  </li>\n  <div class=\"btn-block btn\"></div>\n  <div *ngIf=\"otherUserCreatedEvents\">\n    <li class=\"list-group-item\" *ngFor=\"let event of eventsCreatedbyOthers\">\n      <div class=\"row\">\n        <div class=\"col-xs-12\">\n          <a (click)=\"goToEventDetails(event['eventId'])\">\n            {{event['eventId']}}\n          {{event['eventName']}}\n          </a>\n        </div>\n      </div>\n    </li>\n  </div>\n\n  <div *ngIf=\"!otherUserCreatedEvents\">\n    Other organizers are yet to create events.!\n    <br/>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1393,8 +1403,8 @@ var ManageEventsComponent = (function () {
             });
         });
     };
-    ManageEventsComponent.prototype.goToEventDetailsComments = function (interestedEvent) {
-        this.router.navigate(['/comments', interestedEvent]);
+    ManageEventsComponent.prototype.goToEventDetails = function (eventId) {
+        this.router.navigate(['/detailsManager', eventId]);
     };
     return ManageEventsComponent;
 }());
@@ -2319,6 +2329,16 @@ var ManageEventService = (function () {
             eventNew: event
         };
         return this._http.post(this.baseUrl + '/api/addNewEvent', eventBody)
+            .map(function (res) {
+            return res.json();
+        });
+    };
+    ManageEventService.prototype.updateNewEvent = function (id) {
+        var reqBody = {
+            eventId: id
+        };
+        console.log('---- manage - evnet - client', reqBody);
+        return this._http.post(this.baseUrl + '/api/updateNewEvent', reqBody)
             .map(function (res) {
             return res.json();
         });

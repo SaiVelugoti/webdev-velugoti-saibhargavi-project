@@ -43,9 +43,10 @@ module.exports = function (app) {
   app.get("/facebook/login", passport.authenticate('facebook', {scope: 'email'}));
   app.post("/api/deleteCommentToEvent", deleteCommentToEvent);
   app.post("/api/addNewEvent", addNewEvent);
+  app.post("/api/updateNewEvent", updateNewEvent);
   app.get("/api/findEventsCreated/:userId", getEventsCreated);
   app.get("/api/findEventsCreatedByOthers/:userId", findEventsCreatedByOthers);
-  app.post("/api/deleteEvent/:eventId", deleteEvent);
+  app.delete("/api/deleteEvent/:eventId", deleteEvent);
 
 
   app.get('/auth/facebook/callback',
@@ -357,6 +358,16 @@ module.exports = function (app) {
         res.json(res1);
       })
   }
+
+  function updateNewEvent(req, res) {
+    var eventId = req.body.eventId;
+    console.log('-------', eventId);
+    eventModel.updateNewEvent(eventId)
+      .then(function (res1) {
+        res.json(res1);
+      })
+  }
+
   function getEventsCreated(req, res) {
     var userId = req.params['userId'];
     eventModel.getEventsCreated(userId)
